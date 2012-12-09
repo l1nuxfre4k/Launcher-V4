@@ -188,7 +188,7 @@ Partial Class MainForm
         Me.WebBrowser1.Name = "WebBrowser1"
         Me.WebBrowser1.Size = New System.Drawing.Size(854, 378)
         Me.WebBrowser1.TabIndex = 16
-        Me.WebBrowser1.Url = New System.Uri("http://launcher.mineuk.com/v3/news.php", System.UriKind.Absolute)
+        Me.WebBrowser1.Url = New System.Uri("", System.UriKind.Relative)
         '
         'RadioButton1
         '
@@ -271,16 +271,16 @@ Partial Class MainForm
         Me.BackgroundImage = Global.MineUK_Launcher.My.Resources.Resources.Main
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(854, 480)
+        Me.Controls.Add(Me.BetaLogo)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.BetaWarning)
         Me.Controls.Add(Me.BetaText)
-        Me.Controls.Add(Me.BetaLogo)
         Me.Controls.Add(Me.RadioButton2)
         Me.Controls.Add(Me.RadioButton1)
         Me.Controls.Add(Me.WebBrowser1)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.Label2)

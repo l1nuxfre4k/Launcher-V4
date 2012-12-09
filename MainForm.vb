@@ -78,9 +78,11 @@ Public Class MainForm
         My.Settings.Save()
         If My.Settings.ModPack = "Tekkit" Then
             RadioButton1.Checked = True
+            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/tekkit.php"))
         End If
         If My.Settings.ModPack = "FTB" Then
             RadioButton2.Checked = True
+            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/ftb.php"))
         End If
         Try
             If CommandLineArgs(0) = "auto" Then
@@ -155,11 +157,11 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorkerUpdate1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate1.DoWork
-        If My.Computer.FileSystem.FileExists("Temp.7z") Then
-            My.Computer.FileSystem.DeleteFile("Temp.7z")
+        If My.Computer.FileSystem.FileExists("files.7z") Then
+            My.Computer.FileSystem.DeleteFile("files.7z")
         End If
-        If My.Computer.FileSystem.FileExists("Script.bat") Then
-            My.Computer.FileSystem.DeleteFile("Script.bat")
+        If My.Computer.FileSystem.FileExists("script.bat") Then
+            My.Computer.FileSystem.DeleteFile("script.bat")
         End If
         If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
         Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
@@ -219,12 +221,6 @@ Public Class MainForm
     Private Sub BackgroundWorkerUpdate2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate2.DoWork
         'Start of file check script
         Try
-            If My.Computer.FileSystem.FileExists("Temp.7z") Then
-                My.Computer.FileSystem.DeleteFile("Temp.7z")
-            End If
-        Catch ex As Exception
-        End Try
-        Try
             If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
             Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
             End If
@@ -243,14 +239,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("Script.bat") Then
-                My.Computer.FileSystem.DeleteFile("Script.bat")
-            End If
-        Catch ex As Exception
-        End Try
-        Try
-            If My.Computer.FileSystem.FileExists("installer.bat") Then
-                My.Computer.FileSystem.DeleteFile("installer.bat")
+            If My.Computer.FileSystem.FileExists("script.bat") Then
+                My.Computer.FileSystem.DeleteFile("script.bat")
             End If
         Catch ex As Exception
         End Try
@@ -352,9 +342,11 @@ Public Class MainForm
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
         If RadioButton1.Checked = True Then
             My.Settings.ModPack = "Tekkit"
+            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/tekkit.php"))
         End If
         If RadioButton2.Checked = True Then
             My.Settings.ModPack = "FTB"
+            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/ftb.php"))
         End If
     End Sub
 
@@ -386,12 +378,6 @@ Public Class MainForm
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'Start of file check script
         Try
-            If My.Computer.FileSystem.FileExists("Temp.7z") Then
-                My.Computer.FileSystem.DeleteFile("Temp.7z")
-            End If
-        Catch ex As Exception
-        End Try
-        Try
             If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
             Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
             End If
@@ -410,14 +396,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("Script.bat") Then
-                My.Computer.FileSystem.DeleteFile("Script.bat")
-            End If
-        Catch ex As Exception
-        End Try
-        Try
-            If My.Computer.FileSystem.FileExists("installer.bat") Then
-                My.Computer.FileSystem.DeleteFile("installer.bat")
+            If My.Computer.FileSystem.FileExists("script.bat") Then
+                My.Computer.FileSystem.DeleteFile("script.bat")
             End If
         Catch ex As Exception
         End Try
@@ -623,40 +603,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewTekkitVersion = CurrentTekkitVersion Then
                     If CurrentTekkitIsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "Temp.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewTekkitVersion = CurrentTekkitVersion Then
                     If CurrentTekkitIsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "Temp.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -665,40 +645,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewFTBVersion = CurrentFTBVersion Then
                     If CurrentFTBIsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "Temp.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewFTBVersion = CurrentFTBVersion Then
                     If CurrentFTBIsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "Temp.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -772,7 +752,7 @@ Public Class MainForm
         Dim objProcesss As Process
         objProcesss = New Process()
         objProcesss.StartInfo.FileName = "7za.exe"
-        objProcesss.StartInfo.Arguments = "x Temp.7z * -y"
+        objProcesss.StartInfo.Arguments = "x files.7z * -y"
         objProcesss.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
         objProcesss.Start()
         objProcesss.WaitForExit()
@@ -787,12 +767,6 @@ Public Class MainForm
     Private Sub BackgroundWorker5_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker5.DoWork
         Thread.Sleep(200)
         'Start of file check script
-        Try
-            If My.Computer.FileSystem.FileExists("Temp.7z") Then
-                My.Computer.FileSystem.DeleteFile("Temp.7z")
-            End If
-        Catch ex As Exception
-        End Try
         Try
             If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
             Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
@@ -812,14 +786,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("Script.bat") Then
-                My.Computer.FileSystem.DeleteFile("Script.bat")
-            End If
-        Catch ex As Exception
-        End Try
-        Try
-            If My.Computer.FileSystem.FileExists("installer.bat") Then
-                My.Computer.FileSystem.DeleteFile("installer.bat")
+            If My.Computer.FileSystem.FileExists("script.bat") Then
+                My.Computer.FileSystem.DeleteFile("script.bat")
             End If
         Catch ex As Exception
         End Try
@@ -886,7 +854,7 @@ Public Class MainForm
         End If
         MCDir = (MCDir & LUserFinal & " " & LSessionIDFinal)
         'Write launch info
-        Writer = My.Computer.FileSystem.OpenTextFileWriter("Script.bat", True)
+        Writer = My.Computer.FileSystem.OpenTextFileWriter("script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
         If RadioButton1.Checked = True Then
@@ -907,7 +875,7 @@ Public Class MainForm
         'Launch
         Dim ClientStarter As Process
         ClientStarter = New Process()
-        ClientStarter.StartInfo.FileName = "Script.bat"
+        ClientStarter.StartInfo.FileName = "script.bat"
         If My.Settings.Debug = True Then
         Else : ClientStarter.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
         End If
