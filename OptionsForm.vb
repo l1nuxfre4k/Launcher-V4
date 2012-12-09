@@ -38,25 +38,16 @@
         Me.Close()
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged, RadioButton4.CheckedChanged
         If RadioButton1.Checked = True Then
             My.Settings.RAM = 512
         End If
-    End Sub
-
-    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
         If RadioButton2.Checked = True Then
             My.Settings.RAM = 1024
         End If
-    End Sub
-
-    Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
         If RadioButton3.Checked = True Then
             My.Settings.RAM = 2048
         End If
-    End Sub
-
-    Private Sub RadioButton4_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton4.CheckedChanged
         If RadioButton4.Checked = True Then
             My.Settings.RAM = 4096
         End If

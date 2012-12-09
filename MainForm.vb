@@ -15,18 +15,21 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion
     Dim NewLauncherVersion As String = ""
-    Dim CurrentModPackVersion As String = ""
-    Dim NewModPackVersion As String = ""
+    Dim CurrentTekkitVersion As String = ""
+    Dim NewTekkitVersion As String = ""
+    Dim CurrentFTBVersion As String = ""
+    Dim NewFTBVersion As String = ""
 
-    Dim ServerAdmins As String = ""
+    Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
-    Dim ModPackIsAdmin As Boolean
+    Dim CurrentTekkitIsAdmin As Boolean
+    Dim CurrentFTBIsAdmin As Boolean
     Dim ServerIsReady As Boolean = False
 
     Dim WithEvents WC1 As New WebClient
     Dim WithEvents WC2 As New WebClient
 
-    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, Panel1.Click, Button1.Click, Button2.Click
+    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, RadioButton1.Click, RadioButton2.Click, Panel1.Click, Button1.Click, Button2.Click
         My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
     End Sub
 
@@ -53,13 +56,14 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
+        VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " Beta"
         TextBox1.Text = My.Settings.User
         TextBox2.Text = My.Settings.Password
-        Label3.Hide()
-        Label4.Hide()
-        Label5.Hide()
-        Label6.Hide()
+        StatusLabel.Hide()
         ProgressBar1.Hide()
+        BetaLogo.Show()
+        BetaText.Show()
+        BetaWarning.Show()
         If My.Settings.RAM = 512 Then
         ElseIf My.Settings.RAM = 1024 Then
         ElseIf My.Settings.RAM = 2048 Then
@@ -72,6 +76,12 @@ Public Class MainForm
             End
         End If
         My.Settings.Save()
+        If My.Settings.ModPack = "Tekkit" Then
+            RadioButton1.Checked = True
+        End If
+        If My.Settings.ModPack = "FTB" Then
+            RadioButton2.Checked = True
+        End If
         Try
             If CommandLineArgs(0) = "auto" Then
                 Button1.Enabled = False
@@ -81,10 +91,13 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                Label5.Show()
-                Label5.Text = "Connecting to MineUK..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
             End If
             If CommandLineArgs(2) = "auto" Then
                 Button1.Enabled = False
@@ -94,10 +107,13 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                Label5.Show()
-                Label5.Text = "Connecting to MineUK..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
             End If
             If CommandLineArgs(0) = "update" Then
                 CheckBox1.Checked = True
@@ -108,10 +124,13 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                Label5.Show()
-                Label5.Text = "Connecting to MineUK..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
             End If
             If CommandLineArgs(2) = "update" Then
                 CheckBox1.Checked = True
@@ -122,10 +141,13 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                Label5.Show()
-                Label5.Text = "Connecting to MineUK..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
             End If
         Catch ex As Exception
         End Try
@@ -139,8 +161,11 @@ Public Class MainForm
         If My.Computer.FileSystem.FileExists("Script.bat") Then
             My.Computer.FileSystem.DeleteFile("Script.bat")
         End If
-        If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-        Else : My.Computer.FileSystem.CreateDirectory(".minecraft")
+        If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
+        Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+        End If
+        If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+        Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
         End If
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
@@ -151,20 +176,32 @@ Public Class MainForm
             ServerStream.Close()
             sr.Close()
             NewLauncherVersion = ServerData.Split(":")(1)
-            NewModPackVersion = ServerData.Split(":")(2)
-            ServerAdmins = ServerData.Split(":")(3)
+            NewTekkitVersion = ServerData.Split(":")(2)
+            NewFTBVersion = ServerData.Split(":")(3)
+            ServerAdminList = ServerData.Split(":")(4)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
         End Try
-        ModPackIsAdmin = False
+        CurrentTekkitIsAdmin = False
         Try
-            For Each i As String In Directory.GetFiles(".minecraft\version")
-                CurrentModPackVersion = Path.GetFileName(i)
+            For Each i As String In Directory.GetFiles("Tekkit\.minecraft\version")
+                CurrentTekkitVersion = Path.GetFileName(i)
             Next
-            If CurrentModPackVersion.Substring(CurrentModPackVersion.Length - 1) = "+" Then
-                ModPackIsAdmin = True
-                CurrentModPackVersion = CurrentModPackVersion.Remove(CurrentModPackVersion.Length - 1)
+            If CurrentTekkitVersion.Substring(CurrentTekkitVersion.Length - 1) = "+" Then
+                CurrentTekkitIsAdmin = True
+                CurrentTekkitVersion = CurrentTekkitVersion.Remove(CurrentTekkitVersion.Length - 1)
+            End If
+        Catch ex As Exception
+        End Try
+        CurrentFTBIsAdmin = False
+        Try
+            For Each i As String In Directory.GetFiles("FTB\.minecraft\version")
+                CurrentFTBVersion = Path.GetFileName(i)
+            Next
+            If CurrentFTBVersion.Substring(CurrentFTBVersion.Length - 1) = "+" Then
+                CurrentFTBIsAdmin = True
+                CurrentFTBVersion = CurrentFTBVersion.Remove(CurrentFTBVersion.Length - 1)
             End If
         Catch ex As Exception
         End Try
@@ -174,23 +211,13 @@ Public Class MainForm
         If NewLauncherVersion = "" Then
             MsgBox("MineUK is unreachable!")
             Me.Close()
-        Else
-            Label3.Show()
-            Label3.Text = Label3.Text & CurrentLauncherVersion
-            Label4.Show()
-            Label4.Text = Label4.Text & NewLauncherVersion
-            If CurrentModPackVersion = "" Then
-                Label6.Text = (Label6.Text & "Unknown        Latest Version: ")
-            Else : Label6.Text = (Label6.Text & CurrentModPackVersion & "        Latest Version: ")
-            End If
-            Label6.Show()
-            Label6.Text = Label6.Text & NewModPackVersion
         End If
-        Label5.Text = "Checking files..."
+        StatusLabel.Text = "Checking files..."
         BackgroundWorkerUpdate2.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorkerUpdate2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate2.DoWork
+        'Start of file check script
         Try
             If My.Computer.FileSystem.FileExists("Temp.7z") Then
                 My.Computer.FileSystem.DeleteFile("Temp.7z")
@@ -199,7 +226,19 @@ Public Class MainForm
         End Try
         Try
             If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory(".minecraft")
+            Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -228,7 +267,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles(".minecraft")
+            For Each i As String In Directory.GetFiles("Tekkit\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -244,40 +283,79 @@ Public Class MainForm
             Next
         Catch ex As Exception
         End Try
+        Try
+            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+                If Path.GetFileName(i).Contains("log") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("optifog") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("lck") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+            Next
+        Catch ex As Exception
+        End Try
+        'End of file check script
     End Sub
 
     Private Sub BackgroundWorkerUpdate2_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerUpdate2.RunWorkerCompleted
         Try
             If CommandLineArgs(0) = "auto" Then
-                Label5.Show()
-                Label5.Text = "Checking files..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Checking files..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "auto" Then
-                Label5.Show()
-                Label5.Text = "Checking files..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Checking files..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(0) = "update" Then
-                Label5.Show()
-                Label5.Text = "Checking files..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Checking files..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "update" Then
-                Label5.Show()
-                Label5.Text = "Checking files..."
+                StatusLabel.Show()
+                StatusLabel.Text = "Checking files..."
                 ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
+                BetaLogo.Hide()
+                BetaText.Hide()
+                BetaWarning.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
         Catch ex As Exception
         End Try
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
+        If RadioButton1.Checked = True Then
+            My.Settings.ModPack = "Tekkit"
+        End If
+        If RadioButton2.Checked = True Then
+            My.Settings.ModPack = "FTB"
+        End If
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -295,14 +373,18 @@ Public Class MainForm
         CheckBox1.Enabled = False
         My.Settings.User = TextBox1.Text
         My.Settings.Password = TextBox2.Text
-        Label5.Show()
-        Label5.Text = "Checking files..."
+        StatusLabel.Show()
+        StatusLabel.Text = "Checking files..."
         ProgressBar1.Show()
         ProgressBar1.Style = ProgressBarStyle.Marquee
+        BetaLogo.Hide()
+        BetaText.Hide()
+        BetaWarning.Hide()
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+        'Start of file check script
         Try
             If My.Computer.FileSystem.FileExists("Temp.7z") Then
                 My.Computer.FileSystem.DeleteFile("Temp.7z")
@@ -311,7 +393,19 @@ Public Class MainForm
         End Try
         Try
             If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory(".minecraft")
+            Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -340,7 +434,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles(".minecraft")
+            For Each i As String In Directory.GetFiles("Tekkit\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -356,10 +450,28 @@ Public Class MainForm
             Next
         Catch ex As Exception
         End Try
+        Try
+            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+                If Path.GetFileName(i).Contains("log") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("optifog") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("lck") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+            Next
+        Catch ex As Exception
+        End Try
+        'End of file check script
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        Label5.Text = "Logging in..."
+        StatusLabel.Text = "Logging in..."
         BackgroundWorkerMojang.RunWorkerAsync()
     End Sub
 
@@ -432,12 +544,15 @@ Public Class MainForm
     Private Sub BackgroundWorkerMojang_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerMojang.RunWorkerCompleted
         ProgressBar1.Value = 100
         If LError = "2" Then
-            Label5.Text = ("ERROR!")
+            StatusLabel.Text = ("ERROR!")
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             MsgBox("Your login was rejected!")
-            Label5.Hide()
+            StatusLabel.Hide()
             ProgressBar1.Hide()
+            BetaLogo.Show()
+            BetaText.Show()
+            BetaWarning.Show()
             Button1.Enabled = True
             Button2.Enabled = True
             TextBox1.Enabled = True
@@ -445,12 +560,15 @@ Public Class MainForm
             CheckBox1.Enabled = True
         End If
         If LError = "3" Then
-            Label5.Text = ("ERROR!")
+            StatusLabel.Text = ("ERROR!")
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             MsgBox("The login servers are unreachable!")
-            Label5.Hide()
+            StatusLabel.Hide()
             ProgressBar1.Hide()
+            BetaLogo.Show()
+            BetaText.Show()
+            BetaWarning.Show()
             Button1.Enabled = True
             Button2.Enabled = True
             TextBox1.Enabled = True
@@ -458,7 +576,7 @@ Public Class MainForm
             CheckBox1.Enabled = True
         End If
         If LError = "" Then
-            Label5.Text = "Waiting for server..."
+            StatusLabel.Text = "Waiting for server..."
             ServerIsReady = True
             BackgroundWorker2.RunWorkerAsync()
         End If
@@ -476,77 +594,127 @@ Public Class MainForm
         If NewLauncherVersion = "" Then
             GoTo 1
         End If
-        If NewModPackVersion = "" Then
+        If NewTekkitVersion = "" Then
             GoTo 1
         End If
-        If ServerAdmins = "" Then
+        If NewFTBVersion = "" Then
+            GoTo 1
+        End If
+        If ServerAdminList = "" Then
             GoTo 1
         End If
         If LError = "" Then
         Else : GoTo 1
         End If
-        Label5.Text = "Checking file versions..."
-        If ServerAdmins.Contains("," & LUserFinal & ",") Then
+        StatusLabel.Text = "Checking file versions..."
+        If ServerAdminList.Contains("," & LUserFinal & ",") Then
             UserIsAdmin = True
         Else : UserIsAdmin = False
         End If
         If NewLauncherVersion = CurrentLauncherVersion Then
         Else
-            Label5.Text = "Downloading new launcher..."
+            StatusLabel.Text = "Downloading new launcher..."
             ProgressBar1.Style = ProgressBarStyle.Marquee
             WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
             GoTo 2
         End If
-        If UserIsAdmin = True Then
-            If CheckBox1.Checked = True Then
-                Label5.Text = "Downloading new modpack..."
-                ProgressBar1.Style = ProgressBarStyle.Blocks
-                WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewModPackVersion & "+.7z"), "Temp.7z")
-                GoTo 2
-            End If
-            If NewModPackVersion = CurrentModPackVersion Then
-                If ModPackIsAdmin = False Then
-                    Label5.Text = "Downloading new modpack..."
+        If RadioButton1.Checked = True Then
+            If UserIsAdmin = True Then
+                If CheckBox1.Checked = True Then
+                    StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewModPackVersion & "+.7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "Temp.7z")
+                    GoTo 2
+                End If
+                If NewTekkitVersion = CurrentTekkitVersion Then
+                    If CurrentTekkitIsAdmin = False Then
+                        StatusLabel.Text = "Downloading new modpack..."
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "Temp.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading new modpack..."
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "Temp.7z")
                     GoTo 2
                 End If
             Else
-                Label5.Text = "Downloading new modpack..."
-                ProgressBar1.Style = ProgressBarStyle.Blocks
-                WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewModPackVersion & "+.7z"), "Temp.7z")
-                GoTo 2
+                If CheckBox1.Checked = True Then
+                    StatusLabel.Text = "Downloading new modpack..."
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "Temp.7z")
+                    GoTo 2
+                End If
+                If NewTekkitVersion = CurrentTekkitVersion Then
+                    If CurrentTekkitIsAdmin = True Then
+                        StatusLabel.Text = "Downloading new modpack..."
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "Temp.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading new modpack..."
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "Temp.7z")
+                    GoTo 2
+                End If
             End If
         Else
-            If CheckBox1.Checked = True Then
-                Label5.Text = "Downloading new modpack..."
-                ProgressBar1.Style = ProgressBarStyle.Blocks
-                WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewModPackVersion & ".7z"), "Temp.7z")
-                GoTo 2
-            End If
-            If NewModPackVersion = CurrentModPackVersion Then
-                If ModPackIsAdmin = True Then
-                    Label5.Text = "Downloading new modpack..."
+            If UserIsAdmin = True Then
+                If CheckBox1.Checked = True Then
+                    StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewModPackVersion & ".7z"), "Temp.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "Temp.7z")
+                    GoTo 2
+                End If
+                If NewFTBVersion = CurrentFTBVersion Then
+                    If CurrentFTBIsAdmin = False Then
+                        StatusLabel.Text = "Downloading new modpack..."
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "Temp.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading new modpack..."
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "Temp.7z")
                     GoTo 2
                 End If
             Else
-                Label5.Text = "Downloading new modpack..."
-                ProgressBar1.Style = ProgressBarStyle.Blocks
-                WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewModPackVersion & ".7z"), "Temp.7z")
-                GoTo 2
+                If CheckBox1.Checked = True Then
+                    StatusLabel.Text = "Downloading new modpack..."
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "Temp.7z")
+                    GoTo 2
+                End If
+                If NewFTBVersion = CurrentFTBVersion Then
+                    If CurrentFTBIsAdmin = True Then
+                        StatusLabel.Text = "Downloading new modpack..."
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "Temp.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading new modpack..."
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "Temp.7z")
+                    GoTo 2
+                End If
             End If
         End If
-        Label5.Text = "Launching..."
+        StatusLabel.Text = "Launching..."
         BackgroundWorker6.RunWorkerAsync()
         GoTo 2
-1:      Label5.Text = ("ERROR!")
+1:      StatusLabel.Text = ("ERROR!")
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
         MsgBox("There was an unknown error!")
-        Label5.Hide()
+        StatusLabel.Hide()
         ProgressBar1.Hide()
+        BetaLogo.Show()
+        BetaText.Show()
+        BetaWarning.Show()
         Button1.Enabled = True
         Button2.Enabled = True
         TextBox1.Enabled = True
@@ -556,7 +724,7 @@ Public Class MainForm
     End Sub
 
     Private Sub WC1_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC1.DownloadFileCompleted
-        Label5.Text = "Installing..."
+        StatusLabel.Text = "Installing..."
         My.Settings.Save()
         Dim objProcesss As Process
         objProcesss = New Process()
@@ -574,7 +742,7 @@ Public Class MainForm
 
     Private Sub WC2_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC2.DownloadFileCompleted
         ProgressBar1.Style = ProgressBarStyle.Marquee
-        Label5.Text = "Removing old files..."
+        StatusLabel.Text = "Removing old files..."
         BackgroundWorker3.RunWorkerAsync()
     End Sub
 
@@ -596,7 +764,7 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
-        Label5.Text = "Generating new files..."
+        StatusLabel.Text = "Generating new files..."
         BackgroundWorker4.RunWorkerAsync()
     End Sub
 
@@ -612,12 +780,13 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker4_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker4.RunWorkerCompleted
-        Label5.Text = "Checking files..."
+        StatusLabel.Text = "Checking files..."
         BackgroundWorker5.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorker5_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker5.DoWork
         Thread.Sleep(200)
+        'Start of file check script
         Try
             If My.Computer.FileSystem.FileExists("Temp.7z") Then
                 My.Computer.FileSystem.DeleteFile("Temp.7z")
@@ -626,7 +795,19 @@ Public Class MainForm
         End Try
         Try
             If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory(".minecraft")
+            Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -655,7 +836,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles(".minecraft")
+            For Each i As String In Directory.GetFiles("Tekkit\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -671,10 +852,28 @@ Public Class MainForm
             Next
         Catch ex As Exception
         End Try
+        Try
+            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+                If Path.GetFileName(i).Contains("log") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("optifog") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("lck") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+            Next
+        Catch ex As Exception
+        End Try
+        'End of file check script
     End Sub
 
     Private Sub BackgroundWorker5_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker5.RunWorkerCompleted
-        Label5.Text = "Launching..."
+        StatusLabel.Text = "Launching..."
         BackgroundWorker6.RunWorkerAsync()
     End Sub
 
@@ -690,10 +889,17 @@ Public Class MainForm
         Writer = My.Computer.FileSystem.OpenTextFileWriter("Script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
-        Writer.WriteLine("title MineUK " & NewModPackVersion & " Launcher")
-        Writer.WriteLine("SET BINDIR=%~dp0")
-        Writer.WriteLine("CD /D " & """%BINDIR%""")
-        Writer.WriteLine("set APPDATA=%CD%")
+        If RadioButton1.Checked = True Then
+            Writer.WriteLine("title MineUK " & NewTekkitVersion & " Launcher")
+            Writer.WriteLine("SET BINDIR=%~dp0")
+            Writer.WriteLine("CD /D " & """%BINDIR%""")
+            Writer.WriteLine("set APPDATA=%CD%\Tekkit")
+        Else
+            Writer.WriteLine("title MineUK " & NewFTBVersion & " Launcher")
+            Writer.WriteLine("SET BINDIR=%~dp0")
+            Writer.WriteLine("CD /D " & """%BINDIR%""")
+            Writer.WriteLine("set APPDATA=%CD%\FTB")
+        End If
         Writer.WriteLine("CLS")
         Writer.WriteLine(MCDir)
         Writer.WriteLine("CLS")
