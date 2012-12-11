@@ -58,8 +58,10 @@ Partial Class MainForm
         Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.BetaTesting.SuspendLayout()
@@ -278,6 +280,7 @@ Partial Class MainForm
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.AutoScroll = True
+        Me.SplitContainer1.Panel1.Controls.Add(Me.Label3)
         Me.SplitContainer1.Panel1.Padding = New System.Windows.Forms.Padding(12, 10, 5, 10)
         '
         'SplitContainer1.Panel2
@@ -332,6 +335,16 @@ Partial Class MainForm
         'BackgroundStatusWait
         '
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(15, 10)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(158, 16)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Loading News Feed..."
+        '
         'MainForm
         '
         Me.AcceptButton = Me.Button2
@@ -362,6 +375,8 @@ Partial Class MainForm
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MineUK Launcher V3"
         CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.Panel1.ResumeLayout(False)
+        Me.SplitContainer1.Panel1.PerformLayout()
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         Me.SplitContainer1.Panel2.PerformLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -406,5 +421,6 @@ Partial Class MainForm
     Friend WithEvents BackgroundStatusWait As System.ComponentModel.BackgroundWorker
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents Label3 As System.Windows.Forms.Label
 
 End Class

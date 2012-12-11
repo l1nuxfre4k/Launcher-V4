@@ -292,7 +292,7 @@ Public Class MainForm
                     If (4 - (i - 1)) = 4 Then
                         Text1.Text = "Skins Service: "
                     End If
-                    If (NewPlayerList(4 - (i - 1))).ToString.Contains("1") Then
+                    If (NewPlayerList(4 - (i - 1))) = "1" Then
                         Text1.Text = Text1.Text + "Online"
                     Else
                         Text1.Text = Text1.Text + "Reported Problems!"
