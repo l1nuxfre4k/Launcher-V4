@@ -12,19 +12,19 @@ Public Class MainForm
     Dim LError As String
     Dim LUserFinal As String
     Dim LSessionIDFinal As String
+    Dim ServerIsReady As Boolean = False
 
     Dim CurrentLauncherVersion As String = ProductVersion
     Dim NewLauncherVersion As String = ""
-    Dim CurrentMOD1Version As String = ""
-    Dim NewMOD1Version As String = ""
-    Dim CurrentMOD2Version As String = ""
-    Dim NewMOD2Version As String = ""
+    Dim CurrentFTBVersion As String = ""
+    Dim NewFTBVersion As String = ""
+    Dim CurrentVanillaVersion As String = ""
+    Dim NewVanillaVersion As String = ""
 
     Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
-    Dim CurrentMOD1IsAdmin As Boolean
-    Dim CurrentMOD2IsAdmin As Boolean
-    Dim ServerIsReady As Boolean = False
+    Dim CurrentFTBIsAdmin As Boolean
+    Dim CurrentVanillaIsAdmin As Boolean
 
     Dim NumberOfNewsItems As Integer
     Dim NewNewsItems As Array
@@ -35,8 +35,8 @@ Public Class MainForm
     Dim NewPlayerList As Array
     Dim OldPlayersSt As String = ""
     Dim NewPlayersSt As String = ""
-    Dim StName As String = "ftb.php"
 
+    Dim StName As String = "ftb.php"
     Dim NewStatusFirst As String = ""
     Dim OldStatusFirst As String = ""
 
@@ -420,32 +420,32 @@ Public Class MainForm
             ServerStream.Close()
             sr.Close()
             NewLauncherVersion = ServerData.Split(":")(1)
-            NewMOD1Version = ServerData.Split(":")(2)
-            NewMOD2Version = ServerData.Split(":")(3)
+            NewFTBVersion = ServerData.Split(":")(2)
+            NewVanillaVersion = ServerData.Split(":")(3)
             ServerAdminList = ServerData.Split(":")(4)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
         End Try
-        CurrentMOD1IsAdmin = False
+        CurrentFTBIsAdmin = False
         Try
             For Each i As String In Directory.GetFiles("FTB\.minecraft\version")
-                CurrentMOD1Version = Path.GetFileName(i)
+                CurrentFTBVersion = Path.GetFileName(i)
             Next
-            If CurrentMOD1Version.Substring(CurrentMOD1Version.Length - 1) = "+" Then
-                CurrentMOD1IsAdmin = True
-                CurrentMOD1Version = CurrentMOD1Version.Remove(CurrentMOD1Version.Length - 1)
+            If CurrentFTBVersion.Substring(CurrentFTBVersion.Length - 1) = "+" Then
+                CurrentFTBIsAdmin = True
+                CurrentFTBVersion = CurrentFTBVersion.Remove(CurrentFTBVersion.Length - 1)
             End If
         Catch ex As Exception
         End Try
-        CurrentMOD2IsAdmin = False
+        CurrentVanillaIsAdmin = False
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft\version")
-                CurrentMOD2Version = Path.GetFileName(i)
+                CurrentVanillaVersion = Path.GetFileName(i)
             Next
-            If CurrentMOD2Version.Substring(CurrentMOD2Version.Length - 1) = "+" Then
-                CurrentMOD2IsAdmin = True
-                CurrentMOD2Version = CurrentMOD2Version.Remove(CurrentMOD2Version.Length - 1)
+            If CurrentVanillaVersion.Substring(CurrentVanillaVersion.Length - 1) = "+" Then
+                CurrentVanillaIsAdmin = True
+                CurrentVanillaVersion = CurrentVanillaVersion.Remove(CurrentVanillaVersion.Length - 1)
             End If
         Catch ex As Exception
         End Try
@@ -792,10 +792,10 @@ Public Class MainForm
         If NewLauncherVersion = "" Then
             GoTo 1
         End If
-        If NewMOD1Version = "" Then
+        If NewFTBVersion = "" Then
             GoTo 1
         End If
-        If NewMOD2Version = "" Then
+        If NewVanillaVersion = "" Then
             GoTo 1
         End If
         If ServerAdminList = "" Then
@@ -821,40 +821,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewMOD1Version = CurrentMOD1Version Then
-                    If CurrentMOD1IsAdmin = False Then
+                If NewFTBVersion = CurrentFTBVersion Then
+                    If CurrentFTBIsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & "+.7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewMOD1Version = CurrentMOD1Version Then
-                    If CurrentMOD1IsAdmin = True Then
+                If NewFTBVersion = CurrentFTBVersion Then
+                    If CurrentFTBIsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & ".7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -863,40 +863,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewVanillaVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewMOD2Version = CurrentMOD2Version Then
-                    If CurrentMOD2IsAdmin = False Then
+                If NewVanillaVersion = CurrentVanillaVersion Then
+                    If CurrentVanillaIsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & "+.7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewVanillaVersion & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewVanillaVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewVanillaVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewMOD2Version = CurrentMOD2Version Then
-                    If CurrentMOD2IsAdmin = True Then
+                If NewVanillaVersion = CurrentVanillaVersion Then
+                    If CurrentVanillaIsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & ".7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewVanillaVersion & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewVanillaVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -1072,12 +1072,12 @@ Public Class MainForm
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
         If RadioButton1.Checked = True Then
-            Writer.WriteLine("title MineUK " & NewMOD1Version & " Launcher")
+            Writer.WriteLine("title MineUK " & NewFTBVersion & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
             Writer.WriteLine("set APPDATA=%CD%\FTB")
         Else
-            Writer.WriteLine("title MineUK " & NewMOD2Version & " Launcher")
+            Writer.WriteLine("title MineUK " & NewVanillaVersion & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
             Writer.WriteLine("set APPDATA=%CD%\Vanilla")
