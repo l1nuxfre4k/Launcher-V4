@@ -31,7 +31,7 @@ Partial Class MainForm
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Logo = New System.Windows.Forms.Panel()
         Me.BackgroundWorkerUpdate1 = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.StatusLabel = New System.Windows.Forms.Label()
@@ -43,14 +43,27 @@ Partial Class MainForm
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorkerMojang = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerUpdate2 = New System.ComponentModel.BackgroundWorker()
-        Me.WebBrowser1 = New System.Windows.Forms.WebBrowser()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.VersionLabel = New System.Windows.Forms.Label()
         Me.BetaLogo = New System.Windows.Forms.PictureBox()
         Me.BetaText = New System.Windows.Forms.Label()
         Me.BetaWarning = New System.Windows.Forms.Label()
+        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.BetaTesting = New System.Windows.Forms.Panel()
+        Me.BackgroundWorker7 = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundWorkerNews = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
+        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SplitContainer1.Panel2.SuspendLayout()
+        Me.SplitContainer1.SuspendLayout()
+        Me.BetaTesting.SuspendLayout()
         Me.SuspendLayout()
         '
         'BackgroundWorker1
@@ -116,21 +129,21 @@ Partial Class MainForm
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.BackColor = System.Drawing.Color.Transparent
         Me.CheckBox1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.CheckBox1.Location = New System.Drawing.Point(204, 456)
+        Me.CheckBox1.Location = New System.Drawing.Point(205, 456)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(91, 17)
         Me.CheckBox1.TabIndex = 5
         Me.CheckBox1.Text = "Force Update"
         Me.CheckBox1.UseVisualStyleBackColor = False
         '
-        'Panel1
+        'Logo
         '
-        Me.Panel1.BackColor = System.Drawing.Color.Transparent
-        Me.Panel1.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Panel1.Location = New System.Drawing.Point(552, 398)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(255, 65)
-        Me.Panel1.TabIndex = 9
+        Me.Logo.BackColor = System.Drawing.Color.Transparent
+        Me.Logo.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Logo.Location = New System.Drawing.Point(552, 398)
+        Me.Logo.Name = "Logo"
+        Me.Logo.Size = New System.Drawing.Size(255, 65)
+        Me.Logo.TabIndex = 9
         '
         'BackgroundWorkerUpdate1
         '
@@ -180,27 +193,18 @@ Partial Class MainForm
         'BackgroundWorkerUpdate2
         '
         '
-        'WebBrowser1
-        '
-        Me.WebBrowser1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.WebBrowser1.Location = New System.Drawing.Point(0, 0)
-        Me.WebBrowser1.MinimumSize = New System.Drawing.Size(20, 20)
-        Me.WebBrowser1.Name = "WebBrowser1"
-        Me.WebBrowser1.Size = New System.Drawing.Size(854, 378)
-        Me.WebBrowser1.TabIndex = 16
-        Me.WebBrowser1.Url = New System.Uri("", System.UriKind.Relative)
-        '
         'RadioButton1
         '
         Me.RadioButton1.AutoSize = True
         Me.RadioButton1.BackColor = System.Drawing.Color.Transparent
+        Me.RadioButton1.Checked = True
         Me.RadioButton1.ForeColor = System.Drawing.Color.Gainsboro
         Me.RadioButton1.Location = New System.Drawing.Point(14, 455)
         Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(94, 17)
+        Me.RadioButton1.Size = New System.Drawing.Size(84, 17)
         Me.RadioButton1.TabIndex = 17
         Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Launch Tekkit"
+        Me.RadioButton1.Text = "Launch FTB"
         Me.RadioButton1.UseVisualStyleBackColor = False
         '
         'RadioButton2
@@ -208,12 +212,11 @@ Partial Class MainForm
         Me.RadioButton2.AutoSize = True
         Me.RadioButton2.BackColor = System.Drawing.Color.Transparent
         Me.RadioButton2.ForeColor = System.Drawing.Color.Gainsboro
-        Me.RadioButton2.Location = New System.Drawing.Point(114, 455)
+        Me.RadioButton2.Location = New System.Drawing.Point(104, 455)
         Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(84, 17)
+        Me.RadioButton2.Size = New System.Drawing.Size(95, 17)
         Me.RadioButton2.TabIndex = 18
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Launch FTB"
+        Me.RadioButton2.Text = "Launch Vanilla"
         Me.RadioButton2.UseVisualStyleBackColor = False
         '
         'VersionLabel
@@ -231,8 +234,9 @@ Partial Class MainForm
         'BetaLogo
         '
         Me.BetaLogo.BackColor = System.Drawing.Color.Transparent
+        Me.BetaLogo.Cursor = System.Windows.Forms.Cursors.Hand
         Me.BetaLogo.Image = Global.MineUK_Launcher.My.Resources.Resources.Beta
-        Me.BetaLogo.Location = New System.Drawing.Point(319, 379)
+        Me.BetaLogo.Location = New System.Drawing.Point(0, 0)
         Me.BetaLogo.Name = "BetaLogo"
         Me.BetaLogo.Size = New System.Drawing.Size(100, 100)
         Me.BetaLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -242,11 +246,12 @@ Partial Class MainForm
         'BetaText
         '
         Me.BetaText.BackColor = System.Drawing.Color.Transparent
+        Me.BetaText.Cursor = System.Windows.Forms.Cursors.Hand
         Me.BetaText.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BetaText.ForeColor = System.Drawing.Color.Gainsboro
-        Me.BetaText.Location = New System.Drawing.Point(416, 398)
+        Me.BetaText.Location = New System.Drawing.Point(98, 20)
         Me.BetaText.Name = "BetaText"
-        Me.BetaText.Size = New System.Drawing.Size(103, 80)
+        Me.BetaText.Size = New System.Drawing.Size(102, 80)
         Me.BetaText.TabIndex = 21
         Me.BetaText.Text = "This product is part of the MineUK beta testing program"
         Me.BetaText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -254,14 +259,83 @@ Partial Class MainForm
         'BetaWarning
         '
         Me.BetaWarning.BackColor = System.Drawing.Color.Transparent
+        Me.BetaWarning.Cursor = System.Windows.Forms.Cursors.Hand
         Me.BetaWarning.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BetaWarning.ForeColor = System.Drawing.Color.Maroon
-        Me.BetaWarning.Location = New System.Drawing.Point(416, 383)
+        Me.BetaWarning.Location = New System.Drawing.Point(97, 4)
         Me.BetaWarning.Name = "BetaWarning"
         Me.BetaWarning.Size = New System.Drawing.Size(103, 20)
         Me.BetaWarning.TabIndex = 22
         Me.BetaWarning.Text = "WARNING!"
         Me.BetaWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'SplitContainer1
+        '
+        Me.SplitContainer1.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+        Me.SplitContainer1.Name = "SplitContainer1"
+        '
+        'SplitContainer1.Panel1
+        '
+        Me.SplitContainer1.Panel1.AutoScroll = True
+        Me.SplitContainer1.Panel1.Padding = New System.Windows.Forms.Padding(12, 10, 5, 10)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.AutoScroll = True
+        Me.SplitContainer1.Panel2.Controls.Add(Me.Panel2)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.Panel1)
+        Me.SplitContainer1.Panel2.Padding = New System.Windows.Forms.Padding(5, 10, 12, 10)
+        Me.SplitContainer1.Size = New System.Drawing.Size(854, 378)
+        Me.SplitContainer1.SplitterDistance = 427
+        Me.SplitContainer1.TabIndex = 23
+        '
+        'Panel2
+        '
+        Me.Panel2.AutoSize = True
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(5, 10)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(406, 0)
+        Me.Panel2.TabIndex = 1
+        '
+        'Panel1
+        '
+        Me.Panel1.AutoSize = True
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel1.Location = New System.Drawing.Point(5, 10)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(406, 0)
+        Me.Panel1.TabIndex = 0
+        '
+        'BetaTesting
+        '
+        Me.BetaTesting.BackColor = System.Drawing.Color.Transparent
+        Me.BetaTesting.Controls.Add(Me.BetaLogo)
+        Me.BetaTesting.Controls.Add(Me.BetaText)
+        Me.BetaTesting.Controls.Add(Me.BetaWarning)
+        Me.BetaTesting.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.BetaTesting.Location = New System.Drawing.Point(319, 379)
+        Me.BetaTesting.Name = "BetaTesting"
+        Me.BetaTesting.Size = New System.Drawing.Size(200, 100)
+        Me.BetaTesting.TabIndex = 0
+        '
+        'BackgroundWorkerNews
+        '
+        '
+        'BackgroundWorkerNewsWait
+        '
+        '
+        'BackgroundStatus
+        '
+        '
+        'BackgroundStatusWait
+        '
+        '
+        'Timer2
+        '
+        Me.Timer2.Enabled = True
         '
         'MainForm
         '
@@ -271,13 +345,11 @@ Partial Class MainForm
         Me.BackgroundImage = Global.MineUK_Launcher.My.Resources.Resources.Main
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(854, 480)
-        Me.Controls.Add(Me.BetaLogo)
-        Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.BetaWarning)
-        Me.Controls.Add(Me.BetaText)
+        Me.Controls.Add(Me.BetaTesting)
+        Me.Controls.Add(Me.SplitContainer1)
+        Me.Controls.Add(Me.Logo)
         Me.Controls.Add(Me.RadioButton2)
         Me.Controls.Add(Me.RadioButton1)
-        Me.Controls.Add(Me.WebBrowser1)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.ProgressBar1)
@@ -295,6 +367,11 @@ Partial Class MainForm
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MineUK Launcher V3"
         CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
+        Me.SplitContainer1.Panel2.PerformLayout()
+        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SplitContainer1.ResumeLayout(False)
+        Me.BetaTesting.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -307,7 +384,7 @@ Partial Class MainForm
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
-    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents Logo As System.Windows.Forms.Panel
     Friend WithEvents BackgroundWorkerUpdate1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents StatusLabel As System.Windows.Forms.Label
@@ -319,12 +396,21 @@ Partial Class MainForm
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents BackgroundWorkerMojang As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorkerUpdate2 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents WebBrowser1 As System.Windows.Forms.WebBrowser
     Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents VersionLabel As System.Windows.Forms.Label
     Friend WithEvents BetaLogo As System.Windows.Forms.PictureBox
     Friend WithEvents BetaText As System.Windows.Forms.Label
     Friend WithEvents BetaWarning As System.Windows.Forms.Label
+    Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
+    Friend WithEvents BackgroundWorker7 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundWorkerNews As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BetaTesting As System.Windows.Forms.Panel
+    Friend WithEvents BackgroundWorkerNewsWait As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundStatus As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundStatusWait As System.ComponentModel.BackgroundWorker
+    Friend WithEvents Panel2 As System.Windows.Forms.Panel
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents Timer2 As System.Windows.Forms.Timer
 
 End Class

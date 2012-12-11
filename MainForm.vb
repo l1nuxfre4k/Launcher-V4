@@ -2,7 +2,7 @@
 Imports System.Threading
 Imports System.IO
 Imports System.Net
-Imports Skybound
+Imports System.Drawing
 
 Public Class MainForm
 
@@ -15,21 +15,35 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion
     Dim NewLauncherVersion As String = ""
-    Dim CurrentTekkitVersion As String = ""
-    Dim NewTekkitVersion As String = ""
-    Dim CurrentFTBVersion As String = ""
-    Dim NewFTBVersion As String = ""
+    Dim CurrentMOD1Version As String = ""
+    Dim NewMOD1Version As String = ""
+    Dim CurrentMOD2Version As String = ""
+    Dim NewMOD2Version As String = ""
 
     Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
-    Dim CurrentTekkitIsAdmin As Boolean
-    Dim CurrentFTBIsAdmin As Boolean
+    Dim CurrentMOD1IsAdmin As Boolean
+    Dim CurrentMOD2IsAdmin As Boolean
     Dim ServerIsReady As Boolean = False
+
+    Dim NumberOfNewsItems As Integer
+    Dim NewNewsItems As Array
+    Dim OldNewsSt As String = ""
+    Dim NewNewsSt As String = ""
+
+    Dim NumberOfPlayers As Integer
+    Dim NewPlayerList As Array
+    Dim OldPlayersSt As String = ""
+    Dim NewPlayersSt As String = ""
+    Dim StName As String = "ftb.php"
+
+    Dim NewStatusFirst As String = ""
+    Dim OldStatusFirst As String = ""
 
     Dim WithEvents WC1 As New WebClient
     Dim WithEvents WC2 As New WebClient
 
-    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, RadioButton1.Click, RadioButton2.Click, Panel1.Click, Button1.Click, Button2.Click
+    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, RadioButton1.Click, RadioButton2.Click, Logo.Click, BetaTesting.Click, BetaLogo.Click, BetaText.Click, BetaWarning.Click, Button1.Click, Button2.Click
         My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
     End Sub
 
@@ -59,11 +73,7 @@ Public Class MainForm
         VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " Beta"
         TextBox1.Text = My.Settings.User
         TextBox2.Text = My.Settings.Password
-        StatusLabel.Hide()
-        ProgressBar1.Hide()
-        BetaLogo.Show()
-        BetaText.Show()
-        BetaWarning.Show()
+        BetaTesting.Show()
         If My.Settings.RAM = 512 Then
         ElseIf My.Settings.RAM = 1024 Then
         ElseIf My.Settings.RAM = 2048 Then
@@ -76,13 +86,13 @@ Public Class MainForm
             End
         End If
         My.Settings.Save()
-        If My.Settings.ModPack = "Tekkit" Then
-            RadioButton1.Checked = True
-            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/tekkit.php"))
-        End If
         If My.Settings.ModPack = "FTB" Then
+            RadioButton1.Checked = True
+            StName = "ftb.php"
+        End If
+        If My.Settings.ModPack = "Vanilla" Then
             RadioButton2.Checked = True
-            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/ftb.php"))
+            StName = "vanilla.php"
         End If
         Try
             If CommandLineArgs(0) = "auto" Then
@@ -93,13 +103,9 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                StatusLabel.Show()
                 StatusLabel.Text = "Connecting to MineUK..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
             End If
             If CommandLineArgs(2) = "auto" Then
                 Button1.Enabled = False
@@ -109,13 +115,9 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                StatusLabel.Show()
                 StatusLabel.Text = "Connecting to MineUK..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
             End If
             If CommandLineArgs(0) = "update" Then
                 CheckBox1.Checked = True
@@ -126,13 +128,9 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                StatusLabel.Show()
                 StatusLabel.Text = "Connecting to MineUK..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
             End If
             If CommandLineArgs(2) = "update" Then
                 CheckBox1.Checked = True
@@ -143,17 +141,259 @@ Public Class MainForm
                 CheckBox1.Enabled = False
                 My.Settings.User = TextBox1.Text
                 My.Settings.Password = TextBox2.Text
-                StatusLabel.Show()
                 StatusLabel.Text = "Connecting to MineUK..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
             End If
         Catch ex As Exception
         End Try
         BackgroundWorkerUpdate1.RunWorkerAsync()
+        BackgroundWorkerNews.RunWorkerAsync()
+        BackgroundStatus.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundWorkerNews_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerNews.DoWork
+        Dim ServerStream As Stream
+        Dim myWebClient As New WebClient()
+        Try
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v3/news.php")
+            Dim sr As New StreamReader(ServerStream)
+            Dim ServerData = sr.ReadLine.ToString
+            ServerStream.Close()
+            sr.Close()
+            NumberOfNewsItems = (ServerData.Split(":").Length() - 2)
+            NewNewsItems = ServerData.Split(":")
+            ServerStream.Dispose()
+            sr.Dispose()
+        Catch ex As Exception
+        End Try
+        NewNewsSt = ""
+        Try
+            For i As Integer = 1 To NumberOfNewsItems
+                NewNewsSt = NewNewsSt + NewNewsItems(i)
+            Next
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Private Sub BackgroundWorkerNews_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerNews.RunWorkerCompleted
+        If OldNewsSt = NewNewsSt Then
+        Else
+            Try
+                SplitContainer1.Panel1.Controls.Clear()
+                For i As Integer = 1 To NumberOfNewsItems
+                    Dim News1 As New Panel
+                    News1.AutoSize = False
+                    News1.Dock = DockStyle.Top
+                    News1.Size = New Size(100, 32)
+                    News1.Padding = New Padding(2)
+                    If (NumberOfNewsItems - (i - 1)) Mod 2 = 1 Then
+                        News1.BackColor = Color.FromKnownColor(KnownColor.ControlDark)
+                    Else : News1.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
+                    End If
+                    SplitContainer1.Panel1.Controls.Add(News1)
+                    Dim Text1 As New Label()
+                    Text1.Text = NewNewsItems(NumberOfNewsItems - (i - 1))
+                    Text1.Dock = DockStyle.Fill
+                    Text1.AutoSize = False
+                    Text1.TextAlign = ContentAlignment.MiddleLeft
+                    Text1.Font = New Font("Helvetica", 10, FontStyle.Regular)
+                    News1.Controls.Add(Text1)
+                Next
+                Dim NewsX As New Panel
+                NewsX.AutoSize = False
+                NewsX.Dock = DockStyle.Top
+                NewsX.Size = New Size(100, 35)
+                NewsX.Padding = New Padding(2)
+                NewsX.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
+                SplitContainer1.Panel1.Controls.Add(NewsX)
+                Dim Text2 As New Label()
+                Text2.Text = "Latest News From MineUK"
+                Text2.Dock = DockStyle.Fill
+                Text2.AutoSize = False
+                Text2.TextAlign = ContentAlignment.MiddleCenter
+                Text2.Font = New Font("Helvetica", 12, FontStyle.Bold)
+                NewsX.Controls.Add(Text2)
+            Catch ex As Exception
+            End Try
+        End If
+        OldNewsSt = NewNewsSt
+        BackgroundWorkerNewsWait.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundWorkerNewsWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerNewsWait.DoWork
+        Thread.Sleep(30000)
+    End Sub
+
+    Private Sub BackgroundWorkerNewsWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerNewsWait.RunWorkerCompleted
+        BackgroundWorkerNews.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundStatus_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundStatus.DoWork
+        Dim ServerStream As Stream
+        Dim myWebClient As New WebClient()
+        Try
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v3/" & StName)
+            Dim sr As New StreamReader(ServerStream)
+            Dim ServerData = sr.ReadToEnd.ToString
+            ServerStream.Close()
+            sr.Close()
+            NumberOfPlayers = (ServerData.Split(":").Length() - 2)
+            NewPlayerList = ServerData.Split(":")
+            ServerStream.Dispose()
+            sr.Dispose()
+        Catch ex As Exception
+        End Try
+        NewPlayersSt = ""
+        Try
+            For i As Integer = 5 To NumberOfPlayers
+                NewPlayersSt = NewPlayersSt + NewPlayerList(i)
+            Next
+        Catch ex As Exception
+        End Try
+        NewStatusFirst = ""
+        Try
+            For i As Integer = 1 To 4
+                NewStatusFirst = NewStatusFirst + NewPlayerList(i)
+            Next
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub BackgroundStatus_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundStatus.RunWorkerCompleted
+        If OldStatusFirst = NewStatusFirst Then
+        Else
+            Panel1.Controls.Clear()
+            Try
+                For i As Integer = 1 To 4
+                    Dim News1 As New Panel
+                    News1.AutoSize = False
+                    News1.Dock = DockStyle.Top
+                    News1.Size = New Size(100, 32)
+                    News1.Padding = New Padding(2)
+                    If (4 - (i - 1)) Mod 2 = 1 Then
+                        News1.BackColor = Color.FromKnownColor(KnownColor.ControlDark)
+                    Else : News1.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
+                    End If
+                    Panel1.Controls.Add(News1)
+                    Dim Text1 As New Label()
+                    If (4 - (i - 1)) = 1 Then
+                        Text1.Text = "FTB Server: "
+                    End If
+                    If (4 - (i - 1)) = 2 Then
+                        Text1.Text = "Vanilla Server: "
+                    End If
+                    If (4 - (i - 1)) = 3 Then
+                        Text1.Text = "Capes Service: "
+                    End If
+                    If (4 - (i - 1)) = 4 Then
+                        Text1.Text = "Skins Service: "
+                    End If
+                    If (NewPlayerList(4 - (i - 1))).ToString.Contains("1") Then
+                        Text1.Text = Text1.Text + "Online"
+                    Else
+                        Text1.Text = Text1.Text + "Reported Problems!"
+                    End If
+                    Text1.Dock = DockStyle.Fill
+                    Text1.AutoSize = False
+                    Text1.TextAlign = ContentAlignment.MiddleLeft
+                    Text1.Font = New Font("Helvetica", 10, FontStyle.Regular)
+                    News1.Controls.Add(Text1)
+                Next
+            Catch ex As Exception
+            End Try
+            Try
+                Dim NewsX As New Panel
+                NewsX.AutoSize = False
+                NewsX.Dock = DockStyle.Top
+                NewsX.Size = New Size(100, 35)
+                NewsX.Padding = New Padding(2)
+                NewsX.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
+                Panel1.Controls.Add(NewsX)
+                Dim Text2 As New Label()
+                Text2.Text = "MineUK Server Status"
+                Text2.Dock = DockStyle.Fill
+                Text2.AutoSize = False
+                Text2.TextAlign = ContentAlignment.MiddleCenter
+                Text2.Font = New Font("Helvetica", 12, FontStyle.Bold)
+                NewsX.Controls.Add(Text2)
+            Catch ex As Exception
+            End Try
+        End If
+        If OldPlayersSt = NewPlayersSt Then
+        Else
+            Panel2.Controls.Clear()
+            Try
+                Dim NewsX As New Panel
+                NewsX.AutoSize = False
+                NewsX.Dock = DockStyle.Top
+                NewsX.Size = New Size(100, 12)
+                Panel2.Controls.Add(NewsX)
+            Catch ex As Exception
+            End Try
+            Try
+                For i As Integer = 5 To NumberOfPlayers
+                    Dim News1 As New Panel
+                    News1.AutoSize = False
+                    News1.Dock = DockStyle.Top
+                    News1.Size = New Size(100, 32)
+                    News1.Padding = New Padding(2)
+                    If (NumberOfPlayers - (i - 5)) Mod 2 = 1 Then
+                        News1.BackColor = Color.FromKnownColor(KnownColor.ControlDark)
+                    Else : News1.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
+                    End If
+                    Panel2.Controls.Add(News1)
+                    Dim Text1 As New Label()
+                    Text1.Text = NewPlayerList(NumberOfPlayers - (i - 5))
+                    Text1.Dock = DockStyle.Fill
+                    Text1.AutoSize = False
+                    Text1.TextAlign = ContentAlignment.MiddleLeft
+                    Text1.Font = New Font("Helvetica", 10, FontStyle.Regular)
+                    News1.Controls.Add(Text1)
+                Next
+            Catch ex As Exception
+            End Try
+            Try
+                Dim NewsX As New Panel
+                NewsX.AutoSize = False
+                NewsX.Dock = DockStyle.Top
+                NewsX.Size = New Size(100, 35)
+                NewsX.Padding = New Padding(2)
+                NewsX.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
+                Panel2.Controls.Add(NewsX)
+                Dim Text2 As New Label()
+                If RadioButton1.Checked = True Then
+                    Text2.Text = "Players On The FTB Server"
+                Else : Text2.Text = "Players On The Vanilla Server"
+                End If
+                Text2.Dock = DockStyle.Fill
+                Text2.AutoSize = False
+                Text2.TextAlign = ContentAlignment.MiddleCenter
+                Text2.Font = New Font("Helvetica", 12, FontStyle.Bold)
+                NewsX.Controls.Add(Text2)
+            Catch ex As Exception
+            End Try
+            Try
+                Dim NewsX As New Panel
+                NewsX.AutoSize = False
+                NewsX.Dock = DockStyle.Top
+                NewsX.Size = New Size(100, 12)
+                Panel2.Controls.Add(NewsX)
+            Catch ex As Exception
+            End Try
+        End If
+        OldPlayersSt = NewPlayersSt
+        OldStatusFirst = NewStatusFirst
+        BackgroundStatusWait.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundStatusWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundStatusWait.DoWork
+        Thread.Sleep(100)
+    End Sub
+
+    Private Sub BackgroundStatusWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundStatusWait.RunWorkerCompleted
+        BackgroundStatus.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorkerUpdate1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate1.DoWork
@@ -163,11 +403,11 @@ Public Class MainForm
         If My.Computer.FileSystem.FileExists("script.bat") Then
             My.Computer.FileSystem.DeleteFile("script.bat")
         End If
-        If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
-        Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
-        End If
         If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
         Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+        End If
+        If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
+        Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
         End If
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
@@ -178,32 +418,32 @@ Public Class MainForm
             ServerStream.Close()
             sr.Close()
             NewLauncherVersion = ServerData.Split(":")(1)
-            NewTekkitVersion = ServerData.Split(":")(2)
-            NewFTBVersion = ServerData.Split(":")(3)
+            NewMOD1Version = ServerData.Split(":")(2)
+            NewMOD2Version = ServerData.Split(":")(3)
             ServerAdminList = ServerData.Split(":")(4)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
         End Try
-        CurrentTekkitIsAdmin = False
+        CurrentMOD1IsAdmin = False
         Try
-            For Each i As String In Directory.GetFiles("Tekkit\.minecraft\version")
-                CurrentTekkitVersion = Path.GetFileName(i)
+            For Each i As String In Directory.GetFiles("FTB\.minecraft\version")
+                CurrentMOD1Version = Path.GetFileName(i)
             Next
-            If CurrentTekkitVersion.Substring(CurrentTekkitVersion.Length - 1) = "+" Then
-                CurrentTekkitIsAdmin = True
-                CurrentTekkitVersion = CurrentTekkitVersion.Remove(CurrentTekkitVersion.Length - 1)
+            If CurrentMOD1Version.Substring(CurrentMOD1Version.Length - 1) = "+" Then
+                CurrentMOD1IsAdmin = True
+                CurrentMOD1Version = CurrentMOD1Version.Remove(CurrentMOD1Version.Length - 1)
             End If
         Catch ex As Exception
         End Try
-        CurrentFTBIsAdmin = False
+        CurrentMOD2IsAdmin = False
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft\version")
-                CurrentFTBVersion = Path.GetFileName(i)
+            For Each i As String In Directory.GetFiles("Vanilla\.minecraft\version")
+                CurrentMOD2Version = Path.GetFileName(i)
             Next
-            If CurrentFTBVersion.Substring(CurrentFTBVersion.Length - 1) = "+" Then
-                CurrentFTBIsAdmin = True
-                CurrentFTBVersion = CurrentFTBVersion.Remove(CurrentFTBVersion.Length - 1)
+            If CurrentMOD2Version.Substring(CurrentMOD2Version.Length - 1) = "+" Then
+                CurrentMOD2IsAdmin = True
+                CurrentMOD2Version = CurrentMOD2Version.Remove(CurrentMOD2Version.Length - 1)
             End If
         Catch ex As Exception
         End Try
@@ -214,7 +454,6 @@ Public Class MainForm
             MsgBox("MineUK is unreachable!")
             Me.Close()
         End If
-        StatusLabel.Text = "Checking files..."
         BackgroundWorkerUpdate2.RunWorkerAsync()
     End Sub
 
@@ -227,14 +466,14 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
             End If
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -257,23 +496,6 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("Tekkit\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-            Next
-        Catch ex As Exception
-        End Try
-        Try
             For Each i As String In Directory.GetFiles("FTB\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
@@ -290,49 +512,51 @@ Public Class MainForm
             Next
         Catch ex As Exception
         End Try
+        Try
+            For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
+                If Path.GetFileName(i).Contains("log") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("optifog") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+                If Path.GetFileName(i).Contains("lck") Then
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                End If
+            Next
+        Catch ex As Exception
+        End Try
         'End of file check script
+        ServerIsReady = True
     End Sub
 
     Private Sub BackgroundWorkerUpdate2_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerUpdate2.RunWorkerCompleted
         Try
             If CommandLineArgs(0) = "auto" Then
-                StatusLabel.Show()
                 StatusLabel.Text = "Checking files..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "auto" Then
-                StatusLabel.Show()
                 StatusLabel.Text = "Checking files..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(0) = "update" Then
-                StatusLabel.Show()
                 StatusLabel.Text = "Checking files..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "update" Then
-                StatusLabel.Show()
                 StatusLabel.Text = "Checking files..."
-                ProgressBar1.Show()
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaLogo.Hide()
-                BetaText.Hide()
-                BetaWarning.Hide()
+                BetaTesting.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
         Catch ex As Exception
@@ -341,12 +565,12 @@ Public Class MainForm
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
         If RadioButton1.Checked = True Then
-            My.Settings.ModPack = "Tekkit"
-            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/tekkit.php"))
+            My.Settings.ModPack = "FTB"
+            StName = "ftb.php"
         End If
         If RadioButton2.Checked = True Then
-            My.Settings.ModPack = "FTB"
-            WebBrowser1.Navigate(New Uri("http://launcher.mineuk.com/v3/ftb.php"))
+            My.Settings.ModPack = "Vannila"
+            StName = "vanilla.php"
         End If
     End Sub
 
@@ -365,13 +589,13 @@ Public Class MainForm
         CheckBox1.Enabled = False
         My.Settings.User = TextBox1.Text
         My.Settings.Password = TextBox2.Text
-        StatusLabel.Show()
         StatusLabel.Text = "Checking files..."
-        ProgressBar1.Show()
         ProgressBar1.Style = ProgressBarStyle.Marquee
-        BetaLogo.Hide()
-        BetaText.Hide()
-        BetaWarning.Hide()
+        BetaTesting.Hide()
+        If ServerIsReady = True Then
+            ServerIsReady = False
+            BackgroundWorkerUpdate1.RunWorkerAsync()
+        End If
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -384,14 +608,14 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
             End If
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -414,7 +638,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("Tekkit\.minecraft")
+            For Each i As String In Directory.GetFiles("FTB\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -431,7 +655,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+            For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -528,11 +752,7 @@ Public Class MainForm
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             MsgBox("Your login was rejected!")
-            StatusLabel.Hide()
-            ProgressBar1.Hide()
-            BetaLogo.Show()
-            BetaText.Show()
-            BetaWarning.Show()
+            BetaTesting.Show()
             Button1.Enabled = True
             Button2.Enabled = True
             TextBox1.Enabled = True
@@ -544,11 +764,7 @@ Public Class MainForm
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             MsgBox("The login servers are unreachable!")
-            StatusLabel.Hide()
-            ProgressBar1.Hide()
-            BetaLogo.Show()
-            BetaText.Show()
-            BetaWarning.Show()
+            BetaTesting.Show()
             Button1.Enabled = True
             Button2.Enabled = True
             TextBox1.Enabled = True
@@ -557,10 +773,8 @@ Public Class MainForm
         End If
         If LError = "" Then
             StatusLabel.Text = "Waiting for server..."
-            ServerIsReady = True
             BackgroundWorker2.RunWorkerAsync()
         End If
-        ServerIsReady = True
     End Sub
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker2.DoWork
@@ -574,10 +788,10 @@ Public Class MainForm
         If NewLauncherVersion = "" Then
             GoTo 1
         End If
-        If NewTekkitVersion = "" Then
+        If NewMOD1Version = "" Then
             GoTo 1
         End If
-        If NewFTBVersion = "" Then
+        If NewMOD2Version = "" Then
             GoTo 1
         End If
         If ServerAdminList = "" Then
@@ -603,40 +817,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewTekkitVersion = CurrentTekkitVersion Then
-                    If CurrentTekkitIsAdmin = False Then
+                If NewMOD1Version = CurrentMOD1Version Then
+                    If CurrentMOD1IsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewTekkitVersion = CurrentTekkitVersion Then
-                    If CurrentTekkitIsAdmin = True Then
+                If NewMOD1Version = CurrentMOD1Version Then
+                    If CurrentMOD1IsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewTekkitVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD1Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -645,40 +859,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewFTBVersion = CurrentFTBVersion Then
-                    If CurrentFTBIsAdmin = False Then
+                If NewMOD2Version = CurrentMOD2Version Then
+                    If CurrentMOD2IsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewFTBVersion = CurrentFTBVersion Then
-                    If CurrentFTBIsAdmin = True Then
+                If NewMOD2Version = CurrentMOD2Version Then
+                    If CurrentMOD2IsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMOD2Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -690,11 +904,7 @@ Public Class MainForm
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
         MsgBox("There was an unknown error!")
-        StatusLabel.Hide()
-        ProgressBar1.Hide()
-        BetaLogo.Show()
-        BetaText.Show()
-        BetaWarning.Show()
+        BetaTesting.Show()
         Button1.Enabled = True
         Button2.Enabled = True
         TextBox1.Enabled = True
@@ -774,14 +984,14 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("Tekkit\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Tekkit\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
             End If
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -804,7 +1014,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("Tekkit\.minecraft")
+            For Each i As String In Directory.GetFiles("FTB\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -821,7 +1031,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+            For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -858,15 +1068,15 @@ Public Class MainForm
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
         If RadioButton1.Checked = True Then
-            Writer.WriteLine("title MineUK " & NewTekkitVersion & " Launcher")
-            Writer.WriteLine("SET BINDIR=%~dp0")
-            Writer.WriteLine("CD /D " & """%BINDIR%""")
-            Writer.WriteLine("set APPDATA=%CD%\Tekkit")
-        Else
-            Writer.WriteLine("title MineUK " & NewFTBVersion & " Launcher")
+            Writer.WriteLine("title MineUK " & NewMOD1Version & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
             Writer.WriteLine("set APPDATA=%CD%\FTB")
+        Else
+            Writer.WriteLine("title MineUK " & NewMOD2Version & " Launcher")
+            Writer.WriteLine("SET BINDIR=%~dp0")
+            Writer.WriteLine("CD /D " & """%BINDIR%""")
+            Writer.WriteLine("set APPDATA=%CD%\Vanilla")
         End If
         Writer.WriteLine("CLS")
         Writer.WriteLine(MCDir)
@@ -891,8 +1101,12 @@ Public Class MainForm
         Me.Close()
     End Sub
 
-    Private Sub Panel1_Click(sender As Object, e As EventArgs) Handles Panel1.Click
-        Process.Start("http://status.mineuk.com")
+    Private Sub Panel1_Click(sender As Object, e As EventArgs) Handles Logo.Click
+        Process.Start("http://www.mineuk.com/")
+    End Sub
+
+    Private Sub Panel2_Click(sender As Object, e As EventArgs) Handles BetaTesting.Click, BetaLogo.Click, BetaText.Click, BetaWarning.Click
+        Process.Start("http://dev.mineuk.com/launcher")
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
@@ -901,5 +1115,19 @@ Public Class MainForm
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
         My.Settings.Password = TextBox2.Text
+    End Sub
+
+    Private Sub MainForm_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+        Dim SView As Point = SplitContainer1.Panel2.AutoScrollPosition
+        SView.X = SView.X + 20
+        SplitContainer1.Panel2.AutoScrollPosition = SView
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        If TextBox1.Focused = False Then
+            If TextBox2.Focused = False Then
+                SplitContainer1.Panel2.Select()
+            End If
+        End If
     End Sub
 End Class
