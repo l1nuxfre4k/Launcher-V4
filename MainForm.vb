@@ -89,10 +89,12 @@ Public Class MainForm
         If My.Settings.ModPack = "FTB" Then
             RadioButton1.Checked = True
             StName = "ftb.php"
+            OldPlayersSt = "BAD"
         End If
         If My.Settings.ModPack = "Vanilla" Then
             RadioButton2.Checked = True
             StName = "vanilla.php"
+            OldPlayersSt = "BAD"
         End If
         Try
             If CommandLineArgs(0) = "auto" Then
@@ -567,10 +569,12 @@ Public Class MainForm
         If RadioButton1.Checked = True Then
             My.Settings.ModPack = "FTB"
             StName = "ftb.php"
+            OldPlayersSt = "BAD"
         End If
         If RadioButton2.Checked = True Then
             My.Settings.ModPack = "Vannila"
             StName = "vanilla.php"
+            OldPlayersSt = "BAD"
         End If
     End Sub
 
@@ -1123,11 +1127,4 @@ Public Class MainForm
         SplitContainer1.Panel2.AutoScrollPosition = SView
     End Sub
 
-    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
-        If TextBox1.Focused = False Then
-            If TextBox2.Focused = False Then
-                SplitContainer1.Panel2.Select()
-            End If
-        End If
-    End Sub
 End Class

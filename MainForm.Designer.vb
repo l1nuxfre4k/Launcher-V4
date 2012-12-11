@@ -58,7 +58,6 @@ Partial Class MainForm
         Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
-        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -333,10 +332,6 @@ Partial Class MainForm
         'BackgroundStatusWait
         '
         '
-        'Timer2
-        '
-        Me.Timer2.Enabled = True
-        '
         'MainForm
         '
         Me.AcceptButton = Me.Button2
@@ -411,6 +406,5 @@ Partial Class MainForm
     Friend WithEvents BackgroundStatusWait As System.ComponentModel.BackgroundWorker
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents Timer2 As System.Windows.Forms.Timer
 
 End Class
