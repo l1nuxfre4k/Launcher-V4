@@ -50,6 +50,7 @@ Partial Class MainForm
         Me.BetaText = New System.Windows.Forms.Label()
         Me.BetaWarning = New System.Windows.Forms.Label()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.BetaTesting = New System.Windows.Forms.Panel()
@@ -58,7 +59,6 @@ Partial Class MainForm
         Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
-        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -130,7 +130,7 @@ Partial Class MainForm
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.BackColor = System.Drawing.Color.Transparent
         Me.CheckBox1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.CheckBox1.Location = New System.Drawing.Point(205, 456)
+        Me.CheckBox1.Location = New System.Drawing.Point(203, 456)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(91, 17)
         Me.CheckBox1.TabIndex = 5
@@ -200,12 +200,12 @@ Partial Class MainForm
         Me.RadioButton1.BackColor = System.Drawing.Color.Transparent
         Me.RadioButton1.Checked = True
         Me.RadioButton1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.RadioButton1.Location = New System.Drawing.Point(14, 455)
+        Me.RadioButton1.Location = New System.Drawing.Point(16, 455)
         Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(84, 17)
+        Me.RadioButton1.Size = New System.Drawing.Size(75, 17)
         Me.RadioButton1.TabIndex = 17
         Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Launch FTB"
+        Me.RadioButton1.Text = "Mindcrack"
         Me.RadioButton1.UseVisualStyleBackColor = False
         '
         'RadioButton2
@@ -213,11 +213,11 @@ Partial Class MainForm
         Me.RadioButton2.AutoSize = True
         Me.RadioButton2.BackColor = System.Drawing.Color.Transparent
         Me.RadioButton2.ForeColor = System.Drawing.Color.Gainsboro
-        Me.RadioButton2.Location = New System.Drawing.Point(104, 455)
+        Me.RadioButton2.Location = New System.Drawing.Point(102, 455)
         Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(95, 17)
+        Me.RadioButton2.Size = New System.Drawing.Size(56, 17)
         Me.RadioButton2.TabIndex = 18
-        Me.RadioButton2.Text = "Launch Vanilla"
+        Me.RadioButton2.Text = "Vanilla"
         Me.RadioButton2.UseVisualStyleBackColor = False
         '
         'VersionLabel
@@ -293,6 +293,16 @@ Partial Class MainForm
         Me.SplitContainer1.SplitterDistance = 427
         Me.SplitContainer1.TabIndex = 23
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(15, 10)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(158, 16)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Loading News Feed..."
+        '
         'Panel2
         '
         Me.Panel2.AutoSize = True
@@ -334,16 +344,6 @@ Partial Class MainForm
         '
         'BackgroundStatusWait
         '
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(15, 10)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(158, 16)
-        Me.Label3.TabIndex = 0
-        Me.Label3.Text = "Loading News Feed..."
         '
         'MainForm
         '

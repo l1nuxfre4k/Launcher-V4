@@ -16,14 +16,14 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion
     Dim NewLauncherVersion As String = ""
-    Dim CurrentFTBVersion As String = ""
-    Dim NewFTBVersion As String = ""
+    Dim CurrentMindcrackVersion As String = ""
+    Dim NewMindcrackVersion As String = ""
     Dim CurrentVanillaVersion As String = ""
     Dim NewVanillaVersion As String = ""
 
     Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
-    Dim CurrentFTBIsAdmin As Boolean
+    Dim CurrentMindcrackIsAdmin As Boolean
     Dim CurrentVanillaIsAdmin As Boolean
 
     Dim NumberOfNewsItems As Integer
@@ -36,7 +36,7 @@ Public Class MainForm
     Dim OldPlayersSt As String = ""
     Dim NewPlayersSt As String = ""
 
-    Dim StName As String = "ftb.php"
+    Dim StName As String = "mindcrack.php"
     Dim NewStatusFirst As String = ""
     Dim OldStatusFirst As String = ""
 
@@ -86,9 +86,9 @@ Public Class MainForm
             End
         End If
         My.Settings.Save()
-        If My.Settings.ModPack = "FTB" Then
+        If My.Settings.ModPack = "Mindcrack" Then
             RadioButton1.Checked = True
-            StName = "ftb.php"
+            StName = "mindcrack.php"
             OldPlayersSt = "BAD"
         End If
         If My.Settings.ModPack = "Vanilla" Then
@@ -281,16 +281,16 @@ Public Class MainForm
                     Panel1.Controls.Add(News1)
                     Dim Text1 As New Label()
                     If (4 - (i - 1)) = 1 Then
-                        Text1.Text = "FTB Server: "
+                        Text1.Text = "Mindcrack Server: "
                     End If
                     If (4 - (i - 1)) = 2 Then
                         Text1.Text = "Vanilla Server: "
                     End If
                     If (4 - (i - 1)) = 3 Then
-                        Text1.Text = "Capes Service: "
+                        Text1.Text = "Capes Server: "
                     End If
                     If (4 - (i - 1)) = 4 Then
-                        Text1.Text = "Skins Service: "
+                        Text1.Text = "Skins Server: "
                     End If
                     If (NewPlayerList(4 - (i - 1))) = "1" Then
                         Text1.Text = Text1.Text + "Online"
@@ -366,7 +366,7 @@ Public Class MainForm
                 Panel2.Controls.Add(NewsX)
                 Dim Text2 As New Label()
                 If RadioButton1.Checked = True Then
-                    Text2.Text = "Players On The FTB Server"
+                    Text2.Text = "Players On The Mindcrack Server"
                 Else : Text2.Text = "Players On The Vanilla Server"
                 End If
                 Text2.Dock = DockStyle.Fill
@@ -405,8 +405,8 @@ Public Class MainForm
         If My.Computer.FileSystem.FileExists("script.bat") Then
             My.Computer.FileSystem.DeleteFile("script.bat")
         End If
-        If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-        Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+        If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
+        Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
         End If
         If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
         Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
@@ -420,21 +420,21 @@ Public Class MainForm
             ServerStream.Close()
             sr.Close()
             NewLauncherVersion = ServerData.Split(":")(1)
-            NewFTBVersion = ServerData.Split(":")(2)
+            NewMindcrackVersion = ServerData.Split(":")(2)
             NewVanillaVersion = ServerData.Split(":")(3)
             ServerAdminList = ServerData.Split(":")(4)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
         End Try
-        CurrentFTBIsAdmin = False
+        CurrentMindcrackIsAdmin = False
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft\version")
-                CurrentFTBVersion = Path.GetFileName(i)
+            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft\version")
+                CurrentMindcrackVersion = Path.GetFileName(i)
             Next
-            If CurrentFTBVersion.Substring(CurrentFTBVersion.Length - 1) = "+" Then
-                CurrentFTBIsAdmin = True
-                CurrentFTBVersion = CurrentFTBVersion.Remove(CurrentFTBVersion.Length - 1)
+            If CurrentMindcrackVersion.Substring(CurrentMindcrackVersion.Length - 1) = "+" Then
+                CurrentMindcrackIsAdmin = True
+                CurrentMindcrackVersion = CurrentMindcrackVersion.Remove(CurrentMindcrackVersion.Length - 1)
             End If
         Catch ex As Exception
         End Try
@@ -468,8 +468,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -498,7 +498,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -567,8 +567,8 @@ Public Class MainForm
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
         If RadioButton1.Checked = True Then
-            My.Settings.ModPack = "FTB"
-            StName = "ftb.php"
+            My.Settings.ModPack = "Mindcrack"
+            StName = "mindcrack.php"
             OldPlayersSt = "BAD"
         End If
         If RadioButton2.Checked = True Then
@@ -612,8 +612,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -642,7 +642,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -792,7 +792,7 @@ Public Class MainForm
         If NewLauncherVersion = "" Then
             GoTo 1
         End If
-        If NewFTBVersion = "" Then
+        If NewMindcrackVersion = "" Then
             GoTo 1
         End If
         If NewVanillaVersion = "" Then
@@ -821,40 +821,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewFTBVersion = CurrentFTBVersion Then
-                    If CurrentFTBIsAdmin = False Then
+                If NewMindcrackVersion = CurrentMindcrackVersion Then
+                    If CurrentMindcrackIsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewFTBVersion = CurrentFTBVersion Then
-                    If CurrentFTBIsAdmin = True Then
+                If NewMindcrackVersion = CurrentMindcrackVersion Then
+                    If CurrentMindcrackIsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewFTBVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -988,8 +988,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("FTB\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("FTB\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -1018,7 +1018,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("FTB\.minecraft")
+            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -1072,10 +1072,10 @@ Public Class MainForm
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
         If RadioButton1.Checked = True Then
-            Writer.WriteLine("title MineUK " & NewFTBVersion & " Launcher")
+            Writer.WriteLine("title MineUK " & NewMindcrackVersion & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
-            Writer.WriteLine("set APPDATA=%CD%\FTB")
+            Writer.WriteLine("set APPDATA=%CD%\Mindcrack")
         Else
             Writer.WriteLine("title MineUK " & NewVanillaVersion & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
