@@ -200,12 +200,12 @@ Partial Class MainForm
         Me.RadioButton1.BackColor = System.Drawing.Color.Transparent
         Me.RadioButton1.Checked = True
         Me.RadioButton1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.RadioButton1.Location = New System.Drawing.Point(16, 455)
+        Me.RadioButton1.Location = New System.Drawing.Point(15, 455)
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.Size = New System.Drawing.Size(75, 17)
         Me.RadioButton1.TabIndex = 17
         Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Mindcrack"
+        Me.RadioButton1.Text = "Direwolf20"
         Me.RadioButton1.UseVisualStyleBackColor = False
         '
         'RadioButton2

@@ -16,14 +16,14 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion
     Dim NewLauncherVersion As String = ""
-    Dim CurrentMindcrackVersion As String = ""
-    Dim NewMindcrackVersion As String = ""
+    Dim CurrentDirewolf20Version As String = ""
+    Dim NewDirewolf20Version As String = ""
     Dim CurrentVanillaVersion As String = ""
     Dim NewVanillaVersion As String = ""
 
     Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
-    Dim CurrentMindcrackIsAdmin As Boolean
+    Dim CurrentDirewolf20IsAdmin As Boolean
     Dim CurrentVanillaIsAdmin As Boolean
 
     Dim NumberOfNewsItems As Integer
@@ -36,7 +36,7 @@ Public Class MainForm
     Dim OldPlayersSt As String = ""
     Dim NewPlayersSt As String = ""
 
-    Dim StName As String = "mindcrack.php"
+    Dim StName As String = "direwolf20.php"
     Dim NewStatusFirst As String = ""
     Dim OldStatusFirst As String = ""
 
@@ -86,9 +86,9 @@ Public Class MainForm
             End
         End If
         My.Settings.Save()
-        If My.Settings.ModPack = "Mindcrack" Then
+        If My.Settings.ModPack = "Direwolf20" Then
             RadioButton1.Checked = True
-            StName = "mindcrack.php"
+            StName = "direwolf20.php"
             OldPlayersSt = "BAD"
         End If
         If My.Settings.ModPack = "Vanilla" Then
@@ -281,7 +281,7 @@ Public Class MainForm
                     Panel1.Controls.Add(News1)
                     Dim Text1 As New Label()
                     If (4 - (i - 1)) = 1 Then
-                        Text1.Text = "Mindcrack Server: "
+                        Text1.Text = "Direwolf20 Server: "
                     End If
                     If (4 - (i - 1)) = 2 Then
                         Text1.Text = "Vanilla Server: "
@@ -330,7 +330,7 @@ Public Class MainForm
                 Dim NewsX As New Panel
                 NewsX.AutoSize = False
                 NewsX.Dock = DockStyle.Top
-                NewsX.Size = New Size(100, 12)
+                NewsX.Size = New Size(100, 13)
                 Panel2.Controls.Add(NewsX)
             Catch ex As Exception
             End Try
@@ -366,7 +366,7 @@ Public Class MainForm
                 Panel2.Controls.Add(NewsX)
                 Dim Text2 As New Label()
                 If RadioButton1.Checked = True Then
-                    Text2.Text = "Players On The Mindcrack Server"
+                    Text2.Text = "Players On The Direwolf20 Server"
                 Else : Text2.Text = "Players On The Vanilla Server"
                 End If
                 Text2.Dock = DockStyle.Fill
@@ -405,8 +405,8 @@ Public Class MainForm
         If My.Computer.FileSystem.FileExists("script.bat") Then
             My.Computer.FileSystem.DeleteFile("script.bat")
         End If
-        If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
-        Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
+        If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
+        Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
         End If
         If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
         Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
@@ -420,21 +420,21 @@ Public Class MainForm
             ServerStream.Close()
             sr.Close()
             NewLauncherVersion = ServerData.Split(":")(1)
-            NewMindcrackVersion = ServerData.Split(":")(2)
+            NewDirewolf20Version = ServerData.Split(":")(2)
             NewVanillaVersion = ServerData.Split(":")(3)
             ServerAdminList = ServerData.Split(":")(4)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
         End Try
-        CurrentMindcrackIsAdmin = False
+        CurrentDirewolf20IsAdmin = False
         Try
-            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft\version")
-                CurrentMindcrackVersion = Path.GetFileName(i)
+            For Each i As String In Directory.GetFiles("Direwolf20\.minecraft\version")
+                CurrentDirewolf20Version = Path.GetFileName(i)
             Next
-            If CurrentMindcrackVersion.Substring(CurrentMindcrackVersion.Length - 1) = "+" Then
-                CurrentMindcrackIsAdmin = True
-                CurrentMindcrackVersion = CurrentMindcrackVersion.Remove(CurrentMindcrackVersion.Length - 1)
+            If CurrentDirewolf20Version.Substring(CurrentDirewolf20Version.Length - 1) = "+" Then
+                CurrentDirewolf20IsAdmin = True
+                CurrentDirewolf20Version = CurrentDirewolf20Version.Remove(CurrentDirewolf20Version.Length - 1)
             End If
         Catch ex As Exception
         End Try
@@ -468,8 +468,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -498,7 +498,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft")
+            For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -567,8 +567,8 @@ Public Class MainForm
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
         If RadioButton1.Checked = True Then
-            My.Settings.ModPack = "Mindcrack"
-            StName = "mindcrack.php"
+            My.Settings.ModPack = "Direwolf20"
+            StName = "direwolf20.php"
             OldPlayersSt = "BAD"
         End If
         If RadioButton2.Checked = True Then
@@ -612,8 +612,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -642,7 +642,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft")
+            For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -792,7 +792,7 @@ Public Class MainForm
         If NewLauncherVersion = "" Then
             GoTo 1
         End If
-        If NewMindcrackVersion = "" Then
+        If NewDirewolf20Version = "" Then
             GoTo 1
         End If
         If NewVanillaVersion = "" Then
@@ -821,40 +821,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewDirewolf20Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewMindcrackVersion = CurrentMindcrackVersion Then
-                    If CurrentMindcrackIsAdmin = False Then
+                If NewDirewolf20Version = CurrentDirewolf20Version Then
+                    If CurrentDirewolf20IsAdmin = False Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & "+.7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewDirewolf20Version & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & "+.7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewDirewolf20Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewDirewolf20Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
-                If NewMindcrackVersion = CurrentMindcrackVersion Then
-                    If CurrentMindcrackIsAdmin = True Then
+                If NewDirewolf20Version = CurrentDirewolf20Version Then
+                    If CurrentDirewolf20IsAdmin = True Then
                         StatusLabel.Text = "Downloading new modpack..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & ".7z"), "files.7z")
+                        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewDirewolf20Version & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading new modpack..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewMindcrackVersion & ".7z"), "files.7z")
+                    WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/" & NewDirewolf20Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
@@ -988,8 +988,8 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.DirectoryExists("Mindcrack\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Mindcrack\.minecraft")
+            If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
+            Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
             End If
         Catch ex As Exception
         End Try
@@ -1018,7 +1018,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("Mindcrack\.minecraft")
+            For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
                 If Path.GetFileName(i).Contains("log") Then
                     My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                 End If
@@ -1072,10 +1072,10 @@ Public Class MainForm
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
         If RadioButton1.Checked = True Then
-            Writer.WriteLine("title MineUK " & NewMindcrackVersion & " Launcher")
+            Writer.WriteLine("title MineUK " & NewDirewolf20Version & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
-            Writer.WriteLine("set APPDATA=%CD%\Mindcrack")
+            Writer.WriteLine("set APPDATA=%CD%\Direwolf20")
         Else
             Writer.WriteLine("title MineUK " & NewVanillaVersion & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
