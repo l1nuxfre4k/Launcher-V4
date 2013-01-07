@@ -461,12 +461,14 @@ Public Class MainForm
 
     Private Sub BackgroundWorkerUpdate2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate2.DoWork
         'Start of file check script
-        Try
-            If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-            Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
+        For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
+            If Path.GetFileName(i) = "Direwolf20" Then
+            Else
+                If Path.GetFileName(i) = "Vanilla" Then
+                Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                End If
             End If
-        Catch ex As Exception
-        End Try
+        Next
         Try
             If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
             Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
@@ -605,12 +607,14 @@ Public Class MainForm
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'Start of file check script
-        Try
-            If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-            Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
+        For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
+            If Path.GetFileName(i) = "Direwolf20" Then
+            Else
+                If Path.GetFileName(i) = "Vanilla" Then
+                Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                End If
             End If
-        Catch ex As Exception
-        End Try
+        Next
         Try
             If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
             Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
@@ -941,20 +945,38 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker3_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker3.DoWork
-        For Each i As String In Directory.GetDirectories(".minecraft")
-            If Path.GetFileName(i) = "saves" Then
-            Else
-                If Path.GetFileName(i) = "stats" Then
+        If RadioButton1.Checked = True Then
+            For Each i As String In Directory.GetDirectories("Direwolf20\.minecraft")
+                If Path.GetFileName(i) = "saves" Then
                 Else
-                    If Path.GetFileName(i) = "movies" Then
-                    Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                    If Path.GetFileName(i) = "stats" Then
+                    Else
+                        If Path.GetFileName(i) = "movies" Then
+                        Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        End If
                     End If
                 End If
-            End If
-        Next
-        For Each i As String In Directory.GetFiles(".minecraft")
-            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-        Next
+            Next
+            For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
+                My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+            Next
+        Else
+            For Each i As String In Directory.GetDirectories("Vanilla\.minecraft")
+                If Path.GetFileName(i) = "saves" Then
+                Else
+                    If Path.GetFileName(i) = "stats" Then
+                    Else
+                        If Path.GetFileName(i) = "movies" Then
+                        Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        End If
+                    End If
+                End If
+            Next
+            For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
+                My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+            Next
+        End If
+        
     End Sub
 
     Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
@@ -981,12 +1003,14 @@ Public Class MainForm
     Private Sub BackgroundWorker5_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker5.DoWork
         Thread.Sleep(200)
         'Start of file check script
-        Try
-            If My.Computer.FileSystem.DirectoryExists(".minecraft") Then
-            Else : My.Computer.FileSystem.DeleteDirectory(".minecraft", FileIO.DeleteDirectoryOption.DeleteAllContents)
+        For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
+            If Path.GetFileName(i) = "Direwolf20" Then
+            Else
+                If Path.GetFileName(i) = "Vanilla" Then
+                Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                End If
             End If
-        Catch ex As Exception
-        End Try
+        Next
         Try
             If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
             Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
