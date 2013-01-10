@@ -43,7 +43,7 @@ Public Class MainForm
     Dim WithEvents WC1 As New WebClient
     Dim WithEvents WC2 As New WebClient
 
-    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, RadioButton1.Click, RadioButton2.Click, Logo.Click, BetaTesting.Click, BetaLogo.Click, BetaText.Click, BetaWarning.Click, Button1.Click, Button2.Click
+    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, RadioButton1.Click, RadioButton2.Click, Logo.Click, Button1.Click, Button2.Click
         My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
     End Sub
 
@@ -70,10 +70,11 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
-        VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " Beta"
+        VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " RC"
         TextBox1.Text = My.Settings.User
         TextBox2.Text = My.Settings.Password
-        BetaTesting.Show()
+        StatusLabel.Hide()
+        ProgressBar1.Hide()
         If My.Settings.RAM = 512 Then
         ElseIf My.Settings.RAM = 1024 Then
         ElseIf My.Settings.RAM = 2048 Then
@@ -107,7 +108,8 @@ Public Class MainForm
                 My.Settings.Password = TextBox2.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
             End If
             If CommandLineArgs(2) = "auto" Then
                 Button1.Enabled = False
@@ -119,7 +121,8 @@ Public Class MainForm
                 My.Settings.Password = TextBox2.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
             End If
             If CommandLineArgs(0) = "update" Then
                 CheckBox1.Checked = True
@@ -132,7 +135,8 @@ Public Class MainForm
                 My.Settings.Password = TextBox2.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
             End If
             If CommandLineArgs(2) = "update" Then
                 CheckBox1.Checked = True
@@ -145,7 +149,8 @@ Public Class MainForm
                 My.Settings.Password = TextBox2.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
             End If
         Catch ex As Exception
         End Try
@@ -295,7 +300,7 @@ Public Class MainForm
                     If (NewPlayerList(4 - (i - 1))) = "1" Then
                         Text1.Text = Text1.Text + "Online"
                     Else
-                        Text1.Text = Text1.Text + "Reported Problems!"
+                        Text1.Text = Text1.Text + "Offline"
                     End If
                     Text1.Dock = DockStyle.Fill
                     Text1.AutoSize = False
@@ -542,25 +547,29 @@ Public Class MainForm
             If CommandLineArgs(0) = "auto" Then
                 StatusLabel.Text = "Checking files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "auto" Then
                 StatusLabel.Text = "Checking files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(0) = "update" Then
                 StatusLabel.Text = "Checking files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "update" Then
                 StatusLabel.Text = "Checking files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
-                BetaTesting.Hide()
+                StatusLabel.Show()
+                ProgressBar1.Show()
                 BackgroundWorker1.RunWorkerAsync()
             End If
         Catch ex As Exception
@@ -597,7 +606,8 @@ Public Class MainForm
         My.Settings.Password = TextBox2.Text
         StatusLabel.Text = "Checking files..."
         ProgressBar1.Style = ProgressBarStyle.Marquee
-        BetaTesting.Hide()
+        StatusLabel.Show()
+        ProgressBar1.Show()
         If ServerIsReady = True Then
             ServerIsReady = False
             BackgroundWorkerUpdate1.RunWorkerAsync()
@@ -760,7 +770,8 @@ Public Class MainForm
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             MsgBox("Your login was rejected!")
-            BetaTesting.Show()
+            StatusLabel.Hide()
+            ProgressBar1.Hide()
             Button1.Enabled = True
             Button2.Enabled = True
             TextBox1.Enabled = True
@@ -772,7 +783,8 @@ Public Class MainForm
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             MsgBox("The login servers are unreachable!")
-            BetaTesting.Show()
+            StatusLabel.Hide()
+            ProgressBar1.Hide()
             Button1.Enabled = True
             Button2.Enabled = True
             TextBox1.Enabled = True
@@ -912,7 +924,8 @@ Public Class MainForm
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
         MsgBox("There was an unknown error!")
-        BetaTesting.Show()
+        StatusLabel.Hide()
+        ProgressBar1.Hide()
         Button1.Enabled = True
         Button2.Enabled = True
         TextBox1.Enabled = True
@@ -1130,11 +1143,7 @@ Public Class MainForm
     End Sub
 
     Private Sub Panel1_Click(sender As Object, e As EventArgs) Handles Logo.Click
-        Process.Start("http://www.mineuk.com/")
-    End Sub
-
-    Private Sub Panel2_Click(sender As Object, e As EventArgs) Handles BetaTesting.Click, BetaLogo.Click, BetaText.Click, BetaWarning.Click
-        Process.Start("http://dev.mineuk.com/launcher")
+        Process.Start("http://mineuk.com/")
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged

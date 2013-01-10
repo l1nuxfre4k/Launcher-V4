@@ -1,7 +1,11 @@
 ﻿Public Class OptionsForm
 
+    Dim Loaded As Boolean = False
+
     Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles Button1.Click, RadioButton1.Click, RadioButton2.Click, RadioButton3.Click, RadioButton4.Click, CheckBox1.Click
-        My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
+        If Loaded = True Then
+            My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
+        End If
     End Sub
 
     Private Sub OptionsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -18,6 +22,7 @@
             RadioButton4.Checked = True
         End If
         CheckBox1.Checked = My.Settings.Debug
+        Loaded = True
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

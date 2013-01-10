@@ -46,25 +46,19 @@ Partial Class MainForm
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.VersionLabel = New System.Windows.Forms.Label()
-        Me.BetaLogo = New System.Windows.Forms.PictureBox()
-        Me.BetaText = New System.Windows.Forms.Label()
-        Me.BetaWarning = New System.Windows.Forms.Label()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.BetaTesting = New System.Windows.Forms.Panel()
         Me.BackgroundWorker7 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerNews = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
-        CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        Me.BetaTesting.SuspendLayout()
         Me.SuspendLayout()
         '
         'BackgroundWorker1
@@ -232,44 +226,6 @@ Partial Class MainForm
         Me.VersionLabel.Text = "Loading..."
         Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'BetaLogo
-        '
-        Me.BetaLogo.BackColor = System.Drawing.Color.Transparent
-        Me.BetaLogo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BetaLogo.Image = Global.MineUK_Launcher.My.Resources.Resources.Beta
-        Me.BetaLogo.Location = New System.Drawing.Point(0, 0)
-        Me.BetaLogo.Name = "BetaLogo"
-        Me.BetaLogo.Size = New System.Drawing.Size(100, 100)
-        Me.BetaLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.BetaLogo.TabIndex = 20
-        Me.BetaLogo.TabStop = False
-        '
-        'BetaText
-        '
-        Me.BetaText.BackColor = System.Drawing.Color.Transparent
-        Me.BetaText.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BetaText.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BetaText.ForeColor = System.Drawing.Color.Gainsboro
-        Me.BetaText.Location = New System.Drawing.Point(98, 20)
-        Me.BetaText.Name = "BetaText"
-        Me.BetaText.Size = New System.Drawing.Size(102, 80)
-        Me.BetaText.TabIndex = 21
-        Me.BetaText.Text = "This product is part of the MineUK beta testing program"
-        Me.BetaText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'BetaWarning
-        '
-        Me.BetaWarning.BackColor = System.Drawing.Color.Transparent
-        Me.BetaWarning.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BetaWarning.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BetaWarning.ForeColor = System.Drawing.Color.Maroon
-        Me.BetaWarning.Location = New System.Drawing.Point(97, 4)
-        Me.BetaWarning.Name = "BetaWarning"
-        Me.BetaWarning.Size = New System.Drawing.Size(103, 20)
-        Me.BetaWarning.TabIndex = 22
-        Me.BetaWarning.Text = "WARNING!"
-        Me.BetaWarning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'SplitContainer1
         '
         Me.SplitContainer1.BackColor = System.Drawing.SystemColors.ControlDarkDark
@@ -321,18 +277,6 @@ Partial Class MainForm
         Me.Panel1.Size = New System.Drawing.Size(406, 0)
         Me.Panel1.TabIndex = 0
         '
-        'BetaTesting
-        '
-        Me.BetaTesting.BackColor = System.Drawing.Color.Transparent
-        Me.BetaTesting.Controls.Add(Me.BetaLogo)
-        Me.BetaTesting.Controls.Add(Me.BetaText)
-        Me.BetaTesting.Controls.Add(Me.BetaWarning)
-        Me.BetaTesting.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.BetaTesting.Location = New System.Drawing.Point(319, 379)
-        Me.BetaTesting.Name = "BetaTesting"
-        Me.BetaTesting.Size = New System.Drawing.Size(200, 100)
-        Me.BetaTesting.TabIndex = 0
-        '
         'BackgroundWorkerNews
         '
         '
@@ -353,7 +297,6 @@ Partial Class MainForm
         Me.BackgroundImage = Global.MineUK_Launcher.My.Resources.Resources.Main
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(854, 480)
-        Me.Controls.Add(Me.BetaTesting)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.Logo)
         Me.Controls.Add(Me.RadioButton2)
@@ -374,14 +317,12 @@ Partial Class MainForm
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MineUK Launcher V3"
-        CType(Me.BetaLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel1.PerformLayout()
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         Me.SplitContainer1.Panel2.PerformLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.BetaTesting.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -409,13 +350,9 @@ Partial Class MainForm
     Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents VersionLabel As System.Windows.Forms.Label
-    Friend WithEvents BetaLogo As System.Windows.Forms.PictureBox
-    Friend WithEvents BetaText As System.Windows.Forms.Label
-    Friend WithEvents BetaWarning As System.Windows.Forms.Label
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
     Friend WithEvents BackgroundWorker7 As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorkerNews As System.ComponentModel.BackgroundWorker
-    Friend WithEvents BetaTesting As System.Windows.Forms.Panel
     Friend WithEvents BackgroundWorkerNewsWait As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundStatus As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundStatusWait As System.ComponentModel.BackgroundWorker
