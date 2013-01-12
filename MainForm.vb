@@ -70,7 +70,7 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
-        VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " RC"
+        VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " Stable"
         TextBox1.Text = My.Settings.User
         TextBox2.Text = My.Settings.Password
         StatusLabel.Hide()
