@@ -471,75 +471,171 @@ Public Class MainForm
 
     Private Sub BackgroundWorkerUpdate2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate2.DoWork
         'Start of file check script
-        For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
-            If Path.GetFileName(i) = "Direwolf20" Then
-            Else
-                If Path.GetFileName(i) = "Vanilla" Then
-                Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                End If
-            End If
-        Next
+        Try
+            For Each i As String In Directory.GetDirectories("")
+                Try
+                    If Path.GetFileName(i) = "Direwolf20" Then
+                    Else
+                        If Path.GetFileName(i) = "Vanilla" Then
+                        Else
+                            Try
+                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                            Catch ex As Exception
+                            End Try
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
         Try
             If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
+                Catch ex As Exception
+                End Try
             End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories("Direwolf20")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
             If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
+                Catch ex As Exception
+                End Try
             End If
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("script.bat") Then
-                My.Computer.FileSystem.DeleteFile("script.bat")
-            End If
+            For Each i As String In Directory.GetDirectories("Vanilla")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("files.7z") Then
-                My.Computer.FileSystem.DeleteFile("files.7z")
-            End If
+            For Each i As String In Directory.GetFiles("")
+                Try
+                    If Path.GetFileName(i) = "7za.exe" Then
+                    Else
+                        If Path.GetFileName(i) = "click.wav" Then
+                        Else
+                            If Path.GetFileName(i) = "MineUK Launcher.exe" Then
+                            Else
+                                If Path.GetFileName(i) = "MineUK Launcher.exe.config" Then
+                                Else
+                                    If Path.GetFileName(i) = "MineUK Launcher.xml" Then
+                                    Else
+                                        Try
+                                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                        Catch ex As Exception
+                                        End Try
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
             If My.Computer.FileSystem.FileExists(Environ("temp") & "\MineUK Installer.exe") Then
-                My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
+                Try
+                    My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
+                Catch ex As Exception
+                End Try
             End If
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
@@ -622,75 +718,171 @@ Public Class MainForm
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'Start of file check script
-        For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
-            If Path.GetFileName(i) = "Direwolf20" Then
-            Else
-                If Path.GetFileName(i) = "Vanilla" Then
-                Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                End If
-            End If
-        Next
+        Try
+            For Each i As String In Directory.GetDirectories("")
+                Try
+                    If Path.GetFileName(i) = "Direwolf20" Then
+                    Else
+                        If Path.GetFileName(i) = "Vanilla" Then
+                        Else
+                            Try
+                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                            Catch ex As Exception
+                            End Try
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
         Try
             If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
+                Catch ex As Exception
+                End Try
             End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories("Direwolf20")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
             If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
+                Catch ex As Exception
+                End Try
             End If
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("script.bat") Then
-                My.Computer.FileSystem.DeleteFile("script.bat")
-            End If
+            For Each i As String In Directory.GetDirectories("Vanilla")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("files.7z") Then
-                My.Computer.FileSystem.DeleteFile("files.7z")
-            End If
+            For Each i As String In Directory.GetFiles("")
+                Try
+                    If Path.GetFileName(i) = "7za.exe" Then
+                    Else
+                        If Path.GetFileName(i) = "click.wav" Then
+                        Else
+                            If Path.GetFileName(i) = "MineUK Launcher.exe" Then
+                            Else
+                                If Path.GetFileName(i) = "MineUK Launcher.exe.config" Then
+                                Else
+                                    If Path.GetFileName(i) = "MineUK Launcher.xml" Then
+                                    Else
+                                        Try
+                                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                        Catch ex As Exception
+                                        End Try
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
             If My.Computer.FileSystem.FileExists(Environ("temp") & "\MineUK Installer.exe") Then
-                My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
+                Try
+                    My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
+                Catch ex As Exception
+                End Try
             End If
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
@@ -1131,75 +1323,171 @@ Public Class MainForm
     Private Sub BackgroundWorker5_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker5.DoWork
         Thread.Sleep(200)
         'Start of file check script
-        For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
-            If Path.GetFileName(i) = "Direwolf20" Then
-            Else
-                If Path.GetFileName(i) = "Vanilla" Then
-                Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                End If
-            End If
-        Next
+        Try
+            For Each i As String In Directory.GetDirectories("")
+                Try
+                    If Path.GetFileName(i) = "Direwolf20" Then
+                    Else
+                        If Path.GetFileName(i) = "Vanilla" Then
+                        Else
+                            Try
+                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                            Catch ex As Exception
+                            End Try
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
         Try
             If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
+                Catch ex As Exception
+                End Try
             End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories("Direwolf20")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
             If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
-            Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
+                Catch ex As Exception
+                End Try
             End If
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("script.bat") Then
-                My.Computer.FileSystem.DeleteFile("script.bat")
-            End If
+            For Each i As String In Directory.GetDirectories("Vanilla")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
-            If My.Computer.FileSystem.FileExists("files.7z") Then
-                My.Computer.FileSystem.DeleteFile("files.7z")
-            End If
+            For Each i As String In Directory.GetFiles("")
+                Try
+                    If Path.GetFileName(i) = "7za.exe" Then
+                    Else
+                        If Path.GetFileName(i) = "click.wav" Then
+                        Else
+                            If Path.GetFileName(i) = "MineUK Launcher.exe" Then
+                            Else
+                                If Path.GetFileName(i) = "MineUK Launcher.exe.config" Then
+                                Else
+                                    If Path.GetFileName(i) = "MineUK Launcher.xml" Then
+                                    Else
+                                        Try
+                                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                        Catch ex As Exception
+                                        End Try
+                                    End If
+                                End If
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
         Catch ex As Exception
         End Try
         Try
             If My.Computer.FileSystem.FileExists(Environ("temp") & "\MineUK Installer.exe") Then
-                My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
+                Try
+                    My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
+                Catch ex As Exception
+                End Try
             End If
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
-                If Path.GetFileName(i).Contains("log") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("optifog") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
-                If Path.GetFileName(i).Contains("lck") Then
-                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                End If
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
