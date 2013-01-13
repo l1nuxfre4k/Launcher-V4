@@ -472,7 +472,7 @@ Public Class MainForm
     Private Sub BackgroundWorkerUpdate2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate2.DoWork
         'Start of file check script
         Try
-            For Each i As String In Directory.GetDirectories("")
+            For Each i As String In Directory.GetDirectories(System.Windows.Forms.Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "Direwolf20" Then
                     Else
@@ -540,7 +540,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("")
+            For Each i As String In Directory.GetFiles(System.Windows.Forms.Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
                     Else
@@ -553,7 +553,7 @@ Public Class MainForm
                                     If Path.GetFileName(i) = "MineUK Launcher.xml" Then
                                     Else
                                         Try
-                                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                                         Catch ex As Exception
                                         End Try
                                     End If
@@ -719,7 +719,7 @@ Public Class MainForm
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'Start of file check script
         Try
-            For Each i As String In Directory.GetDirectories("")
+            For Each i As String In Directory.GetDirectories(System.Windows.Forms.Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "Direwolf20" Then
                     Else
@@ -787,7 +787,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("")
+            For Each i As String In Directory.GetFiles(System.Windows.Forms.Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
                     Else
@@ -800,7 +800,7 @@ Public Class MainForm
                                     If Path.GetFileName(i) = "MineUK Launcher.xml" Then
                                     Else
                                         Try
-                                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                                         Catch ex As Exception
                                         End Try
                                     End If
@@ -1324,7 +1324,7 @@ Public Class MainForm
         Thread.Sleep(200)
         'Start of file check script
         Try
-            For Each i As String In Directory.GetDirectories("")
+            For Each i As String In Directory.GetDirectories(System.Windows.Forms.Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "Direwolf20" Then
                     Else
@@ -1392,7 +1392,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles("")
+            For Each i As String In Directory.GetFiles(System.Windows.Forms.Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
                     Else
@@ -1405,7 +1405,7 @@ Public Class MainForm
                                     If Path.GetFileName(i) = "MineUK Launcher.xml" Then
                                     Else
                                         Try
-                                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
                                         Catch ex As Exception
                                         End Try
                                     End If
