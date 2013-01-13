@@ -23,7 +23,7 @@ Public Class MainForm
     Dim NewVanillaVersion As String = ""
     Dim VanillaMinecraftVersion As String = ""
 
-    Dim ServerAdminList As String = ""
+    Dim ServerAdminList As String = "".ToLower
     Dim UserIsAdmin As Boolean
     Dim CurrentDirewolf20IsAdmin As Boolean
     Dim CurrentVanillaIsAdmin As Boolean
@@ -432,7 +432,7 @@ Public Class MainForm
             Direwolf20MinecraftVersion = NewDirewolf20Version.Split(" ")(1).Split("-")(0)
             NewVanillaVersion = ServerData.Split(":")(3)
             VanillaMinecraftVersion = VanillaMinecraftVersion.Split(" ")(1).Split("-")(0)
-            ServerAdminList = ServerData.Split(":")(4)
+            ServerAdminList = ServerData.Split(":")(4).ToLower
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
@@ -744,10 +744,10 @@ Public Class MainForm
                 End If
             End If
         End Try
-        LUserFinal = ""
-        LSessionIDFinal = ""
+        LUserFinal = "".ToLower
+        LSessionIDFinal = "".ToLower
         Try
-            LUserFinal = ServerArray(2).ToString
+            LUserFinal = ServerArray(2).ToString.ToLower
         Catch ex As Exception
             If ex.Message = "" Then
             Else
@@ -757,7 +757,7 @@ Public Class MainForm
             End If
         End Try
         Try
-            LSessionIDFinal = ServerArray(3).ToString
+            LSessionIDFinal = ServerArray(3).ToString.ToLower
         Catch ex As Exception
             If ex.Message = "" Then
             Else
