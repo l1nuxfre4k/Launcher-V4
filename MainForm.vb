@@ -14,7 +14,7 @@ Public Class MainForm
     Dim LSessionIDFinal As String
     Dim ServerIsReady As Boolean = False
 
-    Dim CurrentLauncherVersion As String = ProductVersion
+    Dim CurrentLauncherVersion As String = ProductVersion & " Stable"
     Dim NewLauncherVersion As String = ""
     Dim CurrentDirewolf20Version As String = ""
     Dim NewDirewolf20Version As String = ""
@@ -70,7 +70,7 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
-        VersionLabel.Text = "MineUK Launcher V" & ProductVersion & " Stable"
+        VersionLabel.Text = "MineUK Launcher V" & CurrentLauncherVersion
         TextBox1.Text = My.Settings.User
         TextBox2.Text = My.Settings.Password
         StatusLabel.Hide()
