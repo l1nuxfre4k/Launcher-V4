@@ -16,12 +16,16 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion & " Dev"
     Dim NewLauncherVersion As String = ""
+
     Dim CurrentDirewolf20Version As String = ""
     Dim NewDirewolf20Version As String = ""
-    Dim Direwolf20MinecraftVersion As String = ""
+    Dim Direwolf20MCVersion As String = ""
+    Dim Direwolf20MCWebVersion As String = ""
+
     Dim CurrentVanillaVersion As String = ""
     Dim NewVanillaVersion As String = ""
-    Dim VanillaMinecraftVersion As String = ""
+    Dim VanillaMCVersion As String = ""
+    Dim VanillaMCWebVersion As String = ""
 
     Dim ServerAdminList As String = "".ToLower
     Dim UserIsAdmin As Boolean
@@ -429,9 +433,11 @@ Public Class MainForm
             sr.Close()
             NewLauncherVersion = ServerData.Split(":")(1)
             NewDirewolf20Version = ServerData.Split(":")(2)
-            Direwolf20MinecraftVersion = NewDirewolf20Version.Split(" ")(1).Split("-")(0)
+            Direwolf20MCVersion = NewDirewolf20Version.Split(" ")(1).Split("-")(0)
+            Direwolf20MCWebVersion = Direwolf20MCVersion.Replace(".", "_")
             NewVanillaVersion = ServerData.Split(":")(3)
-            VanillaMinecraftVersion = VanillaMinecraftVersion.Split(" ")(1).Split("-")(0)
+            VanillaMCVersion = VanillaMCVersion.Split(" ")(1).Split("-")(0)
+            VanillaMCWebVersion = VanillaMCVersion.Replace(".", "_")
             ServerAdminList = ServerData.Split(":")(4).ToLower
             ServerStream.Dispose()
             sr.Dispose()
@@ -472,7 +478,7 @@ Public Class MainForm
     Private Sub BackgroundWorkerUpdate2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate2.DoWork
         'Start of file check script
         Try
-            For Each i As String In Directory.GetDirectories(System.Windows.Forms.Application.StartupPath)
+            For Each i As String In Directory.GetDirectories(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "Direwolf20" Then
                     Else
@@ -540,7 +546,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles(System.Windows.Forms.Application.StartupPath)
+            For Each i As String In Directory.GetFiles(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
                     Else
@@ -719,7 +725,7 @@ Public Class MainForm
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
         'Start of file check script
         Try
-            For Each i As String In Directory.GetDirectories(System.Windows.Forms.Application.StartupPath)
+            For Each i As String In Directory.GetDirectories(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "Direwolf20" Then
                     Else
@@ -787,7 +793,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles(System.Windows.Forms.Application.StartupPath)
+            For Each i As String In Directory.GetFiles(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
                     Else
@@ -1008,13 +1014,13 @@ Public Class MainForm
         If NewDirewolf20Version = "" Then
             GoTo 1
         End If
-        If Direwolf20MinecraftVersion = "" Then
+        If Direwolf20MCVersion = "" Then
             GoTo 1
         End If
         If NewVanillaVersion = "" Then
             GoTo 1
         End If
-        If VanillaMinecraftVersion = "" Then
+        If VanillaMCVersion = "" Then
             GoTo 1
         End If
         If ServerAdminList = "" Then
@@ -1038,84 +1044,84 @@ Public Class MainForm
         If RadioButton1.Checked = True Then
             If UserIsAdmin = True Then
                 If CheckBox1.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewDirewolf20Version = CurrentDirewolf20Version Then
                     If CurrentDirewolf20IsAdmin = False Then
-                        StatusLabel.Text = "Downloading Minecraft " & Direwolf20MinecraftVersion & "..."
+                        StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewDirewolf20Version = CurrentDirewolf20Version Then
                     If CurrentDirewolf20IsAdmin = True Then
-                        StatusLabel.Text = "Downloading Minecraft " & Direwolf20MinecraftVersion & "..."
+                        StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             End If
         Else
             If UserIsAdmin = True Then
                 If CheckBox1.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewVanillaVersion = CurrentVanillaVersion Then
                     If CurrentVanillaIsAdmin = False Then
-                        StatusLabel.Text = "Downloading Minecraft " & VanillaMinecraftVersion & "..."
+                        StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewVanillaVersion = CurrentVanillaVersion Then
                     If CurrentVanillaIsAdmin = True Then
-                        StatusLabel.Text = "Downloading Minecraft " & VanillaMinecraftVersion & "..."
+                        StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMinecraftVersion & "..."
+                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMinecraftVersion.Replace(".", "_") & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             End If
@@ -1324,7 +1330,7 @@ Public Class MainForm
         Thread.Sleep(200)
         'Start of file check script
         Try
-            For Each i As String In Directory.GetDirectories(System.Windows.Forms.Application.StartupPath)
+            For Each i As String In Directory.GetDirectories(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "Direwolf20" Then
                     Else
@@ -1392,7 +1398,7 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
-            For Each i As String In Directory.GetFiles(System.Windows.Forms.Application.StartupPath)
+            For Each i As String In Directory.GetFiles(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
                     Else
