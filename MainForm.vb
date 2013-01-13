@@ -436,7 +436,7 @@ Public Class MainForm
             Direwolf20MCVersion = NewDirewolf20Version.Split(" ")(1).Split("-")(0)
             Direwolf20MCWebVersion = Direwolf20MCVersion.Replace(".", "_")
             NewVanillaVersion = ServerData.Split(":")(3)
-            VanillaMCVersion = VanillaMCVersion.Split(" ")(1).Split("-")(0)
+            VanillaMCVersion = NewVanillaVersion.Split(" ")(1).Split("-")(0)
             VanillaMCWebVersion = VanillaMCVersion.Replace(".", "_")
             ServerAdminList = ServerData.Split(":")(4).ToLower
             ServerStream.Dispose()
@@ -1017,10 +1017,16 @@ Public Class MainForm
         If Direwolf20MCVersion = "" Then
             GoTo 1
         End If
+        If Direwolf20MCWebVersion = "" Then
+            GoTo 1
+        End If
         If NewVanillaVersion = "" Then
             GoTo 1
         End If
         If VanillaMCVersion = "" Then
+            GoTo 1
+        End If
+        If VanillaMCWebVersion = "" Then
             GoTo 1
         End If
         If ServerAdminList = "" Then
@@ -1046,40 +1052,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewDirewolf20Version = CurrentDirewolf20Version Then
                     If CurrentDirewolf20IsAdmin = False Then
                         StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewDirewolf20Version = CurrentDirewolf20Version Then
                     If CurrentDirewolf20IsAdmin = True Then
                         StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             End If
@@ -1088,40 +1094,40 @@ Public Class MainForm
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewVanillaVersion = CurrentVanillaVersion Then
                     If CurrentVanillaIsAdmin = False Then
                         StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             Else
                 If CheckBox1.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
                 If NewVanillaVersion = CurrentVanillaVersion Then
                     If CurrentVanillaIsAdmin = True Then
                         StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                         ProgressBar1.Style = ProgressBarStyle.Blocks
-                        WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     ProgressBar1.Style = ProgressBarStyle.Blocks
-                    WC2.DownloadFileAsync(New Uri("http://assets.mojang.com/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "minecraft.jar")
                     GoTo 2
                 End If
             End If
@@ -1132,7 +1138,7 @@ Public Class MainForm
 1:      StatusLabel.Text = ("ERROR!")
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
-        MsgBox("There was an unknown error!")
+        MsgBox("There was a problem fetching data from MineUK!")
         StatusLabel.Hide()
         ProgressBar1.Hide()
         Button1.Enabled = True
