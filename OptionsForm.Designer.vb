@@ -31,6 +31,8 @@ Partial Class OptionsForm
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.SuspendLayout()
         '
         'Label1
@@ -115,6 +117,19 @@ Partial Class OptionsForm
         Me.CheckBox1.Text = "Show the dev console"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
+        'Button2
+        '
+        Me.Button2.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.Button2.Location = New System.Drawing.Point(151, 147)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(40, 23)
+        Me.Button2.TabIndex = 8
+        Me.Button2.Text = "MOO"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'BackgroundWorker1
+        '
+        '
         'OptionsForm
         '
         Me.AcceptButton = Me.Button1
@@ -123,6 +138,7 @@ Partial Class OptionsForm
         Me.CancelButton = Me.Button1
         Me.ClientSize = New System.Drawing.Size(284, 182)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label2)
@@ -148,4 +164,6 @@ Partial Class OptionsForm
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
+    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 End Class
