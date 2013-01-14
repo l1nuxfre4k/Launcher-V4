@@ -5,7 +5,7 @@ Public Class OptionsForm
 
     Dim Loaded As Boolean = False
 
-    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles Button1.Click, RadioButton1.Click, RadioButton2.Click, RadioButton3.Click, RadioButton4.Click, CheckBox1.Click
+    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles OKButton.Click, MooButton.Click, RadioButton1.Click, RadioButton2.Click, RadioButton3.Click, RadioButton4.Click, ConsoleCheckBox.Click
         If Loaded = True Then
             My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
         End If
@@ -24,11 +24,11 @@ Public Class OptionsForm
         If My.Settings.RAM = 4096 Then
             RadioButton4.Checked = True
         End If
-        CheckBox1.Checked = My.Settings.Debug
+        ConsoleCheckBox.Checked = My.Settings.Debug
         Loaded = True
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub OKButton_Click(sender As Object, e As EventArgs) Handles OKButton.Click
         If RadioButton1.Checked = True Then
             My.Settings.RAM = 512
         End If
@@ -41,12 +41,12 @@ Public Class OptionsForm
         If RadioButton4.Checked = True Then
             My.Settings.RAM = 4096
         End If
-        My.Settings.Debug = CheckBox1.Checked
+        My.Settings.Debug = ConsoleCheckBox.Checked
         MainForm.Enabled = True
         Me.Close()
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged, RadioButton4.CheckedChanged
+    Private Sub RadioButton_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged, RadioButton4.CheckedChanged
         If RadioButton1.Checked = True Then
             My.Settings.RAM = 512
         End If
@@ -61,18 +61,18 @@ Public Class OptionsForm
         End If
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        My.Settings.Debug = CheckBox1.Checked
+    Private Sub ConsoleCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles ConsoleCheckBox.CheckedChanged
+        My.Settings.Debug = ConsoleCheckBox.Checked
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub MooButton_Click(sender As Object, e As EventArgs) Handles MooButton.Click
         Me.Enabled = False
         Me.Hide()
         MainForm.Hide()
-        BackgroundWorker1.RunWorkerAsync()
+        MooWorker.RunWorkerAsync()
     End Sub
 
-    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
+    Private Sub MooWorker_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles MooWorker.DoWork
         'Check if script.bat exist
         If My.Computer.FileSystem.FileExists("script.bat") Then
             Try
@@ -111,7 +111,7 @@ Public Class OptionsForm
         Moo.Close()
     End Sub
 
-    Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+    Private Sub MooWorker_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles MooWorker.RunWorkerCompleted
         MainForm.Show()
         Me.Show()
         Me.Enabled = True

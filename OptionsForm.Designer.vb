@@ -29,10 +29,10 @@ Partial Class OptionsForm
         Me.RadioButton3 = New System.Windows.Forms.RadioButton()
         Me.RadioButton4 = New System.Windows.Forms.RadioButton()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.OKButton = New System.Windows.Forms.Button()
+        Me.ConsoleCheckBox = New System.Windows.Forms.CheckBox()
+        Me.MooButton = New System.Windows.Forms.Button()
+        Me.MooWorker = New System.ComponentModel.BackgroundWorker()
         Me.SuspendLayout()
         '
         'Label1
@@ -97,50 +97,50 @@ Partial Class OptionsForm
         Me.Label2.TabIndex = 5
         Me.Label2.Text = resources.GetString("Label2.Text")
         '
-        'Button1
+        'OKButton
         '
-        Me.Button1.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button1.Location = New System.Drawing.Point(197, 147)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "OK"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.OKButton.Location = New System.Drawing.Point(197, 147)
+        Me.OKButton.Name = "OKButton"
+        Me.OKButton.Size = New System.Drawing.Size(75, 23)
+        Me.OKButton.TabIndex = 6
+        Me.OKButton.Text = "OK"
+        Me.OKButton.UseVisualStyleBackColor = True
         '
-        'CheckBox1
+        'ConsoleCheckBox
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(12, 153)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(132, 17)
-        Me.CheckBox1.TabIndex = 7
-        Me.CheckBox1.Text = "Show the dev console"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.ConsoleCheckBox.AutoSize = True
+        Me.ConsoleCheckBox.Location = New System.Drawing.Point(12, 153)
+        Me.ConsoleCheckBox.Name = "ConsoleCheckBox"
+        Me.ConsoleCheckBox.Size = New System.Drawing.Size(132, 17)
+        Me.ConsoleCheckBox.TabIndex = 7
+        Me.ConsoleCheckBox.Text = "Show the dev console"
+        Me.ConsoleCheckBox.UseVisualStyleBackColor = True
         '
-        'Button2
+        'MooButton
         '
-        Me.Button2.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button2.Location = New System.Drawing.Point(151, 147)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(40, 23)
-        Me.Button2.TabIndex = 8
-        Me.Button2.Text = "MOO"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.MooButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.MooButton.Location = New System.Drawing.Point(151, 147)
+        Me.MooButton.Name = "MooButton"
+        Me.MooButton.Size = New System.Drawing.Size(40, 23)
+        Me.MooButton.TabIndex = 8
+        Me.MooButton.Text = "MOO"
+        Me.MooButton.UseVisualStyleBackColor = True
         '
-        'BackgroundWorker1
+        'MooWorker
         '
         '
         'OptionsForm
         '
-        Me.AcceptButton = Me.Button1
+        Me.AcceptButton = Me.OKButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.CancelButton = Me.Button1
+        Me.CancelButton = Me.OKButton
         Me.ClientSize = New System.Drawing.Size(284, 182)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.CheckBox1)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.MooButton)
+        Me.Controls.Add(Me.ConsoleCheckBox)
+        Me.Controls.Add(Me.OKButton)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.RadioButton4)
         Me.Controls.Add(Me.RadioButton3)
@@ -162,8 +162,8 @@ Partial Class OptionsForm
     Friend WithEvents RadioButton3 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton4 As System.Windows.Forms.RadioButton
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
-    Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents OKButton As System.Windows.Forms.Button
+    Friend WithEvents ConsoleCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents MooButton As System.Windows.Forms.Button
+    Friend WithEvents MooWorker As System.ComponentModel.BackgroundWorker
 End Class
