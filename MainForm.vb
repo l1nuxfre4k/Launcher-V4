@@ -690,7 +690,7 @@ Public Class MainForm
             OldPlayersSt = "BAD"
         End If
         If RadioButton2.Checked = True Then
-            My.Settings.ModPack = "Vannila"
+            My.Settings.ModPack = "Vanilla"
             StName = "vanilla"
             OldPlayersSt = "BAD"
         End If
