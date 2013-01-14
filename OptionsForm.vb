@@ -66,6 +66,7 @@ Public Class OptionsForm
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Button2.Enabled = False
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
@@ -245,33 +246,31 @@ Public Class OptionsForm
         Writer = My.Computer.FileSystem.OpenTextFileWriter("script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
-        Writer.WriteLine("title apt-get moo")
-        Writer.WriteLine("echo # apt-get moo")
-        Writer.WriteLine("echo (__)")
-        Writer.WriteLine("echo (oo)")
-        Writer.WriteLine("echo /------\/")
-        Writer.WriteLine("echo / | ||")
-        Writer.WriteLine("echo * /\---/\")
-        Writer.WriteLine("echo ~~ ~~")
-        Writer.WriteLine("echo ....""" & "Have you mooed today?""" & "...")
-        Writer.WriteLine("ping 127.0.0.1 -n 5 > nul")
         Writer.WriteLine("CLS")
+        Writer.WriteLine("title " & """apt-get moo""")
+        Writer.WriteLine("echo " & """# apt-get moo""")
+        Writer.WriteLine("echo " & """(__)""")
+        Writer.WriteLine("echo " & """(oo)")
+        Writer.WriteLine("echo " & """/------\/""")
+        Writer.WriteLine("echo " & """/ | ||""")
+        Writer.WriteLine("echo " & """* /\---/\""")
+        Writer.WriteLine("echo " & """~~ ~~""")
+        Writer.WriteLine("echo " & """....'Have you mooed today?'...""")
+        Writer.WriteLine("ping 127.0.0.1 -n 5 > nul")
+        Writer.WriteLine("pause")
         Writer.WriteLine("DEL script.bat")
         Writer.Close()
         Thread.Sleep(150)
         Writer.Dispose()
         Thread.Sleep(100)
         'Launch
-        Dim ClientStarter As Process
-        ClientStarter = New Process()
-        ClientStarter.StartInfo.FileName = "script.bat"
-        If My.Settings.Debug = True Then
-        Else : ClientStarter.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-        End If
-        ClientStarter.Start()
+        Dim Moo As Process
+        Moo = New Process()
+        Moo.StartInfo.FileName = "script.bat"
+        Moo.Start()
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-
+        Button2.Enabled = True
     End Sub
 End Class
