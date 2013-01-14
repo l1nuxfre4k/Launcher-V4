@@ -66,199 +66,38 @@ Public Class OptionsForm
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Button2.Enabled = False
+        Me.Enabled = False
+        Me.Hide()
+        MainForm.Hide()
         BackgroundWorker1.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
-        'Start of file check script
-        Try
-            For Each i As String In Directory.GetDirectories(Application.StartupPath)
-                Try
-                    If Path.GetFileName(i) = "Direwolf20" Then
-                    Else
-                        If Path.GetFileName(i) = "Vanilla" Then
-                        Else
-                            Try
-                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                            Catch ex As Exception
-                            End Try
-                        End If
-                    End If
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-        End Try
-        Try
-            If My.Computer.FileSystem.DirectoryExists("Direwolf20\.minecraft") Then
-            Else
-                Try
-                    My.Computer.FileSystem.CreateDirectory("Direwolf20\.minecraft")
-                Catch ex As Exception
-                End Try
-            End If
-        Catch ex As Exception
-        End Try
-        Try
-            For Each i As String In Directory.GetDirectories("Direwolf20")
-                Try
-                    If Path.GetFileName(i) = ".minecraft" Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                        Catch ex As Exception
-                        End Try
-                    End If
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-        End Try
-        Try
-            If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
-            Else
-                Try
-                    My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
-                Catch ex As Exception
-                End Try
-            End If
-        Catch ex As Exception
-        End Try
-        Try
-            For Each i As String In Directory.GetDirectories("Vanilla")
-                Try
-                    If Path.GetFileName(i) = ".minecraft" Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                        Catch ex As Exception
-                        End Try
-                    End If
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-        End Try
-        Try
-            For Each i As String In Directory.GetFiles(Application.StartupPath)
-                Try
-                    If Path.GetFileName(i) = "7za.exe" Then
-                    Else
-                        If Path.GetFileName(i) = "click.wav" Then
-                        Else
-                            If Path.GetFileName(i) = "MineUK Launcher.exe" Then
-                            Else
-                                If Path.GetFileName(i) = "MineUK Launcher.exe.config" Then
-                                Else
-                                    If Path.GetFileName(i) = "MineUK Launcher.xml" Then
-                                    Else
-                                        Try
-                                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                                        Catch ex As Exception
-                                        End Try
-                                    End If
-                                End If
-                            End If
-                        End If
-                    End If
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-        End Try
-        Try
-            If My.Computer.FileSystem.FileExists(Environ("temp") & "\MineUK Installer.exe") Then
-                Try
-                    My.Computer.FileSystem.DeleteFile(Environ("temp") & "\MineUK Installer.exe")
-                Catch ex As Exception
-                End Try
-            End If
-        Catch ex As Exception
-        End Try
-        Try
-            For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
-                Try
-                    If Path.GetFileName(i).Contains("log") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    If Path.GetFileName(i).Contains("optifog") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    If Path.GetFileName(i).Contains("lck") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-        End Try
-        Try
-            For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
-                Try
-                    If Path.GetFileName(i).Contains("log") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    If Path.GetFileName(i).Contains("optifog") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    If Path.GetFileName(i).Contains("lck") Then
-                        Try
-                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
-                        Catch ex As Exception
-                        End Try
-                    End If
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-        End Try
-        'End of file check script
+        'Check if script.bat exist
+        If My.Computer.FileSystem.FileExists("script.bat") Then
+            Try
+                My.Computer.FileSystem.DeleteFile("script.bat")
+            Catch ex As Exception
+            End Try
+        End If
         'Write to script.bat
         Dim Writer As StreamWriter
         Writer = My.Computer.FileSystem.OpenTextFileWriter("script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("CLS")
-        Writer.WriteLine("title " & """apt-get moo""")
-        Writer.WriteLine("echo " & """# apt-get moo""")
-        Writer.WriteLine("echo " & """(__)""")
-        Writer.WriteLine("echo " & """(oo)")
-        Writer.WriteLine("echo " & """/------\/""")
-        Writer.WriteLine("echo " & """/ | ||""")
-        Writer.WriteLine("echo " & """* /\---/\""")
-        Writer.WriteLine("echo " & """~~ ~~""")
-        Writer.WriteLine("echo " & """....'Have you mooed today?'...""")
-        Writer.WriteLine("ping 127.0.0.1 -n 5 > nul")
-        Writer.WriteLine("pause")
+        Writer.WriteLine("title apt-get moo")
+        Writer.WriteLine("echo (__)")
+        Writer.WriteLine("echo (oo)")
+        Writer.WriteLine("echo /------\/")
+        Writer.WriteLine("echo / / //")
+        Writer.WriteLine("echo * /\---/\")
+        Writer.WriteLine("echo ~~ ~~")
+        Writer.WriteLine("echo ...Have you mooed today?...")
+        Writer.WriteLine("ping 127.0.0.1 -n 3 > nul")
+        Writer.WriteLine("CLS")
         Writer.WriteLine("DEL script.bat")
+        Writer.WriteLine("CLS")
         Writer.Close()
         Thread.Sleep(150)
         Writer.Dispose()
@@ -268,9 +107,13 @@ Public Class OptionsForm
         Moo = New Process()
         Moo.StartInfo.FileName = "script.bat"
         Moo.Start()
+        Moo.WaitForExit()
+        Moo.Close()
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        Button2.Enabled = True
+        MainForm.Show()
+        Me.Show()
+        Me.Enabled = True
     End Sub
 End Class
