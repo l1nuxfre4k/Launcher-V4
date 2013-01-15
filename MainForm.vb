@@ -49,6 +49,7 @@ Public Class MainForm
     Dim WithEvents WC1 As New WebClient
     Dim WithEvents WC2 As New WebClient
     Dim WithEvents WC3 As New WebClient
+    Dim WithEvents WC4 As New WebClient
 
     Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles UpdateCheckBox.Click, RadioButton1.Click, RadioButton2.Click, LogoPanel.Click, OptionsButton.Click, LoginButton.Click
         My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
@@ -1064,212 +1065,77 @@ Public Class MainForm
             WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
             GoTo 2
         End If
-        If RadioButton1.Checked = True Then
-            If UserIsAdmin = True Then
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
-                    GoTo 2
-                End If
-                If NewDirewolf20Version = CurrentDirewolf20Version Then
-                    If CurrentDirewolf20IsAdmin = False Then
-                        StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
-                        If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
-                        Else
-                            Try
-                                My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
-                            Catch ex As Exception
-                            End Try
-                        End If
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
-                        GoTo 2
-                    End If
+        If UpdateCheckBox.Checked = True Then
+            If RadioButton1.Checked = True Then
+                StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
+                If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
                 Else
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
-                    GoTo 2
+                    Try
+                        My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
+                    Catch ex As Exception
+                    End Try
                 End If
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
+                GoTo 2
             Else
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
-                    GoTo 2
-                End If
-                If NewDirewolf20Version = CurrentDirewolf20Version Then
-                    If CurrentDirewolf20IsAdmin = True Then
-                        StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
-                        If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
-                        Else
-                            Try
-                                My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
-                            Catch ex As Exception
-                            End Try
-                        End If
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
-                        GoTo 2
-                    End If
+                StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
+                If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
                 Else
-                    StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
-                    GoTo 2
+                    Try
+                        My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
+                    Catch ex As Exception
+                    End Try
                 End If
-            End If
-        Else
-            If UserIsAdmin = True Then
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
-                    GoTo 2
-                End If
-                If NewVanillaVersion = CurrentVanillaVersion Then
-                    If CurrentVanillaIsAdmin = False Then
-                        StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
-                        If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
-                        Else
-                            Try
-                                My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
-                            Catch ex As Exception
-                            End Try
-                        End If
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
-                        GoTo 2
-                    End If
-                Else
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
-                    GoTo 2
-                End If
-            Else
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
-                    GoTo 2
-                End If
-                If NewVanillaVersion = CurrentVanillaVersion Then
-                    If CurrentVanillaIsAdmin = True Then
-                        StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
-                        If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
-                        Else
-                            Try
-                                My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
-                            Catch ex As Exception
-                            End Try
-                        End If
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
-                        GoTo 2
-                    End If
-                Else
-                    StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
-                    If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
-                    Else
-                        Try
-                            My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
-                        Catch ex As Exception
-                        End Try
-                    End If
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
-                    GoTo 2
-                End If
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
+                GoTo 2
             End If
         End If
-        StatusLabel.Text = "Launching..."
+        If RadioButton1.Checked = True Then
+            If NewDirewolf20Version = CurrentDirewolf20Version Then
+            Else
+                StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
+                If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
+                Else
+                    Try
+                        My.Computer.FileSystem.CreateDirectory("Direwolf20/Jar")
+                    Catch ex As Exception
+                    End Try
+                End If
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
+                GoTo 2
+            End If
+        Else
+            If NewVanillaVersion = CurrentVanillaVersion Then
+            Else
+                StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
+                If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
+                Else
+                    Try
+                        My.Computer.FileSystem.CreateDirectory("Vanilla/Jar")
+                    Catch ex As Exception
+                    End Try
+                End If
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
+                GoTo 2
+            End If
+        End If
+        StatusLabel.Text = "Cleaning Up..."
         BackgroundWorker6.RunWorkerAsync()
         GoTo 2
 1:      StatusLabel.Text = ("ERROR!")
@@ -1277,7 +1143,7 @@ Public Class MainForm
         ProgressBar1.Style = ProgressBarStyle.Blocks
         ProgressLabel.Text = ("0%")
         ProgressLabel.Hide()
-        MsgBox("There was a problem fetching data from MineUK!")
+        MsgBox("There was an unknown error!")
         StatusLabel.Hide()
         ProgressBar1.Hide()
         OptionsButton.Enabled = True
@@ -1307,125 +1173,52 @@ Public Class MainForm
     End Sub
 
     Private Sub WC2_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC2.DownloadFileCompleted
-        If RadioButton1.Checked = True Then
-            If UserIsAdmin = True Then
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
-                    GoTo 2
-                End If
-                If NewDirewolf20Version = CurrentDirewolf20Version Then
-                    If CurrentDirewolf20IsAdmin = False Then
-                        StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
-                        GoTo 2
-                    End If
-                Else
-                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
-                    GoTo 2
-                End If
+        If My.Computer.FileSystem.FileExists("files.7z") Then
+            Try
+                My.Computer.FileSystem.DeleteFile("files.7z")
+            Catch ex As Exception
+            End Try
+        End If
+        If UpdateCheckBox.Checked = True Then
+            If RadioButton1.Checked = True Then
+                StatusLabel.Text = "Downloading LWJGL..."
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/lwjgl.7z"), "files.7z")
+                GoTo 2
             Else
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
-                    GoTo 2
-                End If
-                If NewDirewolf20Version = CurrentDirewolf20Version Then
-                    If CurrentDirewolf20IsAdmin = True Then
-                        StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
-                        GoTo 2
-                    End If
-                Else
-                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
-                    GoTo 2
-                End If
+                StatusLabel.Text = "Downloading LWJGL..."
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/lwjgl.7z"), "files.7z")
+                GoTo 2
+            End If
+        End If
+        If RadioButton1.Checked = True Then
+            If NewDirewolf20Version = CurrentDirewolf20Version Then
+            Else
+                StatusLabel.Text = "Downloading LWJGL..."
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/lwjgl.7z"), "files.7z")
+                GoTo 2
             End If
         Else
-            If UserIsAdmin = True Then
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
-                    GoTo 2
-                End If
-                If NewVanillaVersion = CurrentVanillaVersion Then
-                    If CurrentVanillaIsAdmin = False Then
-                        StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
-                        GoTo 2
-                    End If
-                Else
-                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
-                    GoTo 2
-                End If
+            If NewVanillaVersion = CurrentVanillaVersion Then
             Else
-                If UpdateCheckBox.Checked = True Then
-                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
-                    GoTo 2
-                End If
-                If NewVanillaVersion = CurrentVanillaVersion Then
-                    If CurrentVanillaIsAdmin = True Then
-                        StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
-                        ProgressBar1.Value = 0
-                        ProgressBar1.Style = ProgressBarStyle.Blocks
-                        ProgressLabel.Text = ("0%")
-                        ProgressLabel.Show()
-                        WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
-                        GoTo 2
-                    End If
-                Else
-                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
-                    ProgressBar1.Value = 0
-                    ProgressBar1.Style = ProgressBarStyle.Blocks
-                    ProgressLabel.Text = ("0%")
-                    ProgressLabel.Show()
-                    WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
-                    GoTo 2
-                End If
+                StatusLabel.Text = "Downloading LWJGL..."
+                ProgressBar1.Value = 0
+                ProgressBar1.Style = ProgressBarStyle.Blocks
+                ProgressLabel.Text = ("0%")
+                ProgressLabel.Show()
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/lwjgl.7z"), "files.7z")
+                GoTo 2
             End If
         End If
 1:      StatusLabel.Text = ("ERROR!")
@@ -1491,11 +1284,179 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
-        StatusLabel.Text = "Generating new files..."
+        StatusLabel.Text = "Preparing jar and libs..."
         BackgroundWorker4.RunWorkerAsync()
     End Sub
 
     Private Sub BackgroundWorker4_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker4.DoWork
+        Dim objProcesss As Process
+        objProcesss = New Process()
+        objProcesss.StartInfo.FileName = "7za.exe"
+        objProcesss.StartInfo.Arguments = "x files.7z * -y"
+        objProcesss.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+        objProcesss.Start()
+        objProcesss.WaitForExit()
+        objProcesss.Close()
+        Thread.Sleep(200)
+    End Sub
+
+    Private Sub BackgroundWorker4_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker4.RunWorkerCompleted
+        If My.Computer.FileSystem.FileExists("files.7z") Then
+            Try
+                My.Computer.FileSystem.DeleteFile("files.7z")
+            Catch ex As Exception
+            End Try
+        End If
+        If RadioButton1.Checked = True Then
+            If UserIsAdmin = True Then
+                If UpdateCheckBox.Checked = True Then
+                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
+                    GoTo 2
+                End If
+                If NewDirewolf20Version = CurrentDirewolf20Version Then
+                    If CurrentDirewolf20IsAdmin = False Then
+                        StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                        ProgressBar1.Value = 0
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
+                        WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
+                    GoTo 2
+                End If
+            Else
+                If UpdateCheckBox.Checked = True Then
+                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
+                    GoTo 2
+                End If
+                If NewDirewolf20Version = CurrentDirewolf20Version Then
+                    If CurrentDirewolf20IsAdmin = True Then
+                        StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                        ProgressBar1.Value = 0
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
+                        WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
+                    GoTo 2
+                End If
+            End If
+        Else
+            If UserIsAdmin = True Then
+                If UpdateCheckBox.Checked = True Then
+                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
+                    GoTo 2
+                End If
+                If NewVanillaVersion = CurrentVanillaVersion Then
+                    If CurrentVanillaIsAdmin = False Then
+                        StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                        ProgressBar1.Value = 0
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
+                        WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
+                    GoTo 2
+                End If
+            Else
+                If UpdateCheckBox.Checked = True Then
+                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
+                    GoTo 2
+                End If
+                If NewVanillaVersion = CurrentVanillaVersion Then
+                    If CurrentVanillaIsAdmin = True Then
+                        StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                        ProgressBar1.Value = 0
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
+                        WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
+                    GoTo 2
+                End If
+            End If
+        End If
+1:      StatusLabel.Text = ("ERROR!")
+        ProgressBar1.Value = 0
+        ProgressBar1.Style = ProgressBarStyle.Blocks
+        ProgressLabel.Text = ("0%")
+        ProgressLabel.Hide()
+        MsgBox("There was an unknown error!")
+        StatusLabel.Hide()
+        ProgressBar1.Hide()
+        OptionsButton.Enabled = True
+        LoginButton.Enabled = True
+        UserTextBox.Enabled = True
+        PasswordTextBox.Enabled = True
+        UpdateCheckBox.Enabled = True
+2:
+    End Sub
+
+    Private Sub WC4_DownloadProgressChanged(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles WC4.DownloadProgressChanged
+        ProgressBar1.Value = e.ProgressPercentage
+        ProgressLabel.Text = ProgressBar1.Value & "%"
+    End Sub
+
+    Private Sub WC4_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC4.DownloadFileCompleted
+        ProgressBar1.Style = ProgressBarStyle.Marquee
+        ProgressLabel.Hide()
+        StatusLabel.Text = "Setting Up New Modpack..."
+        BackgroundWorker5.RunWorkerAsync()
+    End Sub
+
+    Private Sub BackgroundWorker5_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker5.DoWork
         Dim Writer As StreamWriter
         'Write extract info
         Writer = My.Computer.FileSystem.OpenTextFileWriter("script.bat", True)
@@ -1549,14 +1510,15 @@ Public Class MainForm
             End If
             My.Computer.FileSystem.MoveFile("Vanilla\Jar\minecraft.jar", "Vanilla\.minecraft\bin\minecraft.jar")
         End If
+        
     End Sub
 
-    Private Sub BackgroundWorker4_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker4.RunWorkerCompleted
-        StatusLabel.Text = "Checking files..."
-        BackgroundWorker5.RunWorkerAsync()
+    Private Sub BackgroundWorker5_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker5.RunWorkerCompleted
+        StatusLabel.Text = "Cleaning Up..."
+        BackgroundWorker6.RunWorkerAsync()
     End Sub
 
-    Private Sub BackgroundWorker5_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker5.DoWork
+    Private Sub BackgroundWorker6_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker6.DoWork
         Thread.Sleep(200)
         'Start of file check script
         Try
@@ -1730,12 +1692,12 @@ Public Class MainForm
         'End of file check script
     End Sub
 
-    Private Sub BackgroundWorker5_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker5.RunWorkerCompleted
+    Private Sub BackgroundWorker6_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker6.RunWorkerCompleted
         StatusLabel.Text = "Launching..."
-        BackgroundWorker6.RunWorkerAsync()
+        BackgroundWorker7.RunWorkerAsync()
     End Sub
 
-    Private Sub BackgroundWorker6_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker6.DoWork
+    Private Sub BackgroundWorker7_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker7.DoWork
         Dim Writer As StreamWriter
         'Game script
         If My.Settings.Debug = True Then
@@ -1776,7 +1738,7 @@ Public Class MainForm
         ClientStarter.Start()
     End Sub
 
-    Private Sub BackgroundWorker6_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker6.RunWorkerCompleted
+    Private Sub BackgroundWorker7_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker7.RunWorkerCompleted
         Timer1.Enabled = True
     End Sub
 
@@ -1802,5 +1764,4 @@ Public Class MainForm
         SView.X = SView.X + 20
         SplitContainer1.Panel2.AutoScrollPosition = SView
     End Sub
-
 End Class

@@ -40,7 +40,7 @@ Partial Class MainForm
         Me.BackgroundWorker3 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker4 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorker5 = New System.ComponentModel.BackgroundWorker()
-        Me.BackgroundWorker6 = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundWorker7 = New System.ComponentModel.BackgroundWorker()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorkerMojang = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerUpdate2 = New System.ComponentModel.BackgroundWorker()
@@ -51,12 +51,12 @@ Partial Class MainForm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.BackgroundWorker7 = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerNews = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
         Me.ProgressLabel = New System.Windows.Forms.Label()
+        Me.BackgroundWorker6 = New System.ComponentModel.BackgroundWorker()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -177,7 +177,7 @@ Partial Class MainForm
         'BackgroundWorker5
         '
         '
-        'BackgroundWorker6
+        'BackgroundWorker7
         '
         '
         'Timer1
@@ -303,6 +303,9 @@ Partial Class MainForm
         Me.ProgressLabel.Text = "0%"
         Me.ProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'BackgroundWorker6
+        '
+        '
         'MainForm
         '
         Me.AcceptButton = Me.LoginButton
@@ -359,7 +362,7 @@ Partial Class MainForm
     Friend WithEvents BackgroundWorker3 As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorker4 As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorker5 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents BackgroundWorker6 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundWorker7 As System.ComponentModel.BackgroundWorker
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents BackgroundWorkerMojang As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorkerUpdate2 As System.ComponentModel.BackgroundWorker
@@ -367,7 +370,6 @@ Partial Class MainForm
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents VersionLabel As System.Windows.Forms.Label
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
-    Friend WithEvents BackgroundWorker7 As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorkerNews As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorkerNewsWait As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundStatus As System.ComponentModel.BackgroundWorker
@@ -376,5 +378,6 @@ Partial Class MainForm
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents ProgressLabel As System.Windows.Forms.Label
+    Friend WithEvents BackgroundWorker6 As System.ComponentModel.BackgroundWorker
 
 End Class
