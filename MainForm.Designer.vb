@@ -158,9 +158,9 @@ Partial Class MainForm
         Me.StatusLabel.BackColor = System.Drawing.Color.Transparent
         Me.StatusLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusLabel.ForeColor = System.Drawing.Color.Gainsboro
-        Me.StatusLabel.Location = New System.Drawing.Point(318, 407)
+        Me.StatusLabel.Location = New System.Drawing.Point(293, 407)
         Me.StatusLabel.Name = "StatusLabel"
-        Me.StatusLabel.Size = New System.Drawing.Size(200, 18)
+        Me.StatusLabel.Size = New System.Drawing.Size(250, 18)
         Me.StatusLabel.TabIndex = 14
         Me.StatusLabel.Text = "Loading..."
         Me.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
