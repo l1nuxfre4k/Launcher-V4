@@ -1394,7 +1394,7 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
-        StatusLabel.Text = "Preparing LWJGL..."
+        StatusLabel.Text = "Setting Up LWJGL..."
         BackgroundWorker4.RunWorkerAsync()
     End Sub
 
