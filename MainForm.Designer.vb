@@ -25,14 +25,14 @@ Partial Class MainForm
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Logo = New System.Windows.Forms.Panel()
+        Me.OptionsButton = New System.Windows.Forms.Button()
+        Me.LoginButton = New System.Windows.Forms.Button()
+        Me.UserLabel = New System.Windows.Forms.Label()
+        Me.PasswordLabel = New System.Windows.Forms.Label()
+        Me.UserTextBox = New System.Windows.Forms.TextBox()
+        Me.PasswordTextBox = New System.Windows.Forms.TextBox()
+        Me.UpdateCheckBox = New System.Windows.Forms.CheckBox()
+        Me.LogoPanel = New System.Windows.Forms.Panel()
         Me.BackgroundWorkerUpdate1 = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.StatusLabel = New System.Windows.Forms.Label()
@@ -56,6 +56,7 @@ Partial Class MainForm
         Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
+        Me.ProgressLabel = New System.Windows.Forms.Label()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -65,81 +66,81 @@ Partial Class MainForm
         'BackgroundWorker1
         '
         '
-        'Button1
+        'OptionsButton
         '
-        Me.Button1.Location = New System.Drawing.Point(213, 397)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 6
-        Me.Button1.Text = "Options"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.OptionsButton.Location = New System.Drawing.Point(213, 397)
+        Me.OptionsButton.Name = "OptionsButton"
+        Me.OptionsButton.Size = New System.Drawing.Size(75, 23)
+        Me.OptionsButton.TabIndex = 6
+        Me.OptionsButton.Text = "Options"
+        Me.OptionsButton.UseVisualStyleBackColor = True
         '
-        'Button2
+        'LoginButton
         '
-        Me.Button2.Location = New System.Drawing.Point(213, 428)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 7
-        Me.Button2.Text = "Login"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.LoginButton.Location = New System.Drawing.Point(213, 428)
+        Me.LoginButton.Name = "LoginButton"
+        Me.LoginButton.Size = New System.Drawing.Size(75, 23)
+        Me.LoginButton.TabIndex = 7
+        Me.LoginButton.Text = "Login"
+        Me.LoginButton.UseVisualStyleBackColor = True
         '
-        'Label1
+        'UserLabel
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.Label1.Location = New System.Drawing.Point(12, 402)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 13)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Username"
+        Me.UserLabel.AutoSize = True
+        Me.UserLabel.BackColor = System.Drawing.Color.Transparent
+        Me.UserLabel.ForeColor = System.Drawing.Color.Gainsboro
+        Me.UserLabel.Location = New System.Drawing.Point(12, 402)
+        Me.UserLabel.Name = "UserLabel"
+        Me.UserLabel.Size = New System.Drawing.Size(55, 13)
+        Me.UserLabel.TabIndex = 1
+        Me.UserLabel.Text = "Username"
         '
-        'Label2
+        'PasswordLabel
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.Gainsboro
-        Me.Label2.Location = New System.Drawing.Point(12, 433)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(53, 13)
-        Me.Label2.TabIndex = 3
-        Me.Label2.Text = "Password"
+        Me.PasswordLabel.AutoSize = True
+        Me.PasswordLabel.BackColor = System.Drawing.Color.Transparent
+        Me.PasswordLabel.ForeColor = System.Drawing.Color.Gainsboro
+        Me.PasswordLabel.Location = New System.Drawing.Point(12, 433)
+        Me.PasswordLabel.Name = "PasswordLabel"
+        Me.PasswordLabel.Size = New System.Drawing.Size(53, 13)
+        Me.PasswordLabel.TabIndex = 3
+        Me.PasswordLabel.Text = "Password"
         '
-        'TextBox1
+        'UserTextBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(80, 399)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(125, 20)
-        Me.TextBox1.TabIndex = 2
+        Me.UserTextBox.Location = New System.Drawing.Point(80, 399)
+        Me.UserTextBox.Name = "UserTextBox"
+        Me.UserTextBox.Size = New System.Drawing.Size(125, 20)
+        Me.UserTextBox.TabIndex = 2
         '
-        'TextBox2
+        'PasswordTextBox
         '
-        Me.TextBox2.Location = New System.Drawing.Point(80, 428)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.TextBox2.Size = New System.Drawing.Size(125, 20)
-        Me.TextBox2.TabIndex = 4
+        Me.PasswordTextBox.Location = New System.Drawing.Point(80, 428)
+        Me.PasswordTextBox.Name = "PasswordTextBox"
+        Me.PasswordTextBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.PasswordTextBox.Size = New System.Drawing.Size(125, 20)
+        Me.PasswordTextBox.TabIndex = 4
         '
-        'CheckBox1
+        'UpdateCheckBox
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.BackColor = System.Drawing.Color.Transparent
-        Me.CheckBox1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.CheckBox1.Location = New System.Drawing.Point(203, 456)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(91, 17)
-        Me.CheckBox1.TabIndex = 5
-        Me.CheckBox1.Text = "Force Update"
-        Me.CheckBox1.UseVisualStyleBackColor = False
+        Me.UpdateCheckBox.AutoSize = True
+        Me.UpdateCheckBox.BackColor = System.Drawing.Color.Transparent
+        Me.UpdateCheckBox.ForeColor = System.Drawing.Color.Gainsboro
+        Me.UpdateCheckBox.Location = New System.Drawing.Point(203, 456)
+        Me.UpdateCheckBox.Name = "UpdateCheckBox"
+        Me.UpdateCheckBox.Size = New System.Drawing.Size(91, 17)
+        Me.UpdateCheckBox.TabIndex = 5
+        Me.UpdateCheckBox.Text = "Force Update"
+        Me.UpdateCheckBox.UseVisualStyleBackColor = False
         '
-        'Logo
+        'LogoPanel
         '
-        Me.Logo.BackColor = System.Drawing.Color.Transparent
-        Me.Logo.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Logo.Location = New System.Drawing.Point(552, 398)
-        Me.Logo.Name = "Logo"
-        Me.Logo.Size = New System.Drawing.Size(255, 65)
-        Me.Logo.TabIndex = 9
+        Me.LogoPanel.BackColor = System.Drawing.Color.Transparent
+        Me.LogoPanel.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.LogoPanel.Location = New System.Drawing.Point(552, 398)
+        Me.LogoPanel.Name = "LogoPanel"
+        Me.LogoPanel.Size = New System.Drawing.Size(255, 65)
+        Me.LogoPanel.TabIndex = 9
         '
         'BackgroundWorkerUpdate1
         '
@@ -290,27 +291,40 @@ Partial Class MainForm
         'BackgroundStatusWait
         '
         '
+        'ProgressLabel
+        '
+        Me.ProgressLabel.BackColor = System.Drawing.Color.Transparent
+        Me.ProgressLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ProgressLabel.ForeColor = System.Drawing.Color.Gainsboro
+        Me.ProgressLabel.Location = New System.Drawing.Point(319, 454)
+        Me.ProgressLabel.Name = "ProgressLabel"
+        Me.ProgressLabel.Size = New System.Drawing.Size(200, 18)
+        Me.ProgressLabel.TabIndex = 24
+        Me.ProgressLabel.Text = "0%"
+        Me.ProgressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'MainForm
         '
-        Me.AcceptButton = Me.Button2
+        Me.AcceptButton = Me.LoginButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = Global.MineUK_Launcher.My.Resources.Resources.Main
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(854, 480)
+        Me.Controls.Add(Me.ProgressLabel)
         Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.Logo)
+        Me.Controls.Add(Me.LogoPanel)
         Me.Controls.Add(Me.RadioButton2)
         Me.Controls.Add(Me.RadioButton1)
-        Me.Controls.Add(Me.CheckBox1)
+        Me.Controls.Add(Me.UpdateCheckBox)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.PasswordTextBox)
+        Me.Controls.Add(Me.UserTextBox)
+        Me.Controls.Add(Me.PasswordLabel)
+        Me.Controls.Add(Me.UserLabel)
+        Me.Controls.Add(Me.LoginButton)
+        Me.Controls.Add(Me.OptionsButton)
         Me.Controls.Add(Me.VersionLabel)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -330,14 +344,14 @@ Partial Class MainForm
 
     End Sub
     Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
-    Friend WithEvents Logo As System.Windows.Forms.Panel
+    Friend WithEvents OptionsButton As System.Windows.Forms.Button
+    Friend WithEvents LoginButton As System.Windows.Forms.Button
+    Friend WithEvents UserLabel As System.Windows.Forms.Label
+    Friend WithEvents PasswordLabel As System.Windows.Forms.Label
+    Friend WithEvents UserTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents PasswordTextBox As System.Windows.Forms.TextBox
+    Friend WithEvents UpdateCheckBox As System.Windows.Forms.CheckBox
+    Friend WithEvents LogoPanel As System.Windows.Forms.Panel
     Friend WithEvents BackgroundWorkerUpdate1 As System.ComponentModel.BackgroundWorker
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents StatusLabel As System.Windows.Forms.Label
@@ -361,5 +375,6 @@ Partial Class MainForm
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents ProgressLabel As System.Windows.Forms.Label
 
 End Class

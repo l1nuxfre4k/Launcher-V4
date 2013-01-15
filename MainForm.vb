@@ -50,7 +50,7 @@ Public Class MainForm
     Dim WithEvents WC2 As New WebClient
     Dim WithEvents WC3 As New WebClient
 
-    Private Sub CheckBox1_Click(sender As Object, e As EventArgs) Handles CheckBox1.Click, RadioButton1.Click, RadioButton2.Click, Logo.Click, Button1.Click, Button2.Click
+    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles UpdateCheckBox.Click, RadioButton1.Click, RadioButton2.Click, LogoPanel.Click, OptionsButton.Click, LoginButton.Click
         My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
     End Sub
 
@@ -78,10 +78,11 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         VersionLabel.Text = "MineUK Launcher V" & CurrentLauncherVersion
-        TextBox1.Text = My.Settings.User
-        TextBox2.Text = My.Settings.Password
+        UserTextBox.Text = My.Settings.User
+        PasswordTextBox.Text = My.Settings.Password
         StatusLabel.Hide()
         ProgressBar1.Hide()
+        ProgressLabel.Hide()
         If My.Settings.RAM = 512 Then
         ElseIf My.Settings.RAM = 1024 Then
         ElseIf My.Settings.RAM = 2048 Then
@@ -106,58 +107,62 @@ Public Class MainForm
         End If
         Try
             If CommandLineArgs(0) = "auto" Then
-                Button1.Enabled = False
-                Button2.Enabled = False
-                TextBox1.Enabled = False
-                TextBox2.Enabled = False
-                CheckBox1.Enabled = False
-                My.Settings.User = TextBox1.Text
-                My.Settings.Password = TextBox2.Text
+                OptionsButton.Enabled = False
+                LoginButton.Enabled = False
+                UserTextBox.Enabled = False
+                PasswordTextBox.Enabled = False
+                UpdateCheckBox.Enabled = False
+                My.Settings.User = UserTextBox.Text
+                My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
             End If
             If CommandLineArgs(2) = "auto" Then
-                Button1.Enabled = False
-                Button2.Enabled = False
-                TextBox1.Enabled = False
-                TextBox2.Enabled = False
-                CheckBox1.Enabled = False
-                My.Settings.User = TextBox1.Text
-                My.Settings.Password = TextBox2.Text
+                OptionsButton.Enabled = False
+                LoginButton.Enabled = False
+                UserTextBox.Enabled = False
+                PasswordTextBox.Enabled = False
+                UpdateCheckBox.Enabled = False
+                My.Settings.User = UserTextBox.Text
+                My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
             End If
             If CommandLineArgs(0) = "update" Then
-                CheckBox1.Checked = True
-                Button1.Enabled = False
-                Button2.Enabled = False
-                TextBox1.Enabled = False
-                TextBox2.Enabled = False
-                CheckBox1.Enabled = False
-                My.Settings.User = TextBox1.Text
-                My.Settings.Password = TextBox2.Text
+                UpdateCheckBox.Checked = True
+                OptionsButton.Enabled = False
+                LoginButton.Enabled = False
+                UserTextBox.Enabled = False
+                PasswordTextBox.Enabled = False
+                UpdateCheckBox.Enabled = False
+                My.Settings.User = UserTextBox.Text
+                My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
             End If
             If CommandLineArgs(2) = "update" Then
-                CheckBox1.Checked = True
-                Button1.Enabled = False
-                Button2.Enabled = False
-                TextBox1.Enabled = False
-                TextBox2.Enabled = False
-                CheckBox1.Enabled = False
-                My.Settings.User = TextBox1.Text
-                My.Settings.Password = TextBox2.Text
+                UpdateCheckBox.Checked = True
+                OptionsButton.Enabled = False
+                LoginButton.Enabled = False
+                UserTextBox.Enabled = False
+                PasswordTextBox.Enabled = False
+                UpdateCheckBox.Enabled = False
+                My.Settings.User = UserTextBox.Text
+                My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
             End If
         Catch ex As Exception
         End Try
@@ -656,6 +661,7 @@ Public Class MainForm
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "auto" Then
@@ -663,6 +669,7 @@ Public Class MainForm
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(0) = "update" Then
@@ -670,6 +677,7 @@ Public Class MainForm
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "update" Then
@@ -677,13 +685,14 @@ Public Class MainForm
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
+                ProgressLabel.Hide()
                 BackgroundWorker1.RunWorkerAsync()
             End If
         Catch ex As Exception
         End Try
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
+    Private Sub RadioButtons_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
         If RadioButton1.Checked = True Then
             My.Settings.ModPack = "Direwolf20"
             StName = "direwolf20"
@@ -696,25 +705,26 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub OptionsButton_Click(sender As Object, e As EventArgs) Handles OptionsButton.Click
         Me.Enabled = False
-        My.Settings.User = TextBox1.Text
-        My.Settings.Password = TextBox2.Text
+        My.Settings.User = UserTextBox.Text
+        My.Settings.Password = PasswordTextBox.Text
         OptionsForm.Show()
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Button1.Enabled = False
-        Button2.Enabled = False
-        TextBox1.Enabled = False
-        TextBox2.Enabled = False
-        CheckBox1.Enabled = False
-        My.Settings.User = TextBox1.Text
-        My.Settings.Password = TextBox2.Text
+    Private Sub LoginButton_Click(sender As Object, e As EventArgs) Handles LoginButton.Click
+        OptionsButton.Enabled = False
+        LoginButton.Enabled = False
+        UserTextBox.Enabled = False
+        PasswordTextBox.Enabled = False
+        UpdateCheckBox.Enabled = False
+        My.Settings.User = UserTextBox.Text
+        My.Settings.Password = PasswordTextBox.Text
         StatusLabel.Text = "Checking files..."
         ProgressBar1.Style = ProgressBarStyle.Marquee
         StatusLabel.Show()
         ProgressBar1.Show()
+        ProgressLabel.Hide()
         If ServerIsReady = True Then
             ServerIsReady = False
             BackgroundWorkerUpdate1.RunWorkerAsync()
@@ -968,31 +978,36 @@ Public Class MainForm
 
     Private Sub BackgroundWorkerMojang_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerMojang.RunWorkerCompleted
         ProgressBar1.Value = 100
+        ProgressLabel.Text = ProgressBar1.Value & "%"
         If LError = "2" Then
             StatusLabel.Text = ("ERROR!")
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
+            ProgressLabel.Text = ("0%")
+            ProgressLabel.Hide()
             MsgBox("Your login was rejected!")
             StatusLabel.Hide()
             ProgressBar1.Hide()
-            Button1.Enabled = True
-            Button2.Enabled = True
-            TextBox1.Enabled = True
-            TextBox2.Enabled = True
-            CheckBox1.Enabled = True
+            OptionsButton.Enabled = True
+            LoginButton.Enabled = True
+            UserTextBox.Enabled = True
+            PasswordTextBox.Enabled = True
+            UpdateCheckBox.Enabled = True
         End If
         If LError = "3" Then
             StatusLabel.Text = ("ERROR!")
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
+            ProgressLabel.Text = ("0%")
+            ProgressLabel.Hide()
             MsgBox("The login servers are unreachable!")
             StatusLabel.Hide()
             ProgressBar1.Hide()
-            Button1.Enabled = True
-            Button2.Enabled = True
-            TextBox1.Enabled = True
-            TextBox2.Enabled = True
-            CheckBox1.Enabled = True
+            OptionsButton.Enabled = True
+            LoginButton.Enabled = True
+            UserTextBox.Enabled = True
+            PasswordTextBox.Enabled = True
+            UpdateCheckBox.Enabled = True
         End If
         If LError = "" Then
             StatusLabel.Text = "Waiting for server..."
@@ -1008,6 +1023,7 @@ Public Class MainForm
 
     Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
         ProgressBar1.Value = 0
+        ProgressLabel.Text = ProgressBar1.Value & "%"
         If NewLauncherVersion = "" Then
             GoTo 1
         End If
@@ -1044,12 +1060,13 @@ Public Class MainForm
         Else
             StatusLabel.Text = "Downloading new launcher..."
             ProgressBar1.Style = ProgressBarStyle.Marquee
+            ProgressLabel.Hide()
             WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
             GoTo 2
         End If
         If RadioButton1.Checked = True Then
             If UserIsAdmin = True Then
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
                     Else
@@ -1058,7 +1075,10 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
                     GoTo 2
                 End If
@@ -1072,7 +1092,10 @@ Public Class MainForm
                             Catch ex As Exception
                             End Try
                         End If
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
                         GoTo 2
                     End If
@@ -1085,12 +1108,15 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
                     GoTo 2
                 End If
             Else
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
                     If My.Computer.FileSystem.DirectoryExists("Direwolf20/Jar") Then
                     Else
@@ -1099,7 +1125,10 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
                     GoTo 2
                 End If
@@ -1113,7 +1142,10 @@ Public Class MainForm
                             Catch ex As Exception
                             End Try
                         End If
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
                         GoTo 2
                     End If
@@ -1126,14 +1158,17 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & Direwolf20MCWebVersion & "/minecraft.jar"), "Direwolf20/Jar/minecraft.jar")
                     GoTo 2
                 End If
             End If
         Else
             If UserIsAdmin = True Then
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
                     Else
@@ -1142,7 +1177,10 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
                     GoTo 2
                 End If
@@ -1156,7 +1194,10 @@ Public Class MainForm
                             Catch ex As Exception
                             End Try
                         End If
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
                         GoTo 2
                     End If
@@ -1169,12 +1210,15 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
                     GoTo 2
                 End If
             Else
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
                     If My.Computer.FileSystem.DirectoryExists("Vanilla/Jar") Then
                     Else
@@ -1183,7 +1227,10 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
                     GoTo 2
                 End If
@@ -1197,7 +1244,10 @@ Public Class MainForm
                             Catch ex As Exception
                             End Try
                         End If
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
                         GoTo 2
                     End If
@@ -1210,7 +1260,10 @@ Public Class MainForm
                         Catch ex As Exception
                         End Try
                     End If
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & VanillaMCWebVersion & "/minecraft.jar"), "Vanilla/Jar/minecraft.jar")
                     GoTo 2
                 End If
@@ -1222,14 +1275,16 @@ Public Class MainForm
 1:      StatusLabel.Text = ("ERROR!")
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
+        ProgressLabel.Text = ("0%")
+        ProgressLabel.Hide()
         MsgBox("There was a problem fetching data from MineUK!")
         StatusLabel.Hide()
         ProgressBar1.Hide()
-        Button1.Enabled = True
-        Button2.Enabled = True
-        TextBox1.Enabled = True
-        TextBox2.Enabled = True
-        CheckBox1.Enabled = True
+        OptionsButton.Enabled = True
+        LoginButton.Enabled = True
+        UserTextBox.Enabled = True
+        PasswordTextBox.Enabled = True
+        UpdateCheckBox.Enabled = True
 2:
     End Sub
 
@@ -1248,89 +1303,126 @@ Public Class MainForm
 
     Private Sub WC2_DownloadProgressChanged(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles WC2.DownloadProgressChanged
         ProgressBar1.Value = e.ProgressPercentage
+        ProgressLabel.Text = ProgressBar1.Value & "%"
     End Sub
 
     Private Sub WC2_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC2.DownloadFileCompleted
         If RadioButton1.Checked = True Then
             If UserIsAdmin = True Then
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewDirewolf20Version = CurrentDirewolf20Version Then
                     If CurrentDirewolf20IsAdmin = False Then
                         StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewDirewolf20Version = CurrentDirewolf20Version Then
                     If CurrentDirewolf20IsAdmin = True Then
                         StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading " & NewDirewolf20Version & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
                     GoTo 2
                 End If
             End If
         Else
             If UserIsAdmin = True Then
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewVanillaVersion = CurrentVanillaVersion Then
                     If CurrentVanillaIsAdmin = False Then
                         StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
                     GoTo 2
                 End If
             Else
-                If CheckBox1.Checked = True Then
+                If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
                 If NewVanillaVersion = CurrentVanillaVersion Then
                     If CurrentVanillaIsAdmin = True Then
                         StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                        ProgressBar1.Value = 0
                         ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
                         WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
                         GoTo 2
                     End If
                 Else
                     StatusLabel.Text = "Downloading " & NewVanillaVersion & " Pack..."
+                    ProgressBar1.Value = 0
                     ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
                     WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
                     GoTo 2
                 End If
@@ -1339,23 +1431,27 @@ Public Class MainForm
 1:      StatusLabel.Text = ("ERROR!")
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
+        ProgressLabel.Text = ("0%")
+        ProgressLabel.Hide()
         MsgBox("There was an unknown error!")
         StatusLabel.Hide()
         ProgressBar1.Hide()
-        Button1.Enabled = True
-        Button2.Enabled = True
-        TextBox1.Enabled = True
-        TextBox2.Enabled = True
-        CheckBox1.Enabled = True
+        OptionsButton.Enabled = True
+        LoginButton.Enabled = True
+        UserTextBox.Enabled = True
+        PasswordTextBox.Enabled = True
+        UpdateCheckBox.Enabled = True
 2:
     End Sub
 
     Private Sub WC3_DownloadProgressChanged(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles WC3.DownloadProgressChanged
         ProgressBar1.Value = e.ProgressPercentage
+        ProgressLabel.Text = ProgressBar1.Value & "%"
     End Sub
 
     Private Sub WC3_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC3.DownloadFileCompleted
         ProgressBar1.Style = ProgressBarStyle.Marquee
+        ProgressLabel.Hide()
         StatusLabel.Text = "Removing old files..."
         BackgroundWorker3.RunWorkerAsync()
     End Sub
@@ -1689,16 +1785,16 @@ Public Class MainForm
         Me.Close()
     End Sub
 
-    Private Sub Panel1_Click(sender As Object, e As EventArgs) Handles Logo.Click
+    Private Sub Panel1_Click(sender As Object, e As EventArgs) Handles LogoPanel.Click
         Process.Start("http://mineuk.com/")
     End Sub
 
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-        My.Settings.User = TextBox1.Text
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles UserTextBox.TextChanged
+        My.Settings.User = UserTextBox.Text
     End Sub
 
-    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
-        My.Settings.Password = TextBox2.Text
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles PasswordTextBox.TextChanged
+        My.Settings.Password = PasswordTextBox.Text
     End Sub
 
     Private Sub MainForm_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
