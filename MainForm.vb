@@ -117,7 +117,7 @@ Public Class MainForm
                 RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
-                StatusLabel.Text = "Connecting to MineUK..."
+                StatusLabel.Text = "Connecting To MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -133,7 +133,7 @@ Public Class MainForm
                 RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
-                StatusLabel.Text = "Connecting to MineUK..."
+                StatusLabel.Text = "Connecting To MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -150,7 +150,7 @@ Public Class MainForm
                 RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
-                StatusLabel.Text = "Connecting to MineUK..."
+                StatusLabel.Text = "Connecting To MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -167,7 +167,7 @@ Public Class MainForm
                 RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
-                StatusLabel.Text = "Connecting to MineUK..."
+                StatusLabel.Text = "Connecting To MineUK..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -666,7 +666,7 @@ Public Class MainForm
     Private Sub BackgroundWorkerUpdate2_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerUpdate2.RunWorkerCompleted
         Try
             If CommandLineArgs(0) = "auto" Then
-                StatusLabel.Text = "Checking files..."
+                StatusLabel.Text = "Checking Files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -674,7 +674,7 @@ Public Class MainForm
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "auto" Then
-                StatusLabel.Text = "Checking files..."
+                StatusLabel.Text = "Checking Files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -682,7 +682,7 @@ Public Class MainForm
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(0) = "update" Then
-                StatusLabel.Text = "Checking files..."
+                StatusLabel.Text = "Checking Files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -690,7 +690,7 @@ Public Class MainForm
                 BackgroundWorker1.RunWorkerAsync()
             End If
             If CommandLineArgs(2) = "update" Then
-                StatusLabel.Text = "Checking files..."
+                StatusLabel.Text = "Checking Files..."
                 ProgressBar1.Style = ProgressBarStyle.Marquee
                 StatusLabel.Show()
                 ProgressBar1.Show()
@@ -731,7 +731,7 @@ Public Class MainForm
         RadioButton2.Enabled = False
         My.Settings.User = UserTextBox.Text
         My.Settings.Password = PasswordTextBox.Text
-        StatusLabel.Text = "Checking files..."
+        StatusLabel.Text = "Checking Files..."
         ProgressBar1.Style = ProgressBarStyle.Marquee
         StatusLabel.Show()
         ProgressBar1.Show()
@@ -917,7 +917,7 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-        StatusLabel.Text = "Logging in..."
+        StatusLabel.Text = "Logging In..."
         BackgroundWorkerMojang.RunWorkerAsync()
     End Sub
 
@@ -1025,7 +1025,7 @@ Public Class MainForm
             RadioButton2.Enabled = True
         End If
         If LError = "" Then
-            StatusLabel.Text = "Waiting for server..."
+            StatusLabel.Text = "Waiting For Server..."
             BackgroundWorker2.RunWorkerAsync()
         End If
     End Sub
@@ -1066,14 +1066,14 @@ Public Class MainForm
         If LError = "" Then
         Else : GoTo 1
         End If
-        StatusLabel.Text = "Checking file versions..."
+        StatusLabel.Text = "Checking File Versions..."
         If ServerAdminList.Contains("," & LUserFinal & ",") Then
             UserIsAdmin = True
         Else : UserIsAdmin = False
         End If
         If NewLauncherVersion = CurrentLauncherVersion Then
         Else
-            StatusLabel.Text = "Downloading new launcher..."
+            StatusLabel.Text = "Downloading The New Launcher..."
             ProgressBar1.Style = ProgressBarStyle.Marquee
             ProgressLabel.Hide()
             WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
@@ -1330,21 +1330,22 @@ Public Class MainForm
             Catch ex As Exception
             End Try
         End If
+        StatusLabel.Text = "Downloading New Libraries..."
+        ProgressBar1.Value = 0
+        ProgressBar1.Style = ProgressBarStyle.Blocks
+        ProgressLabel.Text = ("0%")
+        ProgressLabel.Show()
         If RadioButton1.Checked = True Then
-            StatusLabel.Text = "Downloading LWJGL..."
-            ProgressBar1.Value = 0
-            ProgressBar1.Style = ProgressBarStyle.Blocks
-            ProgressLabel.Text = ("0%")
-            ProgressLabel.Show()
-            WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/lwjgl.7z"), "files.7z")
+            If UserIsAdmin = True Then
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/Libraries+.7z"), "files.7z")
+            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/Libraries.7z"), "files.7z")
+            End If
             GoTo 2
         Else
-            StatusLabel.Text = "Downloading LWJGL..."
-            ProgressBar1.Value = 0
-            ProgressBar1.Style = ProgressBarStyle.Blocks
-            ProgressLabel.Text = ("0%")
-            ProgressLabel.Show()
-            WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/lwjgl.7z"), "files.7z")
+            If UserIsAdmin = True Then
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/Libraries+.7z"), "files.7z")
+            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/Libraries.7z"), "files.7z")
+            End If
             GoTo 2
         End If
 1:      StatusLabel.Text = ("ERROR!")
@@ -1373,7 +1374,7 @@ Public Class MainForm
     Private Sub WC3_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC3.DownloadFileCompleted
         ProgressBar1.Style = ProgressBarStyle.Marquee
         ProgressLabel.Hide()
-        StatusLabel.Text = "Removing old files..."
+        StatusLabel.Text = "Removing Old Files..."
         BackgroundWorker3.RunWorkerAsync()
     End Sub
 
@@ -1412,7 +1413,7 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker3_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker3.RunWorkerCompleted
-        StatusLabel.Text = "Setting Up LWJGL..."
+        StatusLabel.Text = "Setting Up New Libraries..."
         BackgroundWorker4.RunWorkerAsync()
     End Sub
 
