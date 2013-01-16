@@ -113,6 +113,8 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
+                RadioButton1.Enabled = False
+                RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
@@ -127,6 +129,8 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
+                RadioButton1.Enabled = False
+                RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
@@ -142,6 +146,8 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
+                RadioButton1.Enabled = False
+                RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
@@ -157,6 +163,8 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
+                RadioButton1.Enabled = False
+                RadioButton2.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting to MineUK..."
@@ -719,6 +727,8 @@ Public Class MainForm
         UserTextBox.Enabled = False
         PasswordTextBox.Enabled = False
         UpdateCheckBox.Enabled = False
+        RadioButton1.Enabled = False
+        RadioButton2.Enabled = False
         My.Settings.User = UserTextBox.Text
         My.Settings.Password = PasswordTextBox.Text
         StatusLabel.Text = "Checking files..."
@@ -994,6 +1004,8 @@ Public Class MainForm
             UserTextBox.Enabled = True
             PasswordTextBox.Enabled = True
             UpdateCheckBox.Enabled = True
+            RadioButton1.Enabled = True
+            RadioButton2.Enabled = True
         End If
         If LError = "3" Then
             StatusLabel.Text = ("ERROR!")
@@ -1009,6 +1021,8 @@ Public Class MainForm
             UserTextBox.Enabled = True
             PasswordTextBox.Enabled = True
             UpdateCheckBox.Enabled = True
+            RadioButton1.Enabled = True
+            RadioButton2.Enabled = True
         End If
         If LError = "" Then
             StatusLabel.Text = "Waiting for server..."
@@ -1286,6 +1300,8 @@ Public Class MainForm
         UserTextBox.Enabled = True
         PasswordTextBox.Enabled = True
         UpdateCheckBox.Enabled = True
+        RadioButton1.Enabled = True
+        RadioButton2.Enabled = True
 2:
     End Sub
 
@@ -1344,6 +1360,8 @@ Public Class MainForm
         UserTextBox.Enabled = True
         PasswordTextBox.Enabled = True
         UpdateCheckBox.Enabled = True
+        RadioButton1.Enabled = True
+        RadioButton2.Enabled = True
 2:
     End Sub
 
@@ -1447,6 +1465,8 @@ Public Class MainForm
         UserTextBox.Enabled = True
         PasswordTextBox.Enabled = True
         UpdateCheckBox.Enabled = True
+        RadioButton1.Enabled = True
+        RadioButton2.Enabled = True
 2:
     End Sub
 
