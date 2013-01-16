@@ -1337,14 +1337,14 @@ Public Class MainForm
         ProgressLabel.Show()
         If RadioButton1.Checked = True Then
             If UserIsAdmin = True Then
-                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/Libraries+.7z"), "files.7z")
-            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/Libraries.7z"), "files.7z")
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/libs+.7z"), "files.7z")
+            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/libs.7z"), "files.7z")
             End If
             GoTo 2
         Else
             If UserIsAdmin = True Then
-                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/Libraries+.7z"), "files.7z")
-            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/Libraries.7z"), "files.7z")
+                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/libs+.7z"), "files.7z")
+            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/libs.7z"), "files.7z")
             End If
             GoTo 2
         End If
