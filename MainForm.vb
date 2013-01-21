@@ -7,7 +7,9 @@ Imports System.Drawing
 Public Class MainForm
 
     Dim CommandLineArgs As System.Collections.ObjectModel.ReadOnlyCollection(Of String) = My.Application.CommandLineArgs
-
+    
+    'test
+    
     Dim MCDir As String
     Dim LError As String
     Dim LUserFinal As String
