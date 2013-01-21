@@ -27,7 +27,7 @@ Public Class MainForm
     Dim VanillaMCVersion As String = ""
     Dim VanillaMCWebVersion As String = ""
 
-    Dim ServerAdminList As String = "".ToLower
+    Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
     Dim CurrentDirewolf20IsAdmin As Boolean
     Dim CurrentVanillaIsAdmin As Boolean
@@ -285,7 +285,6 @@ Public Class MainForm
                 NewStatusFirst = NewStatusFirst + NewPlayerList(i)
             Next
         Catch ex As Exception
-
         End Try
     End Sub
 
@@ -452,7 +451,7 @@ Public Class MainForm
             NewVanillaVersion = ServerData.Split(":")(3)
             VanillaMCVersion = NewVanillaVersion.Split(" ")(1).Split("-")(0)
             VanillaMCWebVersion = VanillaMCVersion.Replace(".", "_")
-            ServerAdminList = ServerData.Split(":")(4).ToLower
+            ServerAdminList = ServerData.Split(":")(4)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
@@ -963,10 +962,10 @@ Public Class MainForm
                 End If
             End If
         End Try
-        LUserFinal = "".ToLower
-        LSessionIDFinal = "".ToLower
+        LUserFinal = ""
+        LSessionIDFinal = ""
         Try
-            LUserFinal = ServerArray(2).ToString.ToLower
+            LUserFinal = ServerArray(2).ToString
         Catch ex As Exception
             If ex.Message = "" Then
             Else
@@ -976,7 +975,7 @@ Public Class MainForm
             End If
         End Try
         Try
-            LSessionIDFinal = ServerArray(3).ToString.ToLower
+            LSessionIDFinal = ServerArray(3).ToString
         Catch ex As Exception
             If ex.Message = "" Then
             Else
@@ -1067,7 +1066,7 @@ Public Class MainForm
         Else : GoTo 1
         End If
         StatusLabel.Text = "Checking File Versions..."
-        If ServerAdminList.Contains("," & LUserFinal & ",") Then
+        If ServerAdminList.ToLower.Contains("," & LUserFinal.ToLower & ",") Then
             UserIsAdmin = True
         Else : UserIsAdmin = False
         End If
