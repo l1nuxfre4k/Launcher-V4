@@ -184,7 +184,7 @@ Public Class MainForm
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
-            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4/news.php")
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4/news")
             Dim sr As New StreamReader(ServerStream)
             Dim ServerData = sr.ReadLine.ToString
             ServerStream.Close()
