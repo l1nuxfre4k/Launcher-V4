@@ -416,7 +416,7 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundStatusWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundStatusWait.DoWork
-        Thread.Sleep(100)
+        Thread.Sleep(2000)
     End Sub
 
     Private Sub BackgroundStatusWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundStatusWait.RunWorkerCompleted
