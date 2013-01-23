@@ -176,8 +176,18 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         BackgroundWorkerUpdate1.RunWorkerAsync()
-        BackgroundWorkerNews.RunWorkerAsync()
-        BackgroundStatus.RunWorkerAsync()
+        Try
+            If BackgroundWorkerNews.IsBusy = False Then
+                BackgroundWorkerNews.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            If BackgroundStatus.IsBusy = False Then
+                BackgroundStatus.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub BackgroundWorkerNews_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerNews.DoWork
@@ -246,7 +256,12 @@ Public Class MainForm
             End Try
         End If
         OldNewsSt = NewNewsSt
-        BackgroundWorkerNewsWait.RunWorkerAsync()
+        Try
+            If BackgroundWorkerNewsWait.IsBusy = False Then
+                BackgroundWorkerNewsWait.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub BackgroundWorkerNewsWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerNewsWait.DoWork
@@ -254,7 +269,12 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorkerNewsWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerNewsWait.RunWorkerCompleted
-        BackgroundWorkerNews.RunWorkerAsync()
+        Try
+            If BackgroundWorkerNews.IsBusy = False Then
+                BackgroundWorkerNews.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub BackgroundStatus_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundStatus.DoWork
@@ -412,7 +432,12 @@ Public Class MainForm
         End If
         OldPlayersSt = NewPlayersSt
         OldStatusFirst = NewStatusFirst
-        BackgroundStatusWait.RunWorkerAsync()
+        Try
+            If BackgroundStatusWait.IsBusy = False Then
+                BackgroundStatusWait.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub BackgroundStatusWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundStatusWait.DoWork
@@ -420,7 +445,12 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundStatusWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundStatusWait.RunWorkerCompleted
-        BackgroundStatus.RunWorkerAsync()
+        Try
+            If BackgroundStatus.IsBusy = False Then
+                BackgroundStatus.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub BackgroundWorkerUpdate1_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerUpdate1.DoWork
@@ -711,6 +741,12 @@ Public Class MainForm
             StName = "vanilla"
             OldPlayersSt = "BAD"
         End If
+        Try
+            If BackgroundStatus.IsBusy = False Then
+                BackgroundStatus.RunWorkerAsync()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub OptionsButton_Click(sender As Object, e As EventArgs) Handles OptionsButton.Click
