@@ -51,8 +51,8 @@ Partial Class MainForm
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.BackgroundWorkerNews = New System.ComponentModel.BackgroundWorker()
-        Me.BackgroundWorkerNewsWait = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundNews = New System.ComponentModel.BackgroundWorker()
+        Me.BackgroundNewsWait = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatus = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
         Me.ProgressLabel = New System.Windows.Forms.Label()
@@ -279,10 +279,10 @@ Partial Class MainForm
         Me.Panel1.Size = New System.Drawing.Size(406, 0)
         Me.Panel1.TabIndex = 0
         '
-        'BackgroundWorkerNews
+        'BackgroundNews
         '
         '
-        'BackgroundWorkerNewsWait
+        'BackgroundNewsWait
         '
         '
         'BackgroundStatus
@@ -370,8 +370,8 @@ Partial Class MainForm
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents VersionLabel As System.Windows.Forms.Label
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
-    Friend WithEvents BackgroundWorkerNews As System.ComponentModel.BackgroundWorker
-    Friend WithEvents BackgroundWorkerNewsWait As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundNews As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BackgroundNewsWait As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundStatus As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundStatusWait As System.ComponentModel.BackgroundWorker
     Friend WithEvents Panel2 As System.Windows.Forms.Panel

@@ -177,8 +177,8 @@ Public Class MainForm
         End Try
         BackgroundWorkerUpdate1.RunWorkerAsync()
         Try
-            If BackgroundWorkerNews.IsBusy = False Then
-                BackgroundWorkerNews.RunWorkerAsync()
+            If BackgroundNews.IsBusy = False Then
+                BackgroundNews.RunWorkerAsync()
             End If
         Catch ex As Exception
         End Try
@@ -190,7 +190,7 @@ Public Class MainForm
         End Try
     End Sub
 
-    Private Sub BackgroundWorkerNews_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerNews.DoWork
+    Private Sub BackgroundWorkerNews_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundNews.DoWork
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
@@ -214,7 +214,7 @@ Public Class MainForm
         End Try
     End Sub
 
-    Private Sub BackgroundWorkerNews_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerNews.RunWorkerCompleted
+    Private Sub BackgroundWorkerNews_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundNews.RunWorkerCompleted
         If OldNewsSt = NewNewsSt Then
         Else
             Try
@@ -257,21 +257,21 @@ Public Class MainForm
         End If
         OldNewsSt = NewNewsSt
         Try
-            If BackgroundWorkerNewsWait.IsBusy = False Then
-                BackgroundWorkerNewsWait.RunWorkerAsync()
+            If BackgroundNewsWait.IsBusy = False Then
+                BackgroundNewsWait.RunWorkerAsync()
             End If
         Catch ex As Exception
         End Try
     End Sub
 
-    Private Sub BackgroundWorkerNewsWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorkerNewsWait.DoWork
+    Private Sub BackgroundNewsWait_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundNewsWait.DoWork
         Thread.Sleep(30000)
     End Sub
 
-    Private Sub BackgroundWorkerNewsWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerNewsWait.RunWorkerCompleted
+    Private Sub BackgroundNewsWait_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundNewsWait.RunWorkerCompleted
         Try
-            If BackgroundWorkerNews.IsBusy = False Then
-                BackgroundWorkerNews.RunWorkerAsync()
+            If BackgroundNews.IsBusy = False Then
+                BackgroundNews.RunWorkerAsync()
             End If
         Catch ex As Exception
         End Try
