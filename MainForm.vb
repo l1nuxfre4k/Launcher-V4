@@ -58,6 +58,12 @@ Public Class MainForm
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If My.Settings.First = True Then
             My.Settings.Upgrade()
+            Dim OptInMsg = MessageBox.Show("Do you want to help by submitting statistical usage data to MineUK?" & Environment.NewLine & "All data is anonymous and you can opt-out at anytime you like!", "MineUK Launcher Data Collection?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
+            If OptInMsg = Windows.Forms.DialogResult.Yes Then
+                My.Settings.OptIn = True
+            Else
+                My.Settings.OptIn = False
+            End If
             My.Settings.First = False
         End If
         Try

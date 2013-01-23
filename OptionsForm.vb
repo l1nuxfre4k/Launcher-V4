@@ -5,7 +5,7 @@ Public Class OptionsForm
 
     Dim Loaded As Boolean = False
 
-    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles OKButton.Click, MooButton.Click, RadioButton1.Click, RadioButton2.Click, RadioButton3.Click, RadioButton4.Click, ConsoleCheckBox.Click
+    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles OKButton.Click, MooButton.Click, RadioButton1.Click, RadioButton2.Click, RadioButton3.Click, RadioButton4.Click, OptInCheckBox.Click, ConsoleCheckBox.Click
         If Loaded = True Then
             My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
         End If
@@ -24,6 +24,7 @@ Public Class OptionsForm
         If My.Settings.RAM = 4096 Then
             RadioButton4.Checked = True
         End If
+        OptInCheckBox.Checked = My.Settings.OptIn
         ConsoleCheckBox.Checked = My.Settings.Debug
         Loaded = True
     End Sub
@@ -59,6 +60,10 @@ Public Class OptionsForm
         If RadioButton4.Checked = True Then
             My.Settings.RAM = 4096
         End If
+    End Sub
+
+    Private Sub OptInCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles OptInCheckBox.CheckedChanged
+        My.Settings.OptIn = OptInCheckBox.Checked
     End Sub
 
     Private Sub ConsoleCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles ConsoleCheckBox.CheckedChanged

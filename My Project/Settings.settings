@@ -18,7 +18,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ModPack" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tekkit</Value>
+      <Value Profile="(Default)">Direwolf20</Value>
+    </Setting>
+    <Setting Name="OptIn" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

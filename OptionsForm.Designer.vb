@@ -33,6 +33,7 @@ Partial Class OptionsForm
         Me.ConsoleCheckBox = New System.Windows.Forms.CheckBox()
         Me.MooButton = New System.Windows.Forms.Button()
         Me.MooWorker = New System.ComponentModel.BackgroundWorker()
+        Me.OptInCheckBox = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -100,7 +101,7 @@ Partial Class OptionsForm
         'OKButton
         '
         Me.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.OKButton.Location = New System.Drawing.Point(197, 147)
+        Me.OKButton.Location = New System.Drawing.Point(197, 166)
         Me.OKButton.Name = "OKButton"
         Me.OKButton.Size = New System.Drawing.Size(75, 23)
         Me.OKButton.TabIndex = 6
@@ -110,7 +111,7 @@ Partial Class OptionsForm
         'ConsoleCheckBox
         '
         Me.ConsoleCheckBox.AutoSize = True
-        Me.ConsoleCheckBox.Location = New System.Drawing.Point(12, 153)
+        Me.ConsoleCheckBox.Location = New System.Drawing.Point(12, 170)
         Me.ConsoleCheckBox.Name = "ConsoleCheckBox"
         Me.ConsoleCheckBox.Size = New System.Drawing.Size(132, 17)
         Me.ConsoleCheckBox.TabIndex = 7
@@ -120,7 +121,7 @@ Partial Class OptionsForm
         'MooButton
         '
         Me.MooButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.MooButton.Location = New System.Drawing.Point(151, 147)
+        Me.MooButton.Location = New System.Drawing.Point(151, 166)
         Me.MooButton.Name = "MooButton"
         Me.MooButton.Size = New System.Drawing.Size(40, 23)
         Me.MooButton.TabIndex = 8
@@ -130,14 +131,25 @@ Partial Class OptionsForm
         'MooWorker
         '
         '
+        'OptInCheckBox
+        '
+        Me.OptInCheckBox.AutoSize = True
+        Me.OptInCheckBox.Location = New System.Drawing.Point(12, 142)
+        Me.OptInCheckBox.Name = "OptInCheckBox"
+        Me.OptInCheckBox.Size = New System.Drawing.Size(256, 17)
+        Me.OptInCheckBox.TabIndex = 9
+        Me.OptInCheckBox.Text = "I want to help by submitting statistical usage data"
+        Me.OptInCheckBox.UseVisualStyleBackColor = True
+        '
         'OptionsForm
         '
         Me.AcceptButton = Me.OKButton
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.OKButton
-        Me.ClientSize = New System.Drawing.Size(284, 182)
+        Me.ClientSize = New System.Drawing.Size(284, 199)
         Me.ControlBox = False
+        Me.Controls.Add(Me.OptInCheckBox)
         Me.Controls.Add(Me.MooButton)
         Me.Controls.Add(Me.ConsoleCheckBox)
         Me.Controls.Add(Me.OKButton)
@@ -167,4 +179,5 @@ Partial Class OptionsForm
     Friend WithEvents ConsoleCheckBox As System.Windows.Forms.CheckBox
     Friend WithEvents MooButton As System.Windows.Forms.Button
     Friend WithEvents MooWorker As System.ComponentModel.BackgroundWorker
+    Friend WithEvents OptInCheckBox As System.Windows.Forms.CheckBox
 End Class
