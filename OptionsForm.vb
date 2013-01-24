@@ -48,17 +48,19 @@ Public Class OptionsForm
     End Sub
 
     Private Sub RadioButtons_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged, RadioButton4.CheckedChanged
-        If RadioButton1.Checked = True Then
-            My.Settings.RAM = 512
-        End If
-        If RadioButton2.Checked = True Then
-            My.Settings.RAM = 1024
-        End If
-        If RadioButton3.Checked = True Then
-            My.Settings.RAM = 2048
-        End If
-        If RadioButton4.Checked = True Then
-            My.Settings.RAM = 4096
+        If Loaded = True Then
+            If RadioButton1.Checked = True Then
+                My.Settings.RAM = 512
+            End If
+            If RadioButton2.Checked = True Then
+                My.Settings.RAM = 1024
+            End If
+            If RadioButton3.Checked = True Then
+                My.Settings.RAM = 2048
+            End If
+            If RadioButton4.Checked = True Then
+                My.Settings.RAM = 4096
+            End If
         End If
     End Sub
 

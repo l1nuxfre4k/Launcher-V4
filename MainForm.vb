@@ -16,6 +16,7 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion & " Dev"
     Dim NewLauncherVersion As String = ""
+    Dim Loaded As Boolean = False
 
     Dim CurrentDirewolf20Version As String = ""
     Dim NewDirewolf20Version As String = ""
@@ -42,7 +43,6 @@ Public Class MainForm
     Dim OldPlayersSt As String = ""
     Dim NewPlayersSt As String = ""
 
-    Dim StName As String = "direwolf20"
     Dim NewStatusFirst As String = ""
     Dim OldStatusFirst As String = ""
 
@@ -52,7 +52,9 @@ Public Class MainForm
     Dim WithEvents WC4 As New WebClient
 
     Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles UpdateCheckBox.Click, RadioButton1.Click, RadioButton2.Click, LogoPanel.Click, OptionsButton.Click, LoginButton.Click
-        My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
+        If Loaded = True Then
+            My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
+        End If
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -104,12 +106,10 @@ Public Class MainForm
         My.Settings.Save()
         If My.Settings.ModPack = "Direwolf20" Then
             RadioButton1.Checked = True
-            StName = "direwolf20"
             OldPlayersSt = "BAD"
         End If
         If My.Settings.ModPack = "Vanilla" Then
             RadioButton2.Checked = True
-            StName = "vanilla"
             OldPlayersSt = "BAD"
         End If
         Try
@@ -194,6 +194,7 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
+        Loaded = True
     End Sub
 
     Private Sub BackgroundWorkerNews_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundNews.DoWork
@@ -287,7 +288,7 @@ Public Class MainForm
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
-            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4/" & StName)
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4/" & My.Settings.ModPack.ToLower)
             Dim sr As New StreamReader(ServerStream)
             Dim ServerData = sr.ReadToEnd.ToString
             ServerStream.Close()
@@ -737,15 +738,15 @@ Public Class MainForm
     End Sub
 
     Private Sub RadioButtons_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
-        If RadioButton1.Checked = True Then
-            My.Settings.ModPack = "Direwolf20"
-            StName = "direwolf20"
-            OldPlayersSt = "BAD"
-        End If
-        If RadioButton2.Checked = True Then
-            My.Settings.ModPack = "Vanilla"
-            StName = "vanilla"
-            OldPlayersSt = "BAD"
+        If Loaded = True Then
+            If RadioButton1.Checked = True Then
+                My.Settings.ModPack = "Direwolf20"
+                OldPlayersSt = "BAD"
+            End If
+            If RadioButton2.Checked = True Then
+                My.Settings.ModPack = "Vanilla"
+                OldPlayersSt = "BAD"
+            End If
         End If
         Try
             If BackgroundStatus.IsBusy = False Then
@@ -753,6 +754,7 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
+        My.Settings.Save()
     End Sub
 
     Private Sub OptionsButton_Click(sender As Object, e As EventArgs) Handles OptionsButton.Click
