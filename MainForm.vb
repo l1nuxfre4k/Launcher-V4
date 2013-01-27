@@ -1822,7 +1822,7 @@ Public Class MainForm
     End Sub
 
     Private Sub Panel1_Click(sender As Object, e As EventArgs) Handles LogoPanel.Click
-        Process.Start("http://mineuk.com/")
+        Process.Start("http://adf.ly/HwtRn")
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles UserTextBox.TextChanged
