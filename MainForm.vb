@@ -615,6 +615,31 @@ Public Class MainForm
         Catch ex As Exception
         End Try
         Try
+            If My.Computer.FileSystem.DirectoryExists("FTBLite\.minecraft") Then
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("FTBLite\.minecraft")
+                Catch ex As Exception
+                End Try
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories("FTBLite")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
             For Each i As String In Directory.GetFiles(Application.StartupPath)
                 Try
                     If Path.GetFileName(i) = "7za.exe" Then
@@ -684,6 +709,38 @@ Public Class MainForm
         End Try
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetFiles("FTBLite\.minecraft")
                 Try
                     If Path.GetFileName(i).Contains("log") Then
                         Try
@@ -813,10 +870,13 @@ Public Class MainForm
                     Else
                         If Path.GetFileName(i) = "Vanilla" Then
                         Else
-                            Try
-                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                            Catch ex As Exception
-                            End Try
+                            If Path.GetFileName(i) = "FTBLite" Then
+                            Else
+                                Try
+                                    My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                Catch ex As Exception
+                                End Try
+                            End If
                         End If
                     End If
                 Catch ex As Exception
@@ -861,6 +921,31 @@ Public Class MainForm
         End Try
         Try
             For Each i As String In Directory.GetDirectories("Vanilla")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("FTBLite\.minecraft") Then
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("FTBLite\.minecraft")
+                Catch ex As Exception
+                End Try
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories("FTBLite")
                 Try
                     If Path.GetFileName(i) = ".minecraft" Then
                     Else
@@ -944,6 +1029,38 @@ Public Class MainForm
         End Try
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetFiles("FTBLite\.minecraft")
                 Try
                     If Path.GetFileName(i).Contains("log") Then
                         Try
@@ -1764,10 +1881,13 @@ Public Class MainForm
                     Else
                         If Path.GetFileName(i) = "Vanilla" Then
                         Else
-                            Try
-                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                            Catch ex As Exception
-                            End Try
+                            If Path.GetFileName(i) = "FTBLite" Then
+                            Else
+                                Try
+                                    My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                Catch ex As Exception
+                                End Try
+                            End If
                         End If
                     End If
                 Catch ex As Exception
@@ -1812,6 +1932,31 @@ Public Class MainForm
         End Try
         Try
             For Each i As String In Directory.GetDirectories("Vanilla")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists("FTBLite\.minecraft") Then
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory("FTBLite\.minecraft")
+                Catch ex As Exception
+                End Try
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories("FTBLite")
                 Try
                     If Path.GetFileName(i) = ".minecraft" Then
                     Else
@@ -1895,6 +2040,38 @@ Public Class MainForm
         End Try
         Try
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetFiles("FTBLite\.minecraft")
                 Try
                     If Path.GetFileName(i).Contains("log") Then
                         Try
