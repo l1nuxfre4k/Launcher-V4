@@ -16,6 +16,7 @@ Public Class MainForm
 
     Dim CurrentLauncherVersion As String = ProductVersion & " Dev"
     Dim NewLauncherVersion As String = ""
+    Dim MajorLauncherVersion As String = ""
     Dim Loaded As Boolean = False
 
     Dim CurrentDirewolf20Version As String = ""
@@ -92,6 +93,8 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
+        MajorLauncherVersion = CurrentLauncherVersion.Split(".")(0)
+        Text = "MineUK Launcher V" & MajorLauncherVersion
         VersionLabel.Text = "MineUK Launcher V" & CurrentLauncherVersion
         UserTextBox.Text = My.Settings.User
         PasswordTextBox.Text = My.Settings.Password
@@ -203,7 +206,7 @@ Public Class MainForm
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
-            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4/news")
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/news")
             Dim sr As New StreamReader(ServerStream)
             Dim ServerData = sr.ReadLine.ToString
             ServerStream.Close()
@@ -290,7 +293,7 @@ Public Class MainForm
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
-            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4/" & My.Settings.ModPack.ToLower)
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/" & My.Settings.ModPack.ToLower)
             Dim sr As New StreamReader(ServerStream)
             Dim ServerData = sr.ReadToEnd.ToString
             ServerStream.Close()
@@ -478,7 +481,7 @@ Public Class MainForm
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
-            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v4")
+            ServerStream = myWebClient.OpenRead("http://launcher.mineuk.com/v" & MajorLauncherVersion)
             Dim sr As New StreamReader(ServerStream)
             Dim ServerData = sr.ReadLine.ToString
             ServerStream.Close()
@@ -1261,7 +1264,7 @@ Public Class MainForm
             StatusLabel.Text = "Downloading The New Launcher..."
             ProgressBar1.Style = ProgressBarStyle.Marquee
             ProgressLabel.Hide()
-            WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
+            WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
             GoTo 2
         End If
         If My.Settings.ModPack = "Direwolf20" Then
@@ -1622,8 +1625,8 @@ Public Class MainForm
         ProgressLabel.Text = ("0%")
         ProgressLabel.Show()
         If UserIsAdmin = True Then
-            WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/" & My.Settings.ModPack.ToLower & "/libs+.7z"), "files.7z")
-        Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/" & My.Settings.ModPack.ToLower & "/libs.7z"), "files.7z")
+            WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/" & My.Settings.ModPack.ToLower & "/libs+.7z"), "files.7z")
+        Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/" & My.Settings.ModPack.ToLower & "/libs.7z"), "files.7z")
         End If
         GoTo 2
 1:      StatusLabel.Text = ("ERROR!")
@@ -1735,8 +1738,8 @@ Public Class MainForm
             ProgressLabel.Text = ("0%")
             ProgressLabel.Show()
             If UserIsAdmin = True Then
-                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
-            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
+                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
+            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
             End If
             GoTo 2
         ElseIf My.Settings.ModPack = "Vanilla" Then
@@ -1746,8 +1749,8 @@ Public Class MainForm
             ProgressLabel.Text = ("0%")
             ProgressLabel.Show()
             If UserIsAdmin = True Then
-                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
-            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
+                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
+            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
             End If
             GoTo 2
         Else
@@ -1757,8 +1760,8 @@ Public Class MainForm
             ProgressLabel.Text = ("0%")
             ProgressLabel.Show()
             If UserIsAdmin = True Then
-                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/FTBLite/" & NewFTBLiteVersion & "+.7z"), "files.7z")
-            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/FTBLite/" & NewFTBLiteVersion & ".7z"), "files.7z")
+                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/FTBLite/" & NewFTBLiteVersion & "+.7z"), "files.7z")
+            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v" & MajorLauncherVersion & "/FTBLite/" & NewFTBLiteVersion & ".7z"), "files.7z")
             End If
             GoTo 2
         End If
