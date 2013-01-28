@@ -28,10 +28,16 @@ Public Class MainForm
     Dim VanillaMCVersion As String = ""
     Dim VanillaMCWebVersion As String = ""
 
+    Dim CurrentFTBLiteVersion As String = ""
+    Dim NewFTBLiteVersion As String = ""
+    Dim FTBLiteMCVersion As String = ""
+    Dim FTBLiteMCWebVersion As String = ""
+
     Dim ServerAdminList As String = ""
     Dim UserIsAdmin As Boolean
     Dim CurrentDirewolf20IsAdmin As Boolean
     Dim CurrentVanillaIsAdmin As Boolean
+    Dim CurrentFTBLiteIsAdmin As Boolean
 
     Dim NumberOfNewsItems As Integer
     Dim NewNewsItems As Array
@@ -51,7 +57,7 @@ Public Class MainForm
     Dim WithEvents WC3 As New WebClient
     Dim WithEvents WC4 As New WebClient
 
-    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles UpdateCheckBox.Click, RadioButton1.Click, RadioButton2.Click, LogoPanel.Click, OptionsButton.Click, LoginButton.Click
+    Private Sub Click_Sounds(sender As Object, e As EventArgs) Handles UpdateCheckBox.Click, LogoPanel.Click, OptionsButton.Click, LoginButton.Click
         If Loaded = True Then
             My.Computer.Audio.Play("click.wav", AudioPlayMode.Background)
         End If
@@ -105,13 +111,13 @@ Public Class MainForm
         End If
         My.Settings.Save()
         If My.Settings.ModPack = "Direwolf20" Then
-            RadioButton1.Checked = True
-            OldPlayersSt = "BAD"
+            SelectedModpack.SelectedIndex = 0
+        ElseIf My.Settings.ModPack = "Vanilla" Then
+            SelectedModpack.SelectedIndex = 1
+        Else
+            SelectedModpack.SelectedIndex = 2
         End If
-        If My.Settings.ModPack = "Vanilla" Then
-            RadioButton2.Checked = True
-            OldPlayersSt = "BAD"
-        End If
+        OldPlayersSt = "BAD"
         Try
             If CommandLineArgs(0) = "auto" Then
                 OptionsButton.Enabled = False
@@ -119,8 +125,7 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
-                RadioButton1.Enabled = False
-                RadioButton2.Enabled = False
+                SelectedModpack.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting To MineUK..."
@@ -135,8 +140,7 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
-                RadioButton1.Enabled = False
-                RadioButton2.Enabled = False
+                SelectedModpack.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting To MineUK..."
@@ -152,8 +156,7 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
-                RadioButton1.Enabled = False
-                RadioButton2.Enabled = False
+                SelectedModpack.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting To MineUK..."
@@ -169,8 +172,7 @@ Public Class MainForm
                 UserTextBox.Enabled = False
                 PasswordTextBox.Enabled = False
                 UpdateCheckBox.Enabled = False
-                RadioButton1.Enabled = False
-                RadioButton2.Enabled = False
+                SelectedModpack.Enabled = False
                 My.Settings.User = UserTextBox.Text
                 My.Settings.Password = PasswordTextBox.Text
                 StatusLabel.Text = "Connecting To MineUK..."
@@ -339,10 +341,10 @@ Public Class MainForm
                         Text1.Text = "Vanilla Server: "
                     End If
                     If (4 - (i - 1)) = 3 Then
-                        Text1.Text = "Capes Server: "
+                        Text1.Text = "FTBLite Server: "
                     End If
                     If (4 - (i - 1)) = 4 Then
-                        Text1.Text = "Skins Server: "
+                        Text1.Text = "Skins And Skins: "
                     End If
                     If (NewPlayerList(4 - (i - 1))) = "1" Then
                         Text1.Text = Text1.Text + "Online"
@@ -417,10 +419,7 @@ Public Class MainForm
                 NewsX.BackColor = Color.FromKnownColor(KnownColor.AppWorkspace)
                 Panel2.Controls.Add(NewsX)
                 Dim Text2 As New Label()
-                If RadioButton1.Checked = True Then
-                    Text2.Text = "Players On The Direwolf20 Server"
-                Else : Text2.Text = "Players On The Vanilla Server"
-                End If
+                Text2.Text = "Players On The " & My.Settings.ModPack & " Server"
                 Text2.Dock = DockStyle.Fill
                 Text2.AutoSize = False
                 Text2.TextAlign = ContentAlignment.MiddleCenter
@@ -473,6 +472,9 @@ Public Class MainForm
         If My.Computer.FileSystem.DirectoryExists("Vanilla\.minecraft") Then
         Else : My.Computer.FileSystem.CreateDirectory("Vanilla\.minecraft")
         End If
+        If My.Computer.FileSystem.DirectoryExists("FTBLite\.minecraft") Then
+        Else : My.Computer.FileSystem.CreateDirectory("FTBLite\.minecraft")
+        End If
         Dim ServerStream As Stream
         Dim myWebClient As New WebClient()
         Try
@@ -488,7 +490,10 @@ Public Class MainForm
             NewVanillaVersion = ServerData.Split(":")(3)
             VanillaMCVersion = NewVanillaVersion.Split(" ")(1).Split("-")(0)
             VanillaMCWebVersion = VanillaMCVersion.Replace(".", "_")
-            ServerAdminList = ServerData.Split(":")(4)
+            NewFTBLiteVersion = ServerData.Split(":")(4)
+            FTBLiteMCVersion = NewFTBLiteVersion.Split(" ")(1).Split("-")(0)
+            FTBLiteMCWebVersion = FTBLiteMCVersion.Replace(".", "_")
+            ServerAdminList = ServerData.Split(":")(5)
             ServerStream.Dispose()
             sr.Dispose()
         Catch ex As Exception
@@ -515,6 +520,17 @@ Public Class MainForm
             End If
         Catch ex As Exception
         End Try
+        CurrentFTBLiteIsAdmin = False
+        Try
+            For Each i As String In Directory.GetFiles("FTBLite\.minecraft\version")
+                CurrentFTBLiteVersion = Path.GetFileName(i)
+            Next
+            If CurrentFTBLiteVersion.Substring(CurrentFTBLiteVersion.Length - 1) = "+" Then
+                CurrentFTBLiteIsAdmin = True
+                CurrentFTBLiteVersion = CurrentFTBLiteVersion.Remove(CurrentFTBLiteVersion.Length - 1)
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub BackgroundWorkerUpdate1_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorkerUpdate1.RunWorkerCompleted
@@ -534,10 +550,13 @@ Public Class MainForm
                     Else
                         If Path.GetFileName(i) = "Vanilla" Then
                         Else
-                            Try
-                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
-                            Catch ex As Exception
-                            End Try
+                            If Path.GetFileName(i) = "FTBLite" Then
+                            Else
+                                Try
+                                    My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                                Catch ex As Exception
+                                End Try
+                            End If
                         End If
                     End If
                 Catch ex As Exception
@@ -737,15 +756,14 @@ Public Class MainForm
         End Try
     End Sub
 
-    Private Sub RadioButtons_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
+    Private Sub SelectedModpack_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SelectedModpack.SelectedIndexChanged
         If Loaded = True Then
-            If RadioButton1.Checked = True Then
+            If SelectedModpack.SelectedIndex = 0 Then
                 My.Settings.ModPack = "Direwolf20"
-                OldPlayersSt = "BAD"
-            End If
-            If RadioButton2.Checked = True Then
+            ElseIf SelectedModpack.SelectedIndex = 1 Then
                 My.Settings.ModPack = "Vanilla"
-                OldPlayersSt = "BAD"
+            Else
+                My.Settings.ModPack = "FTBLite"
             End If
         End If
         Try
@@ -770,8 +788,7 @@ Public Class MainForm
         UserTextBox.Enabled = False
         PasswordTextBox.Enabled = False
         UpdateCheckBox.Enabled = False
-        RadioButton1.Enabled = False
-        RadioButton2.Enabled = False
+        SelectedModpack.Enabled = False
         My.Settings.User = UserTextBox.Text
         My.Settings.Password = PasswordTextBox.Text
         StatusLabel.Text = "Checking Files..."
@@ -1047,8 +1064,7 @@ Public Class MainForm
             UserTextBox.Enabled = True
             PasswordTextBox.Enabled = True
             UpdateCheckBox.Enabled = True
-            RadioButton1.Enabled = True
-            RadioButton2.Enabled = True
+            SelectedModpack.Enabled = True
         End If
         If LError = "3" Then
             StatusLabel.Text = ("ERROR!")
@@ -1064,8 +1080,7 @@ Public Class MainForm
             UserTextBox.Enabled = True
             PasswordTextBox.Enabled = True
             UpdateCheckBox.Enabled = True
-            RadioButton1.Enabled = True
-            RadioButton2.Enabled = True
+            SelectedModpack.Enabled = True
         End If
         If LError = "" Then
             StatusLabel.Text = "Waiting For Server..."
@@ -1103,6 +1118,15 @@ Public Class MainForm
         If VanillaMCWebVersion = "" Then
             GoTo 1
         End If
+        If NewFTBLiteVersion = "" Then
+            GoTo 1
+        End If
+        If FTBLiteMCVersion = "" Then
+            GoTo 1
+        End If
+        If FTBLiteMCWebVersion = "" Then
+            GoTo 1
+        End If
         If ServerAdminList = "" Then
             GoTo 1
         End If
@@ -1122,7 +1146,7 @@ Public Class MainForm
             WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/installer.exe"), Environ("temp") & "\MineUK Installer.exe")
             GoTo 2
         End If
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             If UserIsAdmin = True Then
                 If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & Direwolf20MCVersion & "..."
@@ -1224,7 +1248,7 @@ Public Class MainForm
                     GoTo 2
                 End If
             End If
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             If UserIsAdmin = True Then
                 If UpdateCheckBox.Checked = True Then
                     StatusLabel.Text = "Downloading Minecraft " & VanillaMCVersion & "..."
@@ -1326,6 +1350,108 @@ Public Class MainForm
                     GoTo 2
                 End If
             End If
+        Else
+            If UserIsAdmin = True Then
+                If UpdateCheckBox.Checked = True Then
+                    StatusLabel.Text = "Downloading Minecraft " & FTBLiteMCVersion & "..."
+                    If My.Computer.FileSystem.DirectoryExists("FTBLite/Jar") Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.CreateDirectory("FTBLite/Jar")
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & FTBLiteMCWebVersion & "/minecraft.jar"), "FTBLite/Jar/minecraft.jar")
+                    GoTo 2
+                End If
+                If NewFTBLiteVersion = CurrentFTBLiteVersion Then
+                    If CurrentFTBLiteIsAdmin = False Then
+                        StatusLabel.Text = "Downloading Minecraft " & FTBLiteMCVersion & "..."
+                        If My.Computer.FileSystem.DirectoryExists("FTBLite/Jar") Then
+                        Else
+                            Try
+                                My.Computer.FileSystem.CreateDirectory("FTBLite/Jar")
+                            Catch ex As Exception
+                            End Try
+                        End If
+                        ProgressBar1.Value = 0
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
+                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & FTBLiteMCWebVersion & "/minecraft.jar"), "FTBLite/Jar/minecraft.jar")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading Minecraft " & FTBLiteMCVersion & "..."
+                    If My.Computer.FileSystem.DirectoryExists("FTBLite/Jar") Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.CreateDirectory("FTBLite/Jar")
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & FTBLiteMCWebVersion & "/minecraft.jar"), "FTBLite/Jar/minecraft.jar")
+                    GoTo 2
+                End If
+            Else
+                If UpdateCheckBox.Checked = True Then
+                    StatusLabel.Text = "Downloading Minecraft " & FTBLiteMCVersion & "..."
+                    If My.Computer.FileSystem.DirectoryExists("FTBLite/Jar") Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.CreateDirectory("FTBLite/Jar")
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & FTBLiteMCWebVersion & "/minecraft.jar"), "FTBLite/Jar/minecraft.jar")
+                    GoTo 2
+                End If
+                If NewFTBLiteVersion = CurrentFTBLiteVersion Then
+                    If CurrentFTBLiteIsAdmin = True Then
+                        StatusLabel.Text = "Downloading Minecraft " & FTBLiteMCVersion & "..."
+                        If My.Computer.FileSystem.DirectoryExists("FTBLite/Jar") Then
+                        Else
+                            Try
+                                My.Computer.FileSystem.CreateDirectory("FTBLite/Jar")
+                            Catch ex As Exception
+                            End Try
+                        End If
+                        ProgressBar1.Value = 0
+                        ProgressBar1.Style = ProgressBarStyle.Blocks
+                        ProgressLabel.Text = ("0%")
+                        ProgressLabel.Show()
+                        WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & FTBLiteMCWebVersion & "/minecraft.jar"), "FTBLite/Jar/minecraft.jar")
+                        GoTo 2
+                    End If
+                Else
+                    StatusLabel.Text = "Downloading Minecraft " & FTBLiteMCVersion & "..."
+                    If My.Computer.FileSystem.DirectoryExists("FTBLite/Jar") Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.CreateDirectory("FTBLite/Jar")
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    ProgressBar1.Value = 0
+                    ProgressBar1.Style = ProgressBarStyle.Blocks
+                    ProgressLabel.Text = ("0%")
+                    ProgressLabel.Show()
+                    WC2.DownloadFileAsync(New Uri("http://assets.minecraft.net/" & FTBLiteMCWebVersion & "/minecraft.jar"), "FTBLite/Jar/minecraft.jar")
+                    GoTo 2
+                End If
+            End If
         End If
         StatusLabel.Text = "Cleaning Up..."
         BackgroundWorker6.RunWorkerAsync()
@@ -1343,8 +1469,7 @@ Public Class MainForm
         UserTextBox.Enabled = True
         PasswordTextBox.Enabled = True
         UpdateCheckBox.Enabled = True
-        RadioButton1.Enabled = True
-        RadioButton2.Enabled = True
+        SelectedModpack.Enabled = True
 2:
     End Sub
 
@@ -1378,19 +1503,11 @@ Public Class MainForm
         ProgressBar1.Style = ProgressBarStyle.Blocks
         ProgressLabel.Text = ("0%")
         ProgressLabel.Show()
-        If RadioButton1.Checked = True Then
-            If UserIsAdmin = True Then
-                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/libs+.7z"), "files.7z")
-            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/libs.7z"), "files.7z")
-            End If
-            GoTo 2
-        Else
-            If UserIsAdmin = True Then
-                WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/libs+.7z"), "files.7z")
-            Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/libs.7z"), "files.7z")
-            End If
-            GoTo 2
+        If UserIsAdmin = True Then
+            WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/" & My.Settings.ModPack.ToLower & "/libs+.7z"), "files.7z")
+        Else : WC3.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/" & My.Settings.ModPack.ToLower & "/libs.7z"), "files.7z")
         End If
+        GoTo 2
 1:      StatusLabel.Text = ("ERROR!")
         ProgressBar1.Value = 0
         ProgressBar1.Style = ProgressBarStyle.Blocks
@@ -1404,8 +1521,7 @@ Public Class MainForm
         UserTextBox.Enabled = True
         PasswordTextBox.Enabled = True
         UpdateCheckBox.Enabled = True
-        RadioButton1.Enabled = True
-        RadioButton2.Enabled = True
+        SelectedModpack.Enabled = True
 2:
     End Sub
 
@@ -1422,7 +1538,7 @@ Public Class MainForm
     End Sub
 
     Private Sub BackgroundWorker3_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker3.DoWork
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             For Each i As String In Directory.GetDirectories("Direwolf20\.minecraft")
                 If Path.GetFileName(i) = "saves" Then
                 Else
@@ -1437,7 +1553,7 @@ Public Class MainForm
             For Each i As String In Directory.GetFiles("Direwolf20\.minecraft")
                 My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
             Next
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             For Each i As String In Directory.GetDirectories("Vanilla\.minecraft")
                 If Path.GetFileName(i) = "saves" Then
                 Else
@@ -1450,6 +1566,21 @@ Public Class MainForm
                 End If
             Next
             For Each i As String In Directory.GetFiles("Vanilla\.minecraft")
+                My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+            Next
+        Else
+            For Each i As String In Directory.GetDirectories("FTBLite\.minecraft")
+                If Path.GetFileName(i) = "saves" Then
+                Else
+                    If Path.GetFileName(i) = "stats" Then
+                    Else
+                        If Path.GetFileName(i) = "movies" Then
+                        Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        End If
+                    End If
+                End If
+            Next
+            For Each i As String In Directory.GetFiles("FTBLite\.minecraft")
                 My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
             Next
         End If
@@ -1479,21 +1610,38 @@ Public Class MainForm
             Catch ex As Exception
             End Try
         End If
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             StatusLabel.Text = "Downloading " & NewDirewolf20Version & "..."
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             ProgressLabel.Text = ("0%")
             ProgressLabel.Show()
-            WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
+            If UserIsAdmin = True Then
+                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & "+.7z"), "files.7z")
+            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/direwolf20/" & NewDirewolf20Version & ".7z"), "files.7z")
+            End If
             GoTo 2
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             StatusLabel.Text = "Downloading " & NewVanillaVersion & "..."
             ProgressBar1.Value = 0
             ProgressBar1.Style = ProgressBarStyle.Blocks
             ProgressLabel.Text = ("0%")
             ProgressLabel.Show()
-            WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
+            If UserIsAdmin = True Then
+                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & "+.7z"), "files.7z")
+            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/vanilla/" & NewVanillaVersion & ".7z"), "files.7z")
+            End If
+            GoTo 2
+        Else
+            StatusLabel.Text = "Downloading " & NewFTBLiteVersion & "..."
+            ProgressBar1.Value = 0
+            ProgressBar1.Style = ProgressBarStyle.Blocks
+            ProgressLabel.Text = ("0%")
+            ProgressLabel.Show()
+            If UserIsAdmin = True Then
+                WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/FTBLite/" & NewFTBLiteVersion & "+.7z"), "files.7z")
+            Else : WC4.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/FTBLite/" & NewFTBLiteVersion & ".7z"), "files.7z")
+            End If
             GoTo 2
         End If
 1:      StatusLabel.Text = ("ERROR!")
@@ -1509,8 +1657,7 @@ Public Class MainForm
         UserTextBox.Enabled = True
         PasswordTextBox.Enabled = True
         UpdateCheckBox.Enabled = True
-        RadioButton1.Enabled = True
-        RadioButton2.Enabled = True
+        SelectedModpack.Enabled = True
 2:
     End Sub
 
@@ -1522,10 +1669,12 @@ Public Class MainForm
     Private Sub WC4_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC4.DownloadFileCompleted
         ProgressBar1.Style = ProgressBarStyle.Marquee
         ProgressLabel.Hide()
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             StatusLabel.Text = "Setting Up " & NewDirewolf20Version & "..."
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             StatusLabel.Text = "Setting Up " & NewVanillaVersion & "..."
+        Else
+            StatusLabel.Text = "Setting Up " & NewFTBLiteVersion & "..."
         End If
         BackgroundWorker5.RunWorkerAsync()
     End Sub
@@ -1536,7 +1685,7 @@ Public Class MainForm
         Writer = My.Computer.FileSystem.OpenTextFileWriter("script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             Writer.WriteLine("title MineUK " & NewDirewolf20Version & " Installer")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
@@ -1544,7 +1693,7 @@ Public Class MainForm
             Writer.WriteLine("7za.exe x files.7z * -y")
             Writer.WriteLine("CLS")
             Writer.WriteLine("CD Direwolf20\Jar")
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             Writer.WriteLine("title MineUK " & NewVanillaVersion & " Installer")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
@@ -1552,6 +1701,14 @@ Public Class MainForm
             Writer.WriteLine("7za.exe x files.7z * -y")
             Writer.WriteLine("CLS")
             Writer.WriteLine("cd Vanilla\Jar")
+        Else
+            Writer.WriteLine("title MineUK " & NewFTBLiteVersion & " Installer")
+            Writer.WriteLine("SET BINDIR=%~dp0")
+            Writer.WriteLine("CD /D " & """%BINDIR%""")
+            Writer.WriteLine("CLS")
+            Writer.WriteLine("7za.exe x files.7z * -y")
+            Writer.WriteLine("CLS")
+            Writer.WriteLine("cd FTBLite\Jar")
         End If
         Writer.WriteLine("CLS")
         Writer.WriteLine("..\..\7za.exe u minecraft.jar * -x!minecraft.jar")
@@ -1573,18 +1730,22 @@ Public Class MainForm
         objProcesss.Close()
         Thread.Sleep(250)
         'Put the minecraft.jar in the modpack
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             If My.Computer.FileSystem.FileExists("Direwolf20\.minecraft\bin\minecraft.jar") Then
                 My.Computer.FileSystem.DeleteFile("Direwolf20\.minecraft\bin\minecraft.jar")
             End If
             My.Computer.FileSystem.MoveFile("Direwolf20\Jar\minecraft.jar", "Direwolf20\.minecraft\bin\minecraft.jar")
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             If My.Computer.FileSystem.FileExists("Vanilla\.minecraft\bin\minecraft.jar") Then
                 My.Computer.FileSystem.DeleteFile("Vanilla\.minecraft\bin\minecraft.jar")
             End If
             My.Computer.FileSystem.MoveFile("Vanilla\Jar\minecraft.jar", "Vanilla\.minecraft\bin\minecraft.jar")
+        Else
+            If My.Computer.FileSystem.FileExists("FTBLite\.minecraft\bin\minecraft.jar") Then
+                My.Computer.FileSystem.DeleteFile("FTBLite\.minecraft\bin\minecraft.jar")
+            End If
+            My.Computer.FileSystem.MoveFile("FTBLite\Jar\minecraft.jar", "FTBLite\.minecraft\bin\minecraft.jar")
         End If
-        
     End Sub
 
     Private Sub BackgroundWorker5_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker5.RunWorkerCompleted
@@ -1783,16 +1944,21 @@ Public Class MainForm
         Writer = My.Computer.FileSystem.OpenTextFileWriter("script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         Writer.WriteLine("@ECHO OFF")
-        If RadioButton1.Checked = True Then
+        If My.Settings.ModPack = "Direwolf20" Then
             Writer.WriteLine("title MineUK " & NewDirewolf20Version & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
             Writer.WriteLine("set APPDATA=%CD%\Direwolf20")
-        Else
+        ElseIf My.Settings.ModPack = "Vanilla" Then
             Writer.WriteLine("title MineUK " & NewVanillaVersion & " Launcher")
             Writer.WriteLine("SET BINDIR=%~dp0")
             Writer.WriteLine("CD /D " & """%BINDIR%""")
             Writer.WriteLine("set APPDATA=%CD%\Vanilla")
+        Else
+            Writer.WriteLine("title MineUK " & NewFTBLiteVersion & " Launcher")
+            Writer.WriteLine("SET BINDIR=%~dp0")
+            Writer.WriteLine("CD /D " & """%BINDIR%""")
+            Writer.WriteLine("set APPDATA=%CD%\FTBLite")
         End If
         Writer.WriteLine("CLS")
         Writer.WriteLine(MCDir)

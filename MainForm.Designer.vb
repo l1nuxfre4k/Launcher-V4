@@ -44,8 +44,6 @@ Partial Class MainForm
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorkerMojang = New System.ComponentModel.BackgroundWorker()
         Me.BackgroundWorkerUpdate2 = New System.ComponentModel.BackgroundWorker()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.VersionLabel = New System.Windows.Forms.Label()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -57,6 +55,8 @@ Partial Class MainForm
         Me.BackgroundStatusWait = New System.ComponentModel.BackgroundWorker()
         Me.ProgressLabel = New System.Windows.Forms.Label()
         Me.BackgroundWorker6 = New System.ComponentModel.BackgroundWorker()
+        Me.SelectedModpack = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -68,7 +68,7 @@ Partial Class MainForm
         '
         'OptionsButton
         '
-        Me.OptionsButton.Location = New System.Drawing.Point(213, 397)
+        Me.OptionsButton.Location = New System.Drawing.Point(213, 390)
         Me.OptionsButton.Name = "OptionsButton"
         Me.OptionsButton.Size = New System.Drawing.Size(75, 23)
         Me.OptionsButton.TabIndex = 6
@@ -77,7 +77,7 @@ Partial Class MainForm
         '
         'LoginButton
         '
-        Me.LoginButton.Location = New System.Drawing.Point(213, 428)
+        Me.LoginButton.Location = New System.Drawing.Point(213, 421)
         Me.LoginButton.Name = "LoginButton"
         Me.LoginButton.Size = New System.Drawing.Size(75, 23)
         Me.LoginButton.TabIndex = 7
@@ -89,7 +89,7 @@ Partial Class MainForm
         Me.UserLabel.AutoSize = True
         Me.UserLabel.BackColor = System.Drawing.Color.Transparent
         Me.UserLabel.ForeColor = System.Drawing.Color.Gainsboro
-        Me.UserLabel.Location = New System.Drawing.Point(12, 402)
+        Me.UserLabel.Location = New System.Drawing.Point(12, 395)
         Me.UserLabel.Name = "UserLabel"
         Me.UserLabel.Size = New System.Drawing.Size(55, 13)
         Me.UserLabel.TabIndex = 1
@@ -100,7 +100,7 @@ Partial Class MainForm
         Me.PasswordLabel.AutoSize = True
         Me.PasswordLabel.BackColor = System.Drawing.Color.Transparent
         Me.PasswordLabel.ForeColor = System.Drawing.Color.Gainsboro
-        Me.PasswordLabel.Location = New System.Drawing.Point(12, 433)
+        Me.PasswordLabel.Location = New System.Drawing.Point(12, 426)
         Me.PasswordLabel.Name = "PasswordLabel"
         Me.PasswordLabel.Size = New System.Drawing.Size(53, 13)
         Me.PasswordLabel.TabIndex = 3
@@ -108,14 +108,14 @@ Partial Class MainForm
         '
         'UserTextBox
         '
-        Me.UserTextBox.Location = New System.Drawing.Point(80, 399)
+        Me.UserTextBox.Location = New System.Drawing.Point(80, 392)
         Me.UserTextBox.Name = "UserTextBox"
         Me.UserTextBox.Size = New System.Drawing.Size(125, 20)
         Me.UserTextBox.TabIndex = 2
         '
         'PasswordTextBox
         '
-        Me.PasswordTextBox.Location = New System.Drawing.Point(80, 428)
+        Me.PasswordTextBox.Location = New System.Drawing.Point(80, 423)
         Me.PasswordTextBox.Name = "PasswordTextBox"
         Me.PasswordTextBox.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.PasswordTextBox.Size = New System.Drawing.Size(125, 20)
@@ -126,7 +126,7 @@ Partial Class MainForm
         Me.UpdateCheckBox.AutoSize = True
         Me.UpdateCheckBox.BackColor = System.Drawing.Color.Transparent
         Me.UpdateCheckBox.ForeColor = System.Drawing.Color.Gainsboro
-        Me.UpdateCheckBox.Location = New System.Drawing.Point(203, 456)
+        Me.UpdateCheckBox.Location = New System.Drawing.Point(211, 455)
         Me.UpdateCheckBox.Name = "UpdateCheckBox"
         Me.UpdateCheckBox.Size = New System.Drawing.Size(91, 17)
         Me.UpdateCheckBox.TabIndex = 5
@@ -147,7 +147,7 @@ Partial Class MainForm
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(319, 428)
+        Me.ProgressBar1.Location = New System.Drawing.Point(322, 421)
         Me.ProgressBar1.MarqueeAnimationSpeed = 25
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(200, 23)
@@ -158,7 +158,7 @@ Partial Class MainForm
         Me.StatusLabel.BackColor = System.Drawing.Color.Transparent
         Me.StatusLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusLabel.ForeColor = System.Drawing.Color.Gainsboro
-        Me.StatusLabel.Location = New System.Drawing.Point(293, 407)
+        Me.StatusLabel.Location = New System.Drawing.Point(296, 400)
         Me.StatusLabel.Name = "StatusLabel"
         Me.StatusLabel.Size = New System.Drawing.Size(250, 18)
         Me.StatusLabel.TabIndex = 14
@@ -189,32 +189,6 @@ Partial Class MainForm
         '
         'BackgroundWorkerUpdate2
         '
-        '
-        'RadioButton1
-        '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.BackColor = System.Drawing.Color.Transparent
-        Me.RadioButton1.Checked = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.Gainsboro
-        Me.RadioButton1.Location = New System.Drawing.Point(15, 455)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(75, 17)
-        Me.RadioButton1.TabIndex = 17
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Direwolf20"
-        Me.RadioButton1.UseVisualStyleBackColor = False
-        '
-        'RadioButton2
-        '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.BackColor = System.Drawing.Color.Transparent
-        Me.RadioButton2.ForeColor = System.Drawing.Color.Gainsboro
-        Me.RadioButton2.Location = New System.Drawing.Point(102, 455)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(56, 17)
-        Me.RadioButton2.TabIndex = 18
-        Me.RadioButton2.Text = "Vanilla"
-        Me.RadioButton2.UseVisualStyleBackColor = False
         '
         'VersionLabel
         '
@@ -296,7 +270,7 @@ Partial Class MainForm
         Me.ProgressLabel.BackColor = System.Drawing.Color.Transparent
         Me.ProgressLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ProgressLabel.ForeColor = System.Drawing.Color.Gainsboro
-        Me.ProgressLabel.Location = New System.Drawing.Point(319, 454)
+        Me.ProgressLabel.Location = New System.Drawing.Point(322, 447)
         Me.ProgressLabel.Name = "ProgressLabel"
         Me.ProgressLabel.Size = New System.Drawing.Size(200, 18)
         Me.ProgressLabel.TabIndex = 24
@@ -306,6 +280,26 @@ Partial Class MainForm
         'BackgroundWorker6
         '
         '
+        'SelectedModpack
+        '
+        Me.SelectedModpack.FormattingEnabled = True
+        Me.SelectedModpack.Items.AddRange(New Object() {"Direwolf20", "Vanilla", "FTBLite"})
+        Me.SelectedModpack.Location = New System.Drawing.Point(80, 452)
+        Me.SelectedModpack.Name = "SelectedModpack"
+        Me.SelectedModpack.Size = New System.Drawing.Size(125, 21)
+        Me.SelectedModpack.TabIndex = 26
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.BackColor = System.Drawing.Color.Transparent
+        Me.Label1.ForeColor = System.Drawing.Color.Gainsboro
+        Me.Label1.Location = New System.Drawing.Point(12, 456)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(52, 13)
+        Me.Label1.TabIndex = 27
+        Me.Label1.Text = "Modpack"
+        '
         'MainForm
         '
         Me.AcceptButton = Me.LoginButton
@@ -314,11 +308,11 @@ Partial Class MainForm
         Me.BackgroundImage = Global.MineUK_Launcher.My.Resources.Resources.Main
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(854, 480)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.SelectedModpack)
         Me.Controls.Add(Me.ProgressLabel)
         Me.Controls.Add(Me.SplitContainer1)
         Me.Controls.Add(Me.LogoPanel)
-        Me.Controls.Add(Me.RadioButton2)
-        Me.Controls.Add(Me.RadioButton1)
         Me.Controls.Add(Me.UpdateCheckBox)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.ProgressBar1)
@@ -366,8 +360,6 @@ Partial Class MainForm
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents BackgroundWorkerMojang As System.ComponentModel.BackgroundWorker
     Friend WithEvents BackgroundWorkerUpdate2 As System.ComponentModel.BackgroundWorker
-    Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
-    Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents VersionLabel As System.Windows.Forms.Label
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
     Friend WithEvents BackgroundNews As System.ComponentModel.BackgroundWorker
@@ -379,5 +371,7 @@ Partial Class MainForm
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents ProgressLabel As System.Windows.Forms.Label
     Friend WithEvents BackgroundWorker6 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents SelectedModpack As System.Windows.Forms.ComboBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 
 End Class
