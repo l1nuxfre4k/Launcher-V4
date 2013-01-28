@@ -766,6 +766,7 @@ Public Class MainForm
                 My.Settings.ModPack = "FTBLite"
             End If
         End If
+        OldPlayersSt = "BAD"
         Try
             If BackgroundStatus.IsBusy = False Then
                 BackgroundStatus.RunWorkerAsync()

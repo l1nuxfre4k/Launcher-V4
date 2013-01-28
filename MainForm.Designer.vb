@@ -126,7 +126,7 @@ Partial Class MainForm
         Me.UpdateCheckBox.AutoSize = True
         Me.UpdateCheckBox.BackColor = System.Drawing.Color.Transparent
         Me.UpdateCheckBox.ForeColor = System.Drawing.Color.Gainsboro
-        Me.UpdateCheckBox.Location = New System.Drawing.Point(211, 455)
+        Me.UpdateCheckBox.Location = New System.Drawing.Point(213, 455)
         Me.UpdateCheckBox.Name = "UpdateCheckBox"
         Me.UpdateCheckBox.Size = New System.Drawing.Size(91, 17)
         Me.UpdateCheckBox.TabIndex = 5
